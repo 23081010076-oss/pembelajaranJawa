@@ -230,6 +230,81 @@ button {
   }
 }
 
+/* ── Login page ───────────────────────────────────────────────────────────── */
+
+.login-card {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 20px 60px rgba(46, 29, 16, 0.22),
+    0 0 0 1px rgba(255, 200, 120, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.login-input-wrap {
+  position: relative;
+}
+
+.login-input-field {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 2.5px solid rgba(200, 160, 100, 0.35);
+  border-radius: 1rem;
+  background: rgba(255, 250, 240, 0.85);
+  padding: 0.75rem 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.login-input-field.login-input-focused {
+  border-color: #f59a00;
+  box-shadow: 0 0 0 3.5px rgba(245, 154, 0, 0.15);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.login-input-field.login-input-error {
+  border-color: #e55;
+  box-shadow: 0 0 0 3px rgba(220, 80, 80, 0.14);
+}
+
+.login-input-icon {
+  color: #c48a3a;
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+
+.login-input-focused .login-input-icon {
+  color: #f59a00;
+}
+
+.login-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3d1f00;
+  font-family: inherit;
+}
+
+.login-input::placeholder {
+  color: #c9a87a;
+  font-weight: 500;
+}
+
+.login-error {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #d63838;
+  text-align: left;
+  padding-left: 0.25rem;
+}
+
+.login-shake {
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
 /* ── Page transition ──────────────────────────────────────────────────────── */
 
 /*

@@ -1,8 +1,8 @@
-import { HelpCircle, Map } from 'lucide-react';
+import { HelpCircle, Map, LogOut } from 'lucide-react';
 import { MenuButton } from '../components/MenuButton.jsx';
 import { useClickSound } from '../hooks/useClickSound.js';
 
-export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath }) {
+export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, studentName, onLogout }) {
   const playClick = useClickSound();
 
   const handleOpenGuide = () => {
@@ -14,6 +14,19 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath }) {
     playClick();
     onOpenPath?.();
   };
+
+  const handleLogout = () => {
+    playClick();
+    onLogout?.();
+  };
+
+  // Sapaan waktu berdasarkan jam
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 11 ? 'Sugeng Enjing' :
+    hour < 15 ? 'Sugeng Siang' :
+    hour < 18 ? 'Sugeng Sonten' :
+                'Sugeng Ndalu';
 
   return (
     <div className="mx-auto flex w-full max-w-[1200px] flex-col items-center justify-center gap-10 px-4 sm:gap-12 sm:px-6 lg:gap-14 lg:px-8">
@@ -29,6 +42,25 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath }) {
         <p className="mt-4 animate-[fadeInUp_1s_ease-out] text-lg font-bold text-white/90 drop-shadow-md sm:text-xl">
           Sinau Basa Jawa kanthi Cara Menarik
         </p>
+
+        {/* Greeting siswa */}
+        {studentName && (
+          <div className="mt-4 animate-[fadeInUp_1.1s_ease-out_both] flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 px-4 py-2 shadow-md">
+            <span className="text-sm font-bold text-white drop-shadow-sm">
+             {greeting}, <span className="text-orange-200">{studentName}</span>!
+            </span>
+            <button
+              type="button"
+              onClick={handleLogout}
+              title="Ganti nama"
+              className="ml-1 flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-xs font-bold text-white/80 hover:bg-white/35 hover:text-white transition-all"
+            >
+              <LogOut size={12} aria-hidden="true" />
+              Ganti
+            </button>
+          </div>
+        )}
+
         <div className="mt-5 flex flex-wrap justify-center gap-3">
           <button
             type="button"

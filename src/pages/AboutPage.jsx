@@ -34,7 +34,7 @@ function ProfilePhoto({ person, accent, className = '' }) {
     <img
       src={person.photo}
       alt={`Foto ${person.name}`}
-      className={`h-full w-full object-cover object-top ${className}`}
+      className={`h-full w-full object-cover ${person.imagePosition || 'object-top'} ${className}`}
       onError={() => setHasError(true)}
     />
   );
@@ -228,15 +228,20 @@ export function AboutPage() {
           Developer Aplikasi
         </div>
         <div className="grid gap-5 md:grid-cols-2">
-          {developerProfile.developers.map((developer, index) => (
-            <ProfileCard
-              key={developer.name}
-              icon={Code2}
-              label={`Developer ${index + 1}`}
-              person={developer}
-              accent={index === 0 ? '#ef4444' : '#3b82f6'}
-            />
-          ))}
+          {developerProfile.developers.map((developer, index) => {
+            const accent = index === 0 ? '#ef4444' : '#3b82f6';
+            const label = `Developer ${index + 1}`;
+            return (
+              <ProfileCard
+                key={developer.name}
+                icon={Code2}
+                label={label}
+                person={developer}
+                accent={accent}
+                onOpen={() => setActiveProfile({ icon: Code2, label, person: developer, accent })}
+              />
+            );
+          })}
         </div>
       </section>
 

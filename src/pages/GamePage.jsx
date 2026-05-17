@@ -1311,343 +1311,11 @@ function QuizScreen({ level, questions: questionsOverride, onFinish, onBack }) {
   );
 }
 
-// ── Confetti particle ────────────────────────────────────────────────────────
-function ConfettiParticle({ x, color, delay, duration, shape }) {
-  const style = {
-    position: 'absolute',
-    left: `${x}%`,
-    top: '-24px',
-    width: shape === 'circle' ? '10px' : '8px',
-    height: shape === 'circle' ? '10px' : '14px',
-    borderRadius: shape === 'circle' ? '50%' : '2px',
-    background: color,
-    animation: `confettiFall ${duration}s ease-in ${delay}s both, confettiWiggle ${duration * 0.6}s ease-in-out ${delay}s infinite`,
-    pointerEvents: 'none',
-  };
-  return <span aria-hidden="true" style={style} />;
-}
 
-// ── Ripple ring ──────────────────────────────────────────────────────────────
-function RippleRing({ delay, color }) {
-  return (
-    <span
-      aria-hidden="true"
-      style={{
-        position: 'absolute',
-        width: '200px',
-        height: '200px',
-        borderRadius: '50%',
-        border: `3px solid ${color}`,
-        opacity: 0,
-        animation: `rippleRing 1.4s ease-out ${delay}s both`,
-        pointerEvents: 'none',
-      }}
-    />
-  );
-}
-
-// ── Burst particle dari tengah ───────────────────────────────────────────────
-function BurstParticle({ angle, distance, color, delay, size }) {
-  const rad = (angle * Math.PI) / 180;
-  const px = `${Math.cos(rad) * distance}px`;
-  const py = `${Math.sin(rad) * distance}px`;
-  return (
-    <span
-      aria-hidden="true"
-      style={{
-        position: 'absolute',
-        width: size,
-        height: size,
-        borderRadius: '50%',
-        background: color,
-        '--px': px,
-        '--py': py,
-        animation: `particleBurst 0.9s cubic-bezier(0.25,0.46,0.45,0.94) ${delay}s both`,
-        pointerEvents: 'none',
-      }}
-    />
-  );
-}
-
-// ── Ambient floating orb ─────────────────────────────────────────────────────
-function AmbientOrb({ x, y, size, color, duration, delay }) {
-  return (
-    <span
-      aria-hidden="true"
-      style={{
-        position: 'absolute',
-        left: `${x}%`,
-        top: `${y}%`,
-        width: size,
-        height: size,
-        borderRadius: '50%',
-        background: color,
-        filter: 'blur(8px)',
-        animation: `ambientFloat ${duration}s ease-in-out ${delay}s infinite`,
-        pointerEvents: 'none',
-      }}
-    />
-  );
-}
-
-// ── Animated star ────────────────────────────────────────────────────────────
-function AnimatedStar({ filled, delay }) {
-  return (
-    <span
-      aria-hidden="true"
-      style={{
-        display: 'inline-block',
-        fontSize: '2.8rem',
-        lineHeight: 1,
-        opacity: 0,
-        animation: filled
-          ? `starPop 0.6s cubic-bezier(0.34,1.56,0.64,1) ${delay}s both`
-          : `resultSubFadeUp 0.4s ease-out ${delay}s both`,
-        filter: filled ? 'drop-shadow(0 0 12px #facc15)' : 'none',
-      }}
-    >
-      {filled ? '⭐' : '☆'}
-    </span>
-  );
-}
-
-// ── Result overlay (animasi selamat / coba lagi) ─────────────────────────────
-function ResultOverlay({ pct, levelColor, onDone }) {
-  const isSuccess = pct >= 70;
-  const isPerfect = pct === 100;
-  const starsEarned = pct >= 80 ? 3 : pct >= 50 ? 2 : pct > 0 ? 1 : 0;
-
-  // Auto-dismiss setelah 3 detik
-  useEffect(() => {
-    const t = window.setTimeout(onDone, 3000);
-    return () => window.clearTimeout(t);
-  }, [onDone]);
-
-  // Confetti
-  const successColors = ['#facc15', '#fb923c', '#4ade80', '#60a5fa', '#f472b6', '#a78bfa', '#fff', '#fde68a'];
-  const failColors    = ['#94a3b8', '#cbd5e1', '#e2e8f0'];
-  const confettiColors = isSuccess ? successColors : failColors;
-  const particles = Array.from({ length: isSuccess ? 50 : 16 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    color: confettiColors[i % confettiColors.length],
-    delay: Math.random() * 1.0,
-    duration: 2.0 + Math.random() * 1.4,
-    shape: Math.random() > 0.5 ? 'circle' : 'rect',
-  }));
-
-  // Burst particles dari tengah
-  const burstColors = isSuccess
-    ? ['#facc15', '#fb923c', '#4ade80', '#60a5fa', '#f472b6', '#a78bfa', '#fff', '#fde68a', '#34d399', '#f87171']
-    : ['#94a3b8', '#64748b', '#cbd5e1', '#475569'];
-  const burstParticles = Array.from({ length: isSuccess ? 24 : 12 }, (_, i) => ({
-    id: i,
-    angle: (360 / (isSuccess ? 24 : 12)) * i,
-    distance: 80 + Math.random() * 80,
-    color: burstColors[i % burstColors.length],
-    delay: 0.1 + Math.random() * 0.2,
-    size: `${6 + Math.random() * 8}px`,
-  }));
-
-  // Ambient orbs
-  const orbs = isSuccess ? [
-    { x: 10, y: 20, size: '60px', color: 'rgba(250,204,21,0.25)', duration: 4, delay: 0 },
-    { x: 80, y: 15, size: '80px', color: 'rgba(244,114,182,0.2)', duration: 5, delay: 0.5 },
-    { x: 15, y: 70, size: '50px', color: 'rgba(96,165,250,0.25)', duration: 3.5, delay: 1 },
-    { x: 75, y: 65, size: '70px', color: 'rgba(74,222,128,0.2)', duration: 4.5, delay: 0.3 },
-    { x: 50, y: 85, size: '45px', color: 'rgba(167,139,250,0.3)', duration: 3, delay: 0.8 },
-  ] : [
-    { x: 20, y: 25, size: '50px', color: 'rgba(148,163,184,0.2)', duration: 4, delay: 0 },
-    { x: 70, y: 60, size: '60px', color: 'rgba(100,116,139,0.2)', duration: 5, delay: 0.5 },
-  ];
-
-  // Gradient background berdasarkan kondisi
-  const bgGradient = isPerfect
-    ? `radial-gradient(ellipse at 50% 30%, #fbbf24cc 0%, #f59e0baa 30%, #92400e99 70%, #1c0a00ee 100%)`
-    : isSuccess
-    ? `radial-gradient(ellipse at 50% 30%, ${levelColor}dd 0%, ${levelColor}99 40%, #0f172aee 100%)`
-    : `radial-gradient(ellipse at 50% 40%, #1e3a5fee 0%, #0f172aee 50%, #000000cc 100%)`;
-
-  const shimmerGradient = isPerfect
-    ? 'linear-gradient(90deg, #fbbf24, #fff, #fbbf24, #fb923c, #fbbf24)'
-    : isSuccess
-    ? `linear-gradient(90deg, #fff, ${levelColor}, #fff, #a78bfa, #fff)`
-    : 'linear-gradient(90deg, #94a3b8, #fff, #94a3b8, #cbd5e1, #94a3b8)';
-
-  return (
-    <div
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden"
-      style={{
-        background: bgGradient,
-        animation: 'resultOverlayIn 0.4s ease-out both',
-      }}
-      onClick={onDone}
-      role="status"
-      aria-live="polite"
-    >
-      {/* Ambient orbs */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {orbs.map((o, i) => <AmbientOrb key={i} {...o} />)}
-      </div>
-
-      {/* Confetti */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {particles.map(p => <ConfettiParticle key={p.id} {...p} />)}
-      </div>
-
-      {/* Ripple rings dari tengah */}
-      <div className="pointer-events-none absolute flex items-center justify-center" style={{ inset: 0 }}>
-        <div className="relative flex items-center justify-center">
-          {[0, 0.25, 0.5, 0.75].map((d, i) => (
-            <RippleRing key={i} delay={d} color={isSuccess ? 'rgba(255,255,255,0.6)' : 'rgba(148,163,184,0.5)'} />
-          ))}
-        </div>
-      </div>
-
-      {/* Burst particles dari tengah */}
-      <div className="pointer-events-none absolute flex items-center justify-center" style={{ inset: 0 }}>
-        <div className="relative">
-          {burstParticles.map(p => <BurstParticle key={p.id} {...p} />)}
-        </div>
-      </div>
-
-      {/* Spinning glow ring di belakang ikon */}
-      <div
-        className="pointer-events-none absolute"
-        style={{
-          width: '220px',
-          height: '220px',
-          borderRadius: '50%',
-          background: `conic-gradient(from 0deg, transparent 0%, ${isSuccess ? '#facc1566' : '#64748b44'} 30%, transparent 60%, ${isSuccess ? '#fb923c66' : '#94a3b844'} 80%, transparent 100%)`,
-          animation: 'glowSpin 3s linear infinite',
-          filter: 'blur(4px)',
-        }}
-      />
-
-      {/* Konten utama */}
-      <div
-        className="relative z-10 flex flex-col items-center gap-4 px-6 text-center"
-        style={{ animation: 'resultBannerDrop 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.15s both' }}
-      >
-        {/* Ikon dengan glow */}
-        <div
-          className="relative flex items-center justify-center"
-          style={{ animation: 'iconSpring 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.2s both', opacity: 0 }}
-        >
-          {/* Glow layer */}
-          <div
-            className="absolute rounded-full"
-            style={{
-              width: '130px',
-              height: '130px',
-              background: isSuccess
-                ? 'radial-gradient(circle, rgba(250,204,21,0.5) 0%, transparent 70%)'
-                : 'radial-gradient(circle, rgba(148,163,184,0.4) 0%, transparent 70%)',
-              filter: 'blur(12px)',
-              animation: 'bgPulse 2s ease-in-out infinite',
-            }}
-          />
-          {/* Ikon circle */}
-          <div
-            className="relative flex size-28 items-center justify-center rounded-full border-4 shadow-2xl"
-            style={{
-              borderColor: 'rgba(255,255,255,0.5)',
-              background: isSuccess
-                ? 'linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1))'
-                : 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))',
-              backdropFilter: 'blur(12px)',
-              boxShadow: isSuccess
-                ? '0 0 40px rgba(250,204,21,0.4), 0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4)'
-                : '0 0 30px rgba(148,163,184,0.3), 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
-            }}
-          >
-            <span className="text-6xl leading-none" aria-hidden="true" style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.4))' }}>
-              {isPerfect ? '🏆' : isSuccess ? '🌟' : '💪'}
-            </span>
-          </div>
-        </div>
-
-        {/* Teks utama dengan shimmer */}
-        <h2
-          className="text-[clamp(2.4rem,8vw,4rem)] font-black leading-tight"
-          style={{
-            background: shimmerGradient,
-            backgroundSize: '200% auto',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            animation: 'resultSubFadeUp 0.5s ease-out 0.5s both, textShimmer 2.5s linear 0.8s infinite',
-            opacity: 0,
-            filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.5))',
-          }}
-        >
-          {isPerfect ? 'Sampurna! 🎊' : isSuccess ? 'Selamat! 🎉' : 'Ayo Semangat! 💪'}
-        </h2>
-
-        {/* Bintang animasi satu per satu */}
-        <div
-          className="flex gap-2"
-          style={{ animation: 'resultSubFadeUp 0.01s ease-out 0.6s both', opacity: 0 }}
-        >
-          {[0, 1, 2].map(i => (
-            <AnimatedStar key={i} filled={i < starsEarned} delay={0.65 + i * 0.15} />
-          ))}
-        </div>
-
-        {/* Sub-teks */}
-        <p
-          className="max-w-xs text-base font-bold text-white/90"
-          style={{
-            animation: 'resultSubFadeUp 0.5s ease-out 1.1s both',
-            opacity: 0,
-            textShadow: '0 2px 8px rgba(0,0,0,0.6)',
-          }}
-        >
-          {isPerfect
-            ? 'Kowe pancen jago banget!'
-            : isSuccess
-            ? 'Nilaimu apik, terusna sinau!'
-            : 'Sinau maneh, kowe mesthi bisa!'}
-        </p>
-
-        {/* Skor badge glassmorphism */}
-        <div
-          className="flex items-center gap-3 rounded-2xl px-6 py-3"
-          style={{
-            background: 'rgba(255,255,255,0.15)',
-            backdropFilter: 'blur(16px)',
-            border: '1px solid rgba(255,255,255,0.3)',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3)',
-            animation: 'scoreReveal 0.6s cubic-bezier(0.34,1.56,0.64,1) 1.3s both',
-            opacity: 0,
-          }}
-        >
-          <span className="text-3xl font-black text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
-            {pct}%
-          </span>
-          <div className="h-8 w-px bg-white/30" />
-          <span className="text-sm font-bold text-white/80">
-            {isPerfect ? '🏆 Sempurna' : isSuccess ? '✅ Lulus' : '❌ Belum Lulus'}
-          </span>
-        </div>
-      </div>
-
-      {/* Tap to continue */}
-      <p
-        className="absolute bottom-8 text-xs font-bold tracking-widest text-white/40 uppercase"
-        style={{ animation: 'resultSubFadeUp 0.4s ease-out 2.2s both', opacity: 0 }}
-      >
-        ✦ Ketuk untuk lanjut ✦
-      </p>
-    </div>
-  );
-}
 
 // ── Result screen ────────────────────────────────────────────────────────────
 function ResultScreen({ level, score, review = [], onRetry, onBack }) {
   const playClick = useClickSound();
-  const { playApplause, playEncourage, playFailed } = useResultSound();
-  const [showOverlay, setShowOverlay] = useState(true);
   const maxScore = getLevelMaxScore(level);
   const displayScore = clampScore(score, maxScore);
   const pct = maxScore > 0 ? Math.round((displayScore / maxScore) * 100) : 0;
@@ -1670,26 +1338,13 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
     ? { msg: 'Lumayan! 👍', sub: 'Isih ana sing kudu dilatih maneh.' }
     : { msg: 'Kamu gagal, coba lagi!', sub: 'Sinau maneh banjur coba saka awal.' };
 
-  useEffect(() => {
-    if (pct === 100) playApplause();
-    else if (pct >= 70) playEncourage();
-    else playFailed();
-  }, [pct]);
-
-  const s = (delay) => !showOverlay
-    ? { animation: `cardSlideUp 0.5s cubic-bezier(0.16,1,0.3,1) ${delay}s both` }
-    : { opacity: 0, pointerEvents: 'none' };
+  const s = (delay) => ({ animation: `cardSlideUp 0.5s cubic-bezier(0.16,1,0.3,1) ${delay}s both` });
 
   return (
-    <>
-      {showOverlay && (
-        <ResultOverlay pct={pct} levelColor={level.color} onDone={() => setShowOverlay(false)} />
-      )}
-
-      <div
-        className="mx-auto flex w-full max-w-[760px] flex-col items-center gap-5 px-4 py-2 text-center"
-        style={!showOverlay ? { animation: 'resultContentIn 0.4s ease-out both' } : { opacity: 0, pointerEvents: 'none' }}
-      >
+    <div
+      className="mx-auto flex w-full max-w-[760px] flex-col items-center gap-5 px-4 py-2 text-center"
+      style={{ animation: 'resultContentIn 0.4s ease-out both' }}
+    >
         {/* ── Ikon + glow ── */}
         <div className="relative flex flex-col items-center gap-1" style={s(0)}>
           {/* Glow halo */}
@@ -1710,8 +1365,7 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
               borderColor: 'rgba(255,255,255,0.4)',
               background: `linear-gradient(135deg, ${level.color}cc, ${level.color}66)`,
               boxShadow: `0 0 0 8px ${level.color}22, 0 20px 60px rgba(0,0,0,0.35)`,
-              animation: !showOverlay ? 'iconSpring 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.05s both' : undefined,
-              opacity: showOverlay ? 0 : undefined,
+              animation: 'iconSpring 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.05s both',
             }}
           >
             <span className="text-6xl leading-none" aria-hidden="true"
@@ -1731,11 +1385,9 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
                 fontSize: '2.2rem',
                 lineHeight: 1,
                 opacity: 0,
-                animation: !showOverlay
-                  ? (i < starsEarned
-                    ? `starPop 0.55s cubic-bezier(0.34,1.56,0.64,1) ${0.1 + i * 0.12}s both`
-                    : `resultSubFadeUp 0.4s ease-out ${0.1 + i * 0.12}s both`)
-                  : undefined,
+                animation: i < starsEarned
+                  ? `starPop 0.55s cubic-bezier(0.34,1.56,0.64,1) ${0.1 + i * 0.12}s both`
+                  : `resultSubFadeUp 0.4s ease-out ${0.1 + i * 0.12}s both`,
                 filter: i < starsEarned ? 'drop-shadow(0 0 10px #facc15)' : 'none',
               }}
             >
@@ -1747,17 +1399,13 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
         {/* ── Skor besar ── */}
         <div style={s(0.15)}>
           <div
-            className="text-[clamp(3.5rem,10vw,5.5rem)] font-black leading-none text-white"
-            style={{
-              WebkitTextStroke: '4px rgba(0,0,0,0.15)',
-              paintOrder: 'stroke fill',
-              filter: `drop-shadow(0 4px 20px ${level.color}88)`,
-            }}
+            className="text-[clamp(3.5rem,10vw,5.5rem)] font-black leading-none text-[#2e1d10]"
+            style={{ filter: `drop-shadow(0 4px 12px ${level.color}44)` }}
           >
             {displayScore}
-            <span className="text-[0.45em] text-white/50">/{maxScore}</span>
+            <span className="text-[0.45em] text-gray-400">/{maxScore}</span>
           </div>
-          <div className="mt-1 text-base font-black text-white/70 tracking-wide">
+          <div className="mt-1 text-base font-black text-gray-500 tracking-wide">
             {pct}% {isCompose ? 'skor' : 'bener'}
           </div>
         </div>
@@ -1772,51 +1420,38 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
                 background: isSuccess
                   ? `linear-gradient(90deg, ${level.color}, #facc15, ${level.color})`
                   : 'linear-gradient(90deg, #64748b, #94a3b8)',
-                animation: !showOverlay ? 'progressFill 1s cubic-bezier(0.16,1,0.3,1) 0.3s both' : undefined,
-                width: showOverlay ? '0%' : undefined,
+                animation: 'progressFill 1s cubic-bezier(0.16,1,0.3,1) 0.3s both',
                 boxShadow: isSuccess ? `0 0 12px ${level.color}88` : 'none',
               }}
             />
           </div>
         </div>
 
-        {/* ── Feedback card glassmorphism ── */}
+        {/* ── Feedback card ── */}
         <div
-          className="w-full rounded-3xl px-6 py-5"
-          style={{
-            background: 'rgba(255,255,255,0.12)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.25)',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
-            ...s(0.28),
-          }}
+          className="w-full rounded-3xl bg-white px-6 py-5 shadow-sm ring-1 ring-gray-200"
+          style={s(0.28)}
         >
-          <p className="text-xl font-black text-white" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
+          <p className="text-xl font-black text-[#2e1d10]">
             {resultFeedback.msg}
           </p>
-          <p className="mt-1 text-sm font-semibold text-white/70">{resultFeedback.sub}</p>
+          <p className="mt-1 text-sm font-semibold text-gray-500">{resultFeedback.sub}</p>
         </div>
 
         {/* Detail evaluasi */}
         {reviewItems.length > 0 && (
           <div
-            className="w-full rounded-3xl p-4 text-left sm:p-5"
-            style={{
-              background: 'rgba(255,255,255,0.14)',
-              backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255,255,255,0.24)',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.22)',
-              ...s(0.33),
-            }}
+            className="w-full rounded-3xl bg-white p-4 text-left shadow-sm ring-1 ring-gray-200 sm:p-5"
+            style={s(0.33)}
           >
             <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-xs font-black uppercase tracking-widest text-white/55">Tinjauan Jawaban</p>
-                <h3 className="text-xl font-black text-white">
+                <p className="text-xs font-black uppercase tracking-widest text-gray-400">Tinjauan Jawaban</p>
+                <h3 className="text-xl font-black text-[#2e1d10]">
                   {wrongReviews.length > 0 ? `${wrongReviews.length} bagian perlu dibenahi` : 'Kabeh jawaban wis apik'}
                 </h3>
               </div>
-              <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-black text-white/75">
+              <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-black text-gray-600">
                 {reviewItems.length - wrongReviews.length}/{reviewItems.length} tuntas
               </span>
             </div>
@@ -1830,7 +1465,7 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
                 {wrongReviews.map((item) => (
                   <article
                     key={item.id}
-                    className="rounded-2xl border border-white/18 bg-white/92 p-4 text-[#2e1d10] shadow-lg"
+                    className="rounded-2xl border border-gray-100 bg-gray-50 p-4 text-[#2e1d10] shadow-sm"
                   >
                     <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                       <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-black uppercase tracking-wide text-red-700">
@@ -1881,8 +1516,8 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
             )}
 
             {recommendations.length > 1 && (
-              <div className="mt-4 rounded-2xl border border-yellow-300/35 bg-yellow-300/12 px-4 py-3 text-sm font-bold leading-relaxed text-yellow-50">
-                <p className="mb-2 text-xs font-black uppercase tracking-widest text-yellow-200">Ringkesan Materi Baleni</p>
+              <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-bold leading-relaxed text-amber-900">
+                <p className="mb-2 text-xs font-black uppercase tracking-widest text-amber-600">Ringkesan Materi Baleni</p>
                 <ul className="grid gap-1.5">
                   {recommendations.map((item) => (
                     <li key={item}>- {item}</li>
@@ -1896,19 +1531,16 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
         {/* ── Parikan hadiah ── */}
         {pct >= 80 && (
           <div
-            className="w-full rounded-3xl px-5 py-4"
+            className="w-full rounded-3xl px-5 py-4 ring-2 ring-amber-300"
             style={{
-              background: 'linear-gradient(135deg, rgba(251,191,36,0.2), rgba(251,146,60,0.15))',
-              backdropFilter: 'blur(16px)',
-              border: '1px solid rgba(251,191,36,0.4)',
-              boxShadow: '0 4px 24px rgba(251,191,36,0.15), inset 0 1px 0 rgba(255,255,255,0.2)',
+              background: 'linear-gradient(135deg, #fffbeb, #ffedd5)',
               ...s(0.36),
             }}
           >
-            <p className="text-xs font-black uppercase tracking-widest text-yellow-300">🎁 Parikan Hadiah</p>
-            <p className="mt-2 text-sm font-bold italic text-white/90 leading-relaxed">
+            <p className="text-xs font-black uppercase tracking-widest text-amber-600">🎁 Parikan Hadiah</p>
+            <p className="mt-2 text-sm font-bold italic text-amber-900 leading-relaxed">
               "Tuku kupat ning pinggir dalan,<br />
-              <span className="text-yellow-300">eling pepeling aja kesusu tumindak."</span>
+              <span className="text-amber-700">eling pepeling aja kesusu tumindak."</span>
             </p>
           </div>
         )}
@@ -1918,14 +1550,7 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
           <button
             type="button"
             onClick={() => { playClick(); onRetry(); }}
-            className="flex flex-1 items-center justify-center gap-2 rounded-2xl py-4 text-base font-black uppercase transition-all hover:-translate-y-1 active:translate-y-0"
-            style={{
-              background: 'rgba(255,255,255,0.15)',
-              backdropFilter: 'blur(12px)',
-              border: '2px solid rgba(255,255,255,0.3)',
-              color: 'white',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
-            }}
+            className="flex flex-1 items-center justify-center gap-2 rounded-2xl border-2 border-gray-200 bg-white py-4 text-base font-black uppercase text-[#2e1d10] shadow-sm transition-all hover:bg-gray-50 hover:-translate-y-1 active:translate-y-0"
           >
             <RotateCcw size={18} aria-hidden="true" />
             Coba Maneh
@@ -1945,7 +1570,6 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
           </button>
         </div>
       </div>
-    </>
   );
 }
 

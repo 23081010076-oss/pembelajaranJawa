@@ -3,7 +3,7 @@ import { playAudioFile } from './useAudioFile.js';
 const RESULT_AUDIO = {
   perfect: '/assets/sounds/result-sampurna.mp3',
   success: '/assets/sounds/result-lulus.mp3',
-  retry: '/assets/sounds/result-lulus.mp3',
+  retry: '/assets/sounds/youlose.mp3',
 };
 
 const RESULT_FALLBACK_TEXT = {

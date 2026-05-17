@@ -30,9 +30,10 @@ export const developerProfile = {
       ],
     },
     {
-      name: 'Developer 2',
-      role: 'UI/UX dan Integrasi Konten',
-      photo: '/assets/profile/developer-2.jpg',
+      name: 'Misbahul Musthofah',
+      role: 'Frontend Developer',
+      photo: '/assets/profile/pengembang2.jpeg',
+      imagePosition: 'object-center',
       details: [
         'Menyusun pengalaman belajar agar mudah digunakan.',
         'Mengintegrasikan konten, audio, dan alur navigasi aplikasi.',

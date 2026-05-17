@@ -7,7 +7,9 @@ import { HomeBar } from './components/HomeBar.jsx';
 import { InfoModal } from './components/InfoModal.jsx';
 import { SceneLayout } from './components/SceneLayout.jsx';
 import { SplashScreen } from './components/SplashScreen.jsx';
+import { BackgroundMusic } from './components/BackgroundMusic.jsx';
 import { OpeningPage } from './pages/OpeningPage.jsx';
+import { LoginPage } from './pages/LoginPage.jsx';
 import { HomePage } from './pages/HomePage.jsx';
 import { LearningPage } from './pages/LearningPage.jsx';
 import { MateriPage } from './pages/MateriPage.jsx';
@@ -17,6 +19,7 @@ import { GamePage } from './pages/GamePage.jsx';
 import { AboutPage } from './pages/AboutPage.jsx';
 import { GuidePage } from './pages/GuidePage.jsx';
 import { LearningPathPage } from './pages/LearningPathPage.jsx';
+import { getStudentName, clearStudentName } from './hooks/useStudentName.js';
 
 // Cek apakah splash sudah ditampilkan di sesi ini
 const hasSeenSplash = () => {
@@ -38,6 +41,9 @@ export default function App() {
   const [showSplash, setShowSplash] = useState(() => !hasSeenSplash());
   // Opening tampil setelah splash, sebelum home
   const [showOpening, setShowOpening] = useState(true);
+  // Login — cek apakah nama siswa sudah tersimpan
+  const [studentName, setStudentName] = useState(() => getStudentName());
+  const [showLogin, setShowLogin] = useState(false);
 
   const handleSplashDone = () => {
     markSplashSeen();
@@ -45,7 +51,23 @@ export default function App() {
   };
 
   const handleEnter = () => {
+    // Jika belum login, tampilkan halaman login dulu
+    if (!getStudentName()) {
+      setShowLogin(true);
+    }
     setShowOpening(false);
+  };
+
+  const handleLogin = (name) => {
+    setStudentName(name);
+    setShowLogin(false);
+  };
+
+  const handleLogout = () => {
+    clearStudentName();
+    setStudentName(null);
+    setShowLogin(true);
+    setPage('home');
   };
 
   const goHome = () => {
@@ -130,8 +152,13 @@ export default function App() {
         <OpeningPage onEnter={handleEnter} />
       )}
 
-      {/* App utama — hanya render setelah opening selesai */}
-      {!showOpening && (
+      {/* Login page — muncul setelah opening jika belum ada nama */}
+      {!showSplash && !showOpening && showLogin && (
+        <LoginPage onLogin={handleLogin} />
+      )}
+
+      {/* App utama — hanya render setelah opening & login selesai */}
+      {!showOpening && !showLogin && (
         <>
           {page !== 'home' && (
             <NavBar crumbs={crumbs} onHome={goHome} />
@@ -149,6 +176,8 @@ export default function App() {
                   onChooseMenu={openMenu}
                   onOpenGuide={() => { setPage('guide'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                   onOpenPath={() => { setPage('path'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  studentName={studentName}
+                  onLogout={handleLogout}
                 />
               )}
 
@@ -194,6 +223,9 @@ export default function App() {
           )}
         </>
       )}
+
+      {/* Musik Latar diputar setelah melewati splash */}
+      <BackgroundMusic isPlayingApp={!showSplash} />
 
     </main>
   );
