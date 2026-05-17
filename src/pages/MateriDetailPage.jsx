@@ -638,11 +638,11 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
           <div className="mt-7 rounded-2xl border-2 border-green-200 bg-green-50 p-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
             <div>
               <p className="text-xs font-black uppercase tracking-[0.14em] text-green-600">
-                Progress Belajar
+                Kemajuan Sinau
               </p>
               <p className="mt-1 text-sm font-bold leading-relaxed text-[#4f2912]">
                 {isMateriCompleted
-                  ? 'Materi iki wis ditandai rampung. Progresmu bakal katon ing Alur Belajar.'
+                  ? 'Materi iki wis ditandai rampung. Kemajuanmu bakal katon ing Alur Belajar.'
                   : 'Tandai rampung yen wis maca materi, komik, lan tuladha kanthi lengkap.'}
               </p>
             </div>
@@ -678,8 +678,7 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
           }`}
         >
           <ChevronLeft size={20} aria-hidden="true" />
-          <span className="hidden sm:inline">Sadurunge</span>
-          <span className="sm:hidden">Prev</span>
+          <span>Sadurunge</span>
         </button>
 
         {/* Dot indicator (center) */}
@@ -697,8 +696,7 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
               : 'cursor-not-allowed border-white/40 bg-white/40 text-gray-400 opacity-50'
           }`}
         >
-          <span className="hidden sm:inline">Sabanjure</span>
-          <span className="sm:hidden">Next</span>
+          <span>Sabanjure</span>
           <ChevronRight size={20} aria-hidden="true" />
         </button>
       </nav>

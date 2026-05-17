@@ -7,7 +7,6 @@ import { useClickSound } from '../hooks/useClickSound.js';
  *
  * Props:
  *  - crumbs: array of { label, onClick? }
- *    - first item = "Javanesia" (home)
  *    - last item = current page (no onClick, rendered as active)
  *  - onHome: callback to go back to home
  */
@@ -27,30 +26,36 @@ export function NavBar({ crumbs = [], onHome }) {
   };
 
   return (
-    <header className="nav-shell sticky top-0 z-40 w-full overflow-hidden border-b border-orange-300/50 bg-[rgba(255,248,238,0.9)] shadow-[0_8px_28px_rgba(96,55,24,0.10)] backdrop-blur-xl">
+    <header className="nav-shell sticky top-0 z-40 w-full border-b border-orange-300/50 bg-[rgba(255,248,238,0.92)] shadow-[0_4px_20px_rgba(96,55,24,0.10)] backdrop-blur-xl">
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-orange-400/70 to-transparent" />
-      <div className="mx-auto flex h-[64px] max-w-[1200px] items-center gap-3 px-4 sm:h-[68px] sm:px-6 lg:px-8">
 
-        {/* Brand / Home button */}
+      <div className="mx-auto flex min-h-[52px] max-w-[1200px] items-center gap-2 px-3 py-2 sm:min-h-[64px] sm:gap-3 sm:px-6 lg:px-8">
+
+        {/* Brand / Home button — ikon saja di mobile */}
         <button
           type="button"
           onClick={handleHome}
           aria-label="Kembali ke halaman utama"
-          className="group flex shrink-0 items-center gap-2 rounded-full border-2 border-orange-200 bg-white/80 px-3 py-2 font-black text-orange-500 shadow-sm transition hover:-translate-y-0.5 hover:border-orange-300 hover:bg-white hover:shadow-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
+          className="group flex shrink-0 items-center rounded-full border-2 border-orange-200 bg-white/80 p-1.5 text-orange-500 shadow-sm transition hover:-translate-y-0.5 hover:border-orange-300 hover:bg-white hover:shadow-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 sm:px-3 sm:py-2"
         >
-          <span className="grid size-8 place-items-center rounded-full bg-orange-100 text-orange-500 transition group-hover:bg-orange-500 group-hover:text-white">
-            <Home size={17} aria-hidden="true" />
+          <span className="grid size-7 place-items-center rounded-full bg-orange-100 text-orange-500 transition group-hover:bg-orange-500 group-hover:text-white sm:size-8">
+            <Home size={15} aria-hidden="true" className="sm:hidden" />
+            <Home size={17} aria-hidden="true" className="hidden sm:block" />
           </span>
         </button>
 
         {/* Divider */}
         {crumbs.length > 0 && (
-          <ChevronRight size={17} className="shrink-0 text-orange-300" aria-hidden="true" />
+          <ChevronRight
+            size={14}
+            className="shrink-0 text-orange-300"
+            aria-hidden="true"
+          />
         )}
 
-        {/* Breadcrumb trail */}
-        <nav aria-label="Breadcrumb" className="flex min-w-0 items-center gap-1.5 overflow-hidden">
-          <ol className="flex min-w-0 items-center gap-1.5">
+        {/* Breadcrumb trail — flex-1 + min-w-0 agar tidak overflow */}
+        <nav aria-label="Breadcrumb" className="flex min-w-0 flex-1 items-center overflow-hidden">
+          <ol className="flex min-w-0 items-center gap-1">
             {crumbs.map((crumb, i) => {
               const isLast = i === crumbs.length - 1;
               return (
@@ -59,18 +64,19 @@ export function NavBar({ crumbs = [], onHome }) {
                     {isLast ? (
                       /* Active / current page */
                       <span
-                        className="inline-flex max-w-[48vw] items-center gap-2 truncate rounded-full border-2 border-orange-200 bg-gradient-to-r from-orange-100 to-amber-100 px-4 py-2 text-sm font-black text-orange-600 shadow-sm sm:max-w-none"
+                        className="inline-flex min-w-0 max-w-full items-center gap-1.5 truncate rounded-full border border-orange-200 bg-gradient-to-r from-orange-100 to-amber-100 px-2.5 py-1.5 text-xs font-black text-orange-600 shadow-sm sm:gap-2 sm:border-2 sm:px-4 sm:py-2 sm:text-sm"
                         aria-current="page"
                       >
-                        <Sparkles size={14} className="shrink-0 text-orange-500" aria-hidden="true" />
-                        {crumb.label}
+                        <Sparkles size={12} className="shrink-0 text-orange-500 sm:hidden" aria-hidden="true" />
+                        <Sparkles size={14} className="hidden shrink-0 text-orange-500 sm:block" aria-hidden="true" />
+                        <span className="truncate">{crumb.label}</span>
                       </span>
                     ) : (
                       /* Clickable ancestor */
                       <button
                         type="button"
                         onClick={() => handleCrumb(crumb)}
-                        className="truncate rounded-full px-3 py-2 text-sm font-bold text-[#7a4f2e] transition hover:-translate-y-0.5 hover:bg-white hover:text-orange-600 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300"
+                        className="max-w-[22vw] truncate rounded-full px-2 py-1.5 text-xs font-bold text-[#7a4f2e] transition hover:-translate-y-0.5 hover:bg-white hover:text-orange-600 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 sm:max-w-none sm:px-3 sm:py-2 sm:text-sm"
                       >
                         {crumb.label}
                       </button>
@@ -80,7 +86,7 @@ export function NavBar({ crumbs = [], onHome }) {
                   {/* Separator between crumbs */}
                   {!isLast && (
                     <li aria-hidden="true">
-                      <ChevronRight size={14} className="shrink-0 text-orange-300" />
+                      <ChevronRight size={12} className="shrink-0 text-orange-300" />
                     </li>
                   )}
                 </React.Fragment>
@@ -89,7 +95,7 @@ export function NavBar({ crumbs = [], onHome }) {
           </ol>
         </nav>
 
-        {/* Right side — decorative batik accent */}
+        {/* Right side — decorative batik accent (desktop only) */}
         <div className="pointer-events-none ml-auto hidden shrink-0 rounded-full border-2 border-orange-200 bg-white/80 px-5 py-2 text-base font-black uppercase tracking-wide text-orange-500 shadow-sm sm:inline-flex">
           Javanesia
         </div>

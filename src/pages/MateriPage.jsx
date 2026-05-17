@@ -35,7 +35,7 @@ export function MateriPage({ materiItems, onOpenMateri }) {
         </p>
         <div className="mx-auto mt-4 max-w-md rounded-2xl border-2 border-white/80 bg-white/85 p-3 shadow-sm">
           <div className="flex items-center justify-between gap-3 text-xs font-black uppercase tracking-[0.12em] text-orange-600">
-            <span>Progress Materi</span>
+            <span>Kemajuan Materi</span>
             <span>{materiStats.completedCount}/{materiStats.total} rampung</span>
           </div>
           <div className="mt-2 h-3 overflow-hidden rounded-full bg-orange-100">
@@ -85,7 +85,7 @@ export function MateriPage({ materiItems, onOpenMateri }) {
                   : 'bg-stone-100 text-stone-500'
               }`}>
                 {isCompleted ? <CheckCircle2 size={13} aria-hidden="true" /> : <Circle size={13} aria-hidden="true" />}
-                {isCompleted ? 'Rampung' : isVisited ? 'Wis Dibuka' : 'Belum'}
+                {isCompleted ? 'Rampung' : isVisited ? 'Wis Dibuka' : 'Durung'}
               </span>
             </div>
 

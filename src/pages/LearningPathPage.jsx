@@ -226,7 +226,7 @@ export function LearningPathPage({ onNavigate }) {
                 </span>
               </div>
               <p className="mt-2 text-xs font-bold leading-relaxed text-[#7a5030]">
-                Skor total terbaik: {gameStats.bestTotalScore}. Skor level tertinggi: {gameStats.bestSingleScore}.
+                Gunggunge skor paling apik: {gameStats.bestTotalScore}. Skor level paling dhuwur: {gameStats.bestSingleScore}.
               </p>
             </div>
           </div>
@@ -236,7 +236,7 @@ export function LearningPathPage({ onNavigate }) {
               <div key={step.id} className="flex items-center justify-between gap-3 rounded-2xl bg-orange-50 px-4 py-3">
                 <span className="text-sm font-black text-[#5d351d]">{step.title}</span>
                 <span className={`text-xs font-black uppercase ${progress[step.id] ? 'text-green-600' : 'text-orange-500'}`}>
-                  {progress[step.id] ? 'Selesai' : 'Belum'}
+                  {progress[step.id] ? 'Rampung' : 'Durung'}
                 </span>
               </div>
             ))}

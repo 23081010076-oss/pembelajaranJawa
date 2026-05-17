@@ -13,6 +13,8 @@ export const developerProfile = {
     name: 'Dr. Octo Dendy Andriyanto, S.Pd., M.Pd.',
     role: 'Dosen Pembimbing',
     photo: '/assets/profile/dosen-pembimbing.jpeg',
+    imageFit: 'object-cover',
+    imagePosition: 'object-top',
     details: [
       'NIP/NIDN: 198907262015041002 / 0026078901',
       'Bidang: Pembelajaran Bahasa Jawa',

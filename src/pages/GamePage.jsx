@@ -167,7 +167,7 @@ function buildComposeFeedback(text, keyword, scoring) {
 }
 
 function getFillQuestionPrompt(q) {
-  return q.lines?.join('\n') ?? q.blank ?? 'Soal parikan';
+  return q.lines?.join('\n') ?? q.blank ?? 'Pitakon parikan';
 }
 
 function getReviewRecommendation(entry) {
@@ -195,7 +195,7 @@ function buildFillReview(q, userAnswer, isCorrect, questionNum) {
     id: q.id,
     type: 'fill',
     questionNum,
-    title: `Soal ${questionNum}`,
+    title: `Pitakon ${questionNum}`,
     prompt: getFillQuestionPrompt(q),
     userAnswer: userAnswer.trim(),
     correctAnswer: q.answer,
@@ -408,7 +408,7 @@ function LevelSelect({ scores, onSelect, onReset }) {
               'Miwiti saka Tingkat 1 kanggo nglengkapi parikan.',
               'Skor minimal 70% bakal mbukak tingkat sabanjure.',
               'Tingkat 2 lan 3 digunakake kanggo latihan nulis parikan dhewe.',
-              'Sawise submit, waca Hasil Penilaian lan Saran Guru kanggo revisi.',
+              'Sawise dikirim, waca Hasil Penilaian lan Saran Guru kanggo revisi.',
             ].map((guide) => (
               <p key={guide} className="flex items-start gap-2 text-sm font-bold leading-relaxed text-[#5a3a22]">
                 <CheckCircle2 size={15} className="mt-0.5 shrink-0 text-green-500" aria-hidden="true" />
@@ -422,7 +422,7 @@ function LevelSelect({ scores, onSelect, onReset }) {
           <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
             <div className="inline-flex items-center gap-2 rounded-full bg-yellow-400 px-5 py-2 text-sm font-black text-yellow-900 shadow-lg">
               <Trophy size={16} aria-hidden="true" />
-              Skor Total: {totalScore} / {maxScore}
+              Gunggunge Skor: {totalScore} / {maxScore}
             </div>
             <button
               type="button"
@@ -430,7 +430,7 @@ function LevelSelect({ scores, onSelect, onReset }) {
               className="inline-flex items-center gap-1.5 rounded-full border-2 border-white/80 bg-white/80 px-4 py-2 text-xs font-black uppercase tracking-wide text-gray-500 shadow-md backdrop-blur-sm transition hover:bg-red-50 hover:text-red-500 hover:border-red-200"
             >
               <RotateCcw size={12} aria-hidden="true" />
-              Reset Skor
+              Reseti Skor
             </button>
           </div>
         )}
@@ -489,7 +489,7 @@ function LevelSelect({ scores, onSelect, onReset }) {
               {best > 0 && levelMaxScore > 0 && (
                 <div className="w-full">
                   <ProgressBar current={best} total={levelMaxScore} color="rgba(255,255,255,0.9)" />
-                  <p className="mt-1 text-xs font-bold text-white/70">Skor terbaik: {best}/{levelMaxScore}</p>
+                  <p className="mt-1 text-xs font-bold text-white/70">Skor paling apik: {best}/{levelMaxScore}</p>
                 </div>
               )}
 
@@ -498,13 +498,13 @@ function LevelSelect({ scores, onSelect, onReset }) {
                   className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-1.5 text-sm font-black uppercase tracking-wide shadow-md transition group-hover:shadow-lg"
                   style={{ color: level.color }}
                 >
-                  {best > 0 ? 'Main Lagi' : 'Mulai'}
+                  {best > 0 ? 'Main Maneh' : 'Miwiti'}
                   <ChevronRight size={14} aria-hidden="true" />
                 </span>
               )}
 
               {!hasQuestions && (
-                <span className="text-xs font-bold text-white/60">Soal menyusul...</span>
+                <span className="text-xs font-bold text-white/60">Pitakon nyusul...</span>
               )}
             </button>
           );
@@ -533,7 +533,7 @@ function QuizTopBar({ level, current, total, score, onBack }) {
           onClick={() => { playClick(); onBack(); }}
           className="rounded-xl border-2 border-white bg-white/95 px-3 py-2 text-xs font-black uppercase text-[#2e1d10] shadow-md transition hover:bg-white hover:-translate-y-0.5"
         >
-          ← Kembali
+          ← Bali
         </button>
         <div
           className="flex items-center gap-2 rounded-full border-2 px-4 py-1.5 text-sm font-black shadow-md"
@@ -548,7 +548,7 @@ function QuizTopBar({ level, current, total, score, onBack }) {
       </div>
       <div className="flex flex-col gap-1.5">
         <div className="flex justify-between text-xs font-bold text-[#2e1d10]">
-          <span>Soal {current + 1} saka {total}</span>
+          <span>Pitakon {current + 1} saka {total}</span>
           <span>{Math.round((current / total) * 100)}% rampung</span>
         </div>
         <ProgressBar current={current} total={total} color={level.color} />
@@ -768,8 +768,8 @@ function FillQuestion({ q, level, questionNum, onCorrect, onWrong, onReview, onN
           style={{ background: `linear-gradient(135deg, ${level.color}, ${level.color}bb)` }}
         >
           {isLast
-            ? <><Trophy size={20} aria-hidden="true" /> Lihat Hasil</>
-            : <>Soal Sabanjure <ChevronRight size={20} aria-hidden="true" /></>
+            ? <><Trophy size={20} aria-hidden="true" /> Deleng Kasil</>
+            : <>Pitakon Sabanjure <ChevronRight size={20} aria-hidden="true" /></>
           }
         </button>
       )}
@@ -962,7 +962,7 @@ function ComposeQuestion({ q, level, questionNum, onScore, onReview, onNext, isL
 
           {/* Kriteria */}
           <div className="rounded-2xl border-2 border-gray-100 bg-white p-4 shadow-sm">
-            <p className="mb-3 text-xs font-black uppercase tracking-widest text-gray-400">Hasil Penilaian:</p>
+            <p className="mb-3 text-xs font-black uppercase tracking-widest text-gray-400">Kasil Pambiji:</p>
             <div className="flex flex-col gap-2">
               <div className={`flex items-center justify-between rounded-xl px-4 py-2.5 ${result.hasKeyword ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-700'}`}>
                 <div className="flex items-center gap-2">
@@ -1048,7 +1048,7 @@ function ComposeQuestion({ q, level, questionNum, onScore, onReview, onNext, isL
               className="flex flex-1 items-center justify-center gap-2 rounded-2xl border-4 border-white/80 py-3 text-sm font-black uppercase text-white shadow-xl transition hover:-translate-y-1"
               style={{ background: `linear-gradient(135deg, ${level.color}, ${level.color}bb)` }}
             >
-              {isLast ? <><Trophy size={16} /> Lihat Hasil</> : <>Soal Sabanjure <ChevronRight size={16} /></>}
+              {isLast ? <><Trophy size={16} /> Deleng Kasil</> : <>Pitakon Sabanjure <ChevronRight size={16} /></>}
             </button>
           </div>
         </div>
@@ -1097,7 +1097,7 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
           onClick={() => { playClick(); onBack(); }}
           className="rounded-xl border-2 border-white bg-white/95 px-3 py-2 text-xs font-black uppercase text-[#2e1d10] shadow-md transition hover:bg-white hover:-translate-y-0.5"
         >
-          ← Kembali
+          ← Bali
         </button>
         <div
           className="flex items-center gap-2 rounded-full border-2 px-4 py-1.5 text-sm font-black shadow-md"
@@ -1114,9 +1114,9 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
       >
         <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-black uppercase tracking-widest">
           <Sparkles size={12} aria-hidden="true" />
-          Pituduh Soal
+          Pituduh Pitakon
         </div>
-        <h2 className="text-xl font-black leading-snug">Soal Latihan Nulis Parikan</h2>
+        <h2 className="text-xl font-black leading-snug">Pitakon Latihan Nulis Parikan</h2>
         <div className="mt-3 flex flex-col gap-1.5 text-sm font-semibold text-white/90">
           <p>Gawea parikan dhewe kanthi basa Jawa. Parikanmu kudu:</p>
           <ul className="mt-1 flex flex-col gap-1 pl-2">
@@ -1223,7 +1223,7 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
       >
         {selected.length < needed
           ? `Pilih ${needed - selected.length} tema maneh`
-          : <><Sparkles size={20} aria-hidden="true" /> Wis Siap, Mulai Nulis!</>
+          : <><Sparkles size={20} aria-hidden="true" /> Wis Siap, Miwiti Nulis!</>
         }
       </button>
     </div>
@@ -1446,9 +1446,9 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
           >
             <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-xs font-black uppercase tracking-widest text-gray-400">Tinjauan Jawaban</p>
+                <p className="text-xs font-black uppercase tracking-widest text-gray-400">Tinjauan Wangsulan</p>
                 <h3 className="text-xl font-black text-[#2e1d10]">
-                  {wrongReviews.length > 0 ? `${wrongReviews.length} bagian perlu dibenahi` : 'Kabeh jawaban wis apik'}
+                  {wrongReviews.length > 0 ? `${wrongReviews.length} bagian perlu dibenahi` : 'Kabeh wangsulan wis apik'}
                 </h3>
               </div>
               <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-black text-gray-600">
@@ -1458,7 +1458,7 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
 
             {wrongReviews.length === 0 ? (
               <div className="mt-4 rounded-2xl border border-emerald-300/40 bg-emerald-400/15 px-4 py-3 text-sm font-bold leading-relaxed text-emerald-50">
-                Ora ana jawaban salah. Terusna latihan gawe parikan supaya luwih lancar lan kreatif.
+                Ora ana wangsulan salah. Terusna latihan gawe parikan supaya luwih lancar lan kreatif.
               </div>
             ) : (
               <div className="mt-4 grid gap-3">
@@ -1480,19 +1480,19 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
 
                     <div className="grid gap-3 text-sm font-semibold leading-relaxed">
                       <div>
-                        <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-orange-500">Soal</p>
+                        <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-orange-500">Pitakon</p>
                         <p className="whitespace-pre-line rounded-xl bg-orange-50 px-3 py-2">{item.prompt}</p>
                       </div>
                       <div className="grid gap-3 sm:grid-cols-2">
                         <div>
-                          <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-red-500">Jawabanmu</p>
+                          <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-red-500">Wangsulanmu</p>
                           <p className="whitespace-pre-line rounded-xl bg-red-50 px-3 py-2 text-red-800">
-                            {item.userAnswer || 'Durung ana jawaban'}
+                            {item.userAnswer || 'Durung ana wangsulan'}
                           </p>
                         </div>
                         <div>
                           <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-green-600">
-                            {item.type === 'compose' ? 'Kriteria Benar' : 'Jawaban Benar'}
+                            {item.type === 'compose' ? 'Kriteria Bener' : 'Wangsulan Bener'}
                           </p>
                           <p className="whitespace-pre-line rounded-xl bg-green-50 px-3 py-2 text-green-800">
                             {item.correctAnswer}
@@ -1500,7 +1500,7 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
                         </div>
                       </div>
                       <div>
-                        <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-sky-600">Alasan</p>
+                        <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-sky-600">Katrangan</p>
                         <p className="rounded-xl bg-sky-50 px-3 py-2 text-sky-900">{item.explanation}</p>
                       </div>
                       {item.recommendation && (

@@ -73,7 +73,7 @@ export function VideoPage({ videos }) {
           className="inline-flex w-fit items-center gap-2 rounded-xl border-2 border-white/80 bg-white/80 px-4 py-2 text-sm font-black text-[#7a4f2e] shadow-md backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
         >
           <ArrowLeft size={16} aria-hidden="true" />
-          Kembali ke Daftar Video
+          Bali menyang Daftar Video
         </button>
 
         {/* Player card */}
@@ -106,7 +106,7 @@ export function VideoPage({ videos }) {
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0">
                 <span className="mb-1 block text-xs font-black uppercase tracking-[0.12em] text-orange-500">
-                  Sedang Diputar
+                  Saiki Diputar
                 </span>
                 <h2 className="text-[clamp(1.3rem,3vw,1.8rem)] font-black leading-tight text-[#3d2817]">
                   {selectedVideo.title}

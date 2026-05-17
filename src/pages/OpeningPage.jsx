@@ -116,7 +116,7 @@ export function OpeningPage({ onEnter }) {
                 paintOrder: 'stroke fill',
               }}
             >
-              Mlebu / Mulai
+              Mlebu / Miwiti
             </span>
             <ChevronRight
               size={24}

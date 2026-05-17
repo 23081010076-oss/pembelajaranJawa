@@ -126,7 +126,7 @@ function ProfileModal({ icon: Icon, label, person, accent, onClose }) {
         onClick={(event) => event.stopPropagation()}
       >
         <div
-          className="relative min-h-[280px] overflow-hidden lg:min-h-0"
+          className="relative min-h-[360px] sm:min-h-[400px] overflow-hidden lg:min-h-0"
           style={{ background: `linear-gradient(135deg, ${accent}22, ${accent}10)` }}
         >
           <button
