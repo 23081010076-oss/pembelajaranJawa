@@ -119,14 +119,14 @@ function ProfileModal({ icon: Icon, label, person, accent, onClose }) {
       onClick={onClose}
     >
       <article
-        className="grid max-h-[92vh] w-[min(920px,100%)] overflow-hidden rounded-3xl border-4 border-white/85 bg-white shadow-[0_24px_70px_rgba(46,26,11,0.42)] lg:grid-cols-[340px_1fr]"
+        className="flex max-h-[92vh] w-[min(920px,100%)] flex-col overflow-hidden rounded-3xl border-4 border-white/85 bg-white shadow-[0_24px_70px_rgba(46,26,11,0.42)] lg:grid lg:grid-cols-[340px_1fr]"
         role="dialog"
         aria-modal="true"
         aria-labelledby="profile-modal-title"
         onClick={(event) => event.stopPropagation()}
       >
         <div
-          className="relative min-h-[360px] sm:min-h-[400px] overflow-hidden lg:min-h-0"
+          className="relative shrink-0 min-h-[360px] sm:min-h-[400px] overflow-hidden lg:min-h-0"
           style={{ background: `linear-gradient(135deg, ${accent}22, ${accent}10)` }}
         >
           <button
@@ -150,7 +150,7 @@ function ProfileModal({ icon: Icon, label, person, accent, onClose }) {
           />
         </div>
 
-        <div className="relative overflow-y-auto px-6 py-7 sm:px-8">
+        <div className="relative flex-1 overflow-y-auto px-6 py-7 sm:px-8">
           <button
             type="button"
             onClick={onClose}
