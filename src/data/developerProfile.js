@@ -22,7 +22,7 @@ export const developerProfile = {
   developers: [
     {
       name: 'Misbahul Munir',
-      role: 'Frontend Developer',
+      role: 'developer',
       photo: '/assets/profile/pengembang.jpeg',
       details: [
         'Membangun tampilan aplikasi Javanesia.',
@@ -31,7 +31,7 @@ export const developerProfile = {
     },
     {
       name: 'Misbahul Musthofah',
-      role: 'Frontend Developer',
+      role: 'developer',
       photo: '/assets/profile/pengembang2.jpeg',
       imageFit: 'object-cover',
       imagePosition: 'object-center',
