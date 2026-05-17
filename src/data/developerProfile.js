@@ -33,6 +33,7 @@ export const developerProfile = {
       name: 'Misbahul Musthofah',
       role: 'Frontend Developer',
       photo: '/assets/profile/pengembang2.jpeg',
+      imageFit: 'object-cover',
       imagePosition: 'object-center',
       details: [
         'Menyusun pengalaman belajar agar mudah digunakan.',

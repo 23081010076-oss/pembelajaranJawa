@@ -34,7 +34,7 @@ function ProfilePhoto({ person, accent, className = '' }) {
     <img
       src={person.photo}
       alt={`Foto ${person.name}`}
-      className={`h-full w-full object-cover ${person.imagePosition || 'object-top'} ${className}`}
+      className={`h-full w-full ${person.imageFit || 'object-cover'} ${person.imagePosition || 'object-top'} ${className}`}
       onError={() => setHasError(true)}
     />
   );
@@ -114,7 +114,7 @@ function ProfileModal({ icon: Icon, label, person, accent, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 grid place-items-center bg-[#2e1a0b]/65 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 grid place-items-center p-4"
       role="presentation"
       onClick={onClose}
     >
@@ -125,7 +125,10 @@ function ProfileModal({ icon: Icon, label, person, accent, onClose }) {
         aria-labelledby="profile-modal-title"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="relative grid min-h-[320px] place-items-center bg-orange-50 p-5" style={{ background: `${accent}18` }}>
+        <div
+          className="relative min-h-[280px] overflow-hidden lg:min-h-0"
+          style={{ background: `linear-gradient(135deg, ${accent}22, ${accent}10)` }}
+        >
           <button
             type="button"
             onClick={onClose}
@@ -135,9 +138,16 @@ function ProfileModal({ icon: Icon, label, person, accent, onClose }) {
             <X size={22} aria-hidden="true" />
           </button>
 
-          <div className="relative w-full max-w-[280px] overflow-hidden rounded-3xl border-4 border-white bg-white shadow-2xl">
-            <ProfilePhoto person={person} accent={accent} className="max-h-[430px] min-h-[320px] object-contain text-5xl" />
-          </div>
+          <ProfilePhoto
+            person={person}
+            accent={accent}
+            className="absolute inset-0 h-full w-full text-5xl"
+          />
+          {/* Gradient overlay bawah untuk transisi elegan */}
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-20 lg:hidden"
+            style={{ background: 'linear-gradient(to top, white, transparent)' }}
+          />
         </div>
 
         <div className="relative overflow-y-auto px-6 py-7 sm:px-8">
