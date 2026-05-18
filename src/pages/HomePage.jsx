@@ -45,15 +45,15 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, stu
 
         {/* Greeting siswa */}
         {studentName && (
-          <div className="mt-4 animate-[fadeInUp_1.1s_ease-out_both] flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 px-4 py-2 shadow-md">
+          <div className="mt-4 animate-[fadeInUp_1.1s_ease-out_both] flex items-center gap-2 rounded-full border-2 border-white/90 bg-[#d97811] px-4 py-2 shadow-[0_6px_0_rgba(126,68,18,0.22),0_12px_24px_rgba(46,29,16,0.22)]">
             <span className="text-sm font-bold text-white drop-shadow-sm">
-             {greeting}, <span className="text-orange-200">{studentName}</span>!
+             {greeting}, <span className="text-white">{studentName}</span>!
             </span>
             <button
               type="button"
               onClick={handleLogout}
               title="Ganti nama"
-              className="ml-1 flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-xs font-bold text-white/80 hover:bg-white/35 hover:text-white transition-all"
+              className="ml-1 flex items-center gap-1 rounded-full border border-white/80 bg-white px-2.5 py-1 text-xs font-bold text-orange-600 shadow-sm transition-all hover:bg-orange-50 hover:text-orange-700"
             >
               <LogOut size={12} aria-hidden="true" />
               Ganti
