@@ -144,6 +144,20 @@ button {
   filter: drop-shadow(0 2px 0 rgba(245, 154, 0, 0.75));
 }
 
+.materi-page-title {
+  font-size: clamp(2.2rem, 12vw, 3.55rem);
+  -webkit-text-stroke: 3.2px #ff9632;
+  paint-order: stroke fill;
+}
+
+.materi-example-preview {
+  display: -webkit-box;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 .text-shadow-orange {
   text-shadow:
     0 2px 0 #e27705,
@@ -650,6 +664,13 @@ button {
 @keyframes glowSpin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
+}
+
+@media (min-width: 640px) {
+  .materi-page-title {
+    font-size: clamp(2.8rem, 6vw, 4rem);
+    -webkit-text-stroke-width: 5px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

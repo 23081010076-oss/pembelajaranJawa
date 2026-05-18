@@ -16,25 +16,24 @@ export function MateriPage({ materiItems, onOpenMateri }) {
   const materiStats = getMateriProgressStats(materiItems, normalizedProgress);
 
   return (
-    <div className="mx-auto flex w-full max-w-[1100px] flex-col items-center gap-8 px-4 py-2 sm:px-6 lg:px-8">
+    <div className="mx-auto flex w-full max-w-[1100px] flex-col items-center gap-5 px-1 py-1 sm:gap-8 sm:px-6 sm:py-2 lg:px-8">
 
       {/* Header */}
       <header className="w-full max-w-2xl text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border-2 border-orange-300 bg-white/80 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-orange-600 shadow-sm backdrop-blur-sm">
+        <div className="inline-flex items-center gap-2 rounded-full border-2 border-orange-300 bg-white/80 px-3 py-1.5 text-[0.68rem] font-black uppercase tracking-[0.18em] text-orange-600 shadow-sm backdrop-blur-sm sm:px-4 sm:text-xs">
           <BookOpen size={13} aria-hidden="true" />
           Materi Parikan
         </div>
         <h1
-          className="mt-3 text-[clamp(2.8rem,6vw,4rem)] font-black uppercase leading-none text-white drop-shadow-2xl"
-          style={{ WebkitTextStroke: '5px #ff9632', paintOrder: 'stroke fill' }}
+          className="materi-page-title mt-3 font-black uppercase leading-none text-white drop-shadow-2xl"
         >
           Pilih Materi
         </h1>
-        <p className="mt-2 text-sm font-bold text-[#2e1d10]/80 drop-shadow-sm">
+        <p className="mx-auto mt-2 max-w-[18rem] text-sm font-bold leading-snug text-[#2e1d10]/80 drop-shadow-sm sm:max-w-none">
           {materiItems.length} materi kasedhiya — klik kanggo maca kanthi lengkap
         </p>
-        <div className="mx-auto mt-4 max-w-md rounded-2xl border-2 border-white/80 bg-white/85 p-3 shadow-sm">
-          <div className="flex items-center justify-between gap-3 text-xs font-black uppercase tracking-[0.12em] text-orange-600">
+        <div className="mx-auto mt-4 w-full max-w-md rounded-2xl border-2 border-white/80 bg-white/85 p-3 shadow-sm sm:p-4">
+          <div className="flex items-center justify-between gap-3 text-[0.68rem] font-black uppercase tracking-[0.12em] text-orange-600 sm:text-xs">
             <span>Kemajuan Materi</span>
             <span>{materiStats.completedCount}/{materiStats.total} rampung</span>
           </div>
@@ -49,7 +48,7 @@ export function MateriPage({ materiItems, onOpenMateri }) {
 
       {/* Grid kartu materi */}
       <nav
-        className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-5"
+        className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3"
         aria-label="Daftar materi parikan"
       >
         {materiItems.map((item, index) => {
@@ -61,7 +60,7 @@ export function MateriPage({ materiItems, onOpenMateri }) {
             key={item.title}
             type="button"
             onClick={() => { playClick(); onOpenMateri(item); }}
-            className={`group relative flex flex-col gap-3 overflow-hidden rounded-2xl border-4 bg-white/90 p-5 text-left shadow-[0_6px_0_rgba(95,60,31,0.15),0_12px_24px_rgba(78,45,21,0.12)] backdrop-blur-sm transition-all duration-200 hover:-translate-y-1.5 hover:border-orange-300 hover:shadow-[0_10px_0_rgba(95,60,31,0.12),0_18px_30px_rgba(78,45,21,0.18)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 active:translate-y-0 animate-[fadeInUp_0.55s_ease-out] ${
+            className={`group relative flex min-w-0 flex-col gap-2.5 overflow-hidden rounded-[1.15rem] border-[3px] bg-white/92 p-4 text-left shadow-[0_5px_0_rgba(95,60,31,0.14),0_10px_20px_rgba(78,45,21,0.10)] backdrop-blur-sm transition-all duration-200 hover:-translate-y-1.5 hover:border-orange-300 hover:shadow-[0_10px_0_rgba(95,60,31,0.12),0_18px_30px_rgba(78,45,21,0.18)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 active:translate-y-0 sm:gap-3 sm:rounded-2xl sm:border-4 sm:p-5 animate-[fadeInUp_0.55s_ease-out] ${
               isCompleted ? 'border-green-300' : isVisited ? 'border-orange-300' : 'border-white/90'
             }`}
             style={{ '--stagger-delay': `${index * 80}ms`, animationDelay: `${index * 0.08}s`, animationFillMode: 'both' }}
@@ -71,13 +70,13 @@ export function MateriPage({ materiItems, onOpenMateri }) {
             <span className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/60 via-transparent to-transparent" />
 
             {/* Number badge */}
-            <div className="relative flex items-center justify-between gap-3">
-              <span className={`inline-flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-black text-white shadow-md ${
+            <div className="relative flex min-w-0 flex-wrap items-center gap-2.5">
+              <span className={`inline-flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-black text-white shadow-md sm:size-9 ${
                 isCompleted ? 'bg-green-500' : 'bg-gradient-to-br from-[#ff9b2f] to-[#ffba73]'
               }`}>
                 {index + 1}
               </span>
-              <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[0.65rem] font-black uppercase tracking-wide ${
+              <span className={`inline-flex min-w-0 items-center gap-1 rounded-full px-2.5 py-1 text-[0.65rem] font-black uppercase tracking-wide ${
                 isCompleted
                   ? 'bg-green-100 text-green-700'
                   : isVisited
@@ -90,7 +89,7 @@ export function MateriPage({ materiItems, onOpenMateri }) {
             </div>
 
             {/* Title */}
-            <h2 className="relative text-[clamp(1.05rem,2vw,1.2rem)] font-black leading-snug text-[#4f2912]">
+            <h2 className="relative text-[1.05rem] font-black leading-snug text-[#4f2912] sm:text-[clamp(1.05rem,2vw,1.2rem)]">
               {item.title}
             </h2>
 
@@ -103,7 +102,7 @@ export function MateriPage({ materiItems, onOpenMateri }) {
 
             {/* Example preview */}
             {item.example && (
-              <p className="relative truncate rounded-lg bg-orange-50 px-3 py-2 text-xs font-bold italic text-orange-700 ring-1 ring-orange-200">
+              <p className="materi-example-preview relative rounded-xl bg-orange-50 px-3 py-2 text-xs font-bold italic leading-relaxed text-orange-700 ring-1 ring-orange-200">
                 "{item.example.split('\n')[0]}"
               </p>
             )}

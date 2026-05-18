@@ -75,7 +75,7 @@ export function BackgroundMusic({ isPlayingApp }) {
       <button
         type="button"
         onClick={toggleMute}
-        className="fixed bottom-6 right-4 z-[999] grid size-[52px] place-items-center rounded-full border-2 border-orange-200 bg-orange-100 text-orange-600 shadow-[0_8px_20px_rgba(46,29,16,0.15)] transition-all hover:-translate-y-1 hover:bg-orange-200 hover:shadow-[0_12px_24px_rgba(46,29,16,0.2)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 md:bottom-8 md:right-8"
+        className="fixed right-3 top-[74px] z-[999] grid size-11 place-items-center rounded-full border-2 border-orange-200 bg-orange-100 text-orange-600 shadow-[0_8px_20px_rgba(46,29,16,0.15)] transition-all hover:-translate-y-1 hover:bg-orange-200 hover:shadow-[0_12px_24px_rgba(46,29,16,0.2)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 md:bottom-8 md:right-8 md:top-auto md:size-[52px]"
         aria-label={isMuted ? 'Nyalakan Musik Latar' : 'Matikan Musik Latar'}
         title={isMuted ? 'Nyalakan Musik Latar' : 'Matikan Musik Latar'}
       >
