@@ -1,9 +1,8 @@
 import React from 'react';
-import { Home, ChevronRight, Sparkles } from 'lucide-react';
 import { useClickSound } from '../hooks/useClickSound.js';
 
 /**
- * NavBar — sticky top navigation with breadcrumb.
+ * NavBar - sticky top navigation with breadcrumb.
  *
  * Props:
  *  - crumbs: array of { label, onClick? }
@@ -26,67 +25,54 @@ export function NavBar({ crumbs = [], onHome }) {
   };
 
   return (
-    <header className="nav-shell sticky top-0 z-40 w-full border-b border-orange-300/50 bg-[rgba(255,248,238,0.92)] shadow-[0_4px_20px_rgba(96,55,24,0.10)] backdrop-blur-xl">
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-orange-400/70 to-transparent" />
+    <header className="nav-shell sticky top-0 z-40 w-full border-b border-orange-200/70 bg-[rgba(255,250,242,0.96)] shadow-[0_5px_18px_rgba(96,55,24,0.10)] backdrop-blur-xl">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-orange-300/80 to-transparent" />
 
-      <div className="mx-auto flex min-h-[52px] max-w-[1200px] items-center gap-2 px-3 py-2 sm:min-h-[64px] sm:gap-3 sm:px-6 lg:px-8">
-
-        {/* Brand / Home button — ikon saja di mobile */}
+      <div className="mx-auto grid min-h-[54px] max-w-[1200px] grid-cols-[auto_1fr_auto] items-center gap-2 px-3 py-2 sm:min-h-[62px] sm:gap-3 sm:px-6 lg:px-8">
         <button
           type="button"
           onClick={handleHome}
           aria-label="Kembali ke halaman utama"
-          className="group flex shrink-0 items-center rounded-full border-2 border-orange-200 bg-white/80 p-1.5 text-orange-500 shadow-sm transition hover:-translate-y-0.5 hover:border-orange-300 hover:bg-white hover:shadow-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 sm:px-3 sm:py-2"
+          className="group flex h-11 shrink-0 items-center justify-center rounded-xl border border-orange-200/80 bg-white/82 px-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-orange-300 hover:bg-white hover:shadow-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
         >
-          <span className="grid size-7 place-items-center rounded-full bg-orange-100 text-orange-500 transition group-hover:bg-orange-500 group-hover:text-white sm:size-8">
-            <Home size={15} aria-hidden="true" className="sm:hidden" />
-            <Home size={17} aria-hidden="true" className="hidden sm:block" />
-          </span>
+          <img
+            src="/assets/logo-icon.png"
+            alt=""
+            aria-hidden="true"
+            className="size-7 object-contain"
+          />
         </button>
 
-        {/* Divider */}
-        {crumbs.length > 0 && (
-          <ChevronRight
-            size={14}
-            className="shrink-0 text-orange-300"
-            aria-hidden="true"
-          />
-        )}
-
-        {/* Breadcrumb trail — flex-1 + min-w-0 agar tidak overflow */}
-        <nav aria-label="Breadcrumb" className="flex min-w-0 flex-1 items-center overflow-hidden">
-          <ol className="flex min-w-0 items-center gap-1">
+        <nav aria-label="Breadcrumb" className="flex min-w-0 items-center justify-center overflow-hidden">
+          <ol className="flex min-w-0 items-center justify-center gap-1">
             {crumbs.map((crumb, i) => {
               const isLast = i === crumbs.length - 1;
               return (
                 <React.Fragment key={i}>
                   <li className="flex min-w-0 items-center">
                     {isLast ? (
-                      /* Active / current page */
                       <span
-                        className="inline-flex min-w-0 max-w-full items-center gap-1.5 truncate rounded-full border border-orange-200 bg-gradient-to-r from-orange-100 to-amber-100 px-2.5 py-1.5 text-xs font-black text-orange-600 shadow-sm sm:gap-2 sm:border-2 sm:px-4 sm:py-2 sm:text-sm"
+                        className="inline-flex min-w-0 max-w-full items-center justify-center rounded-xl border border-orange-200 bg-orange-50/80 px-4 py-2 text-center shadow-sm"
                         aria-current="page"
                       >
-                        <Sparkles size={12} className="shrink-0 text-orange-500 sm:hidden" aria-hidden="true" />
-                        <Sparkles size={14} className="hidden shrink-0 text-orange-500 sm:block" aria-hidden="true" />
-                        <span className="truncate">{crumb.label}</span>
+                        <span className="block max-w-full truncate text-xs font-black text-orange-700 sm:text-sm">
+                          {crumb.label}
+                        </span>
                       </span>
                     ) : (
-                      /* Clickable ancestor */
                       <button
                         type="button"
                         onClick={() => handleCrumb(crumb)}
-                        className="max-w-[22vw] truncate rounded-full px-2 py-1.5 text-xs font-bold text-[#7a4f2e] transition hover:-translate-y-0.5 hover:bg-white hover:text-orange-600 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 sm:max-w-none sm:px-3 sm:py-2 sm:text-sm"
+                        className="max-w-[24vw] truncate rounded-lg px-2 py-1.5 text-xs font-bold text-[#7a4f2e] transition hover:bg-white hover:text-orange-600 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 sm:max-w-none sm:px-3 sm:text-sm"
                       >
                         {crumb.label}
                       </button>
                     )}
                   </li>
 
-                  {/* Separator between crumbs */}
                   {!isLast && (
-                    <li aria-hidden="true">
-                      <ChevronRight size={12} className="shrink-0 text-orange-300" />
+                    <li className="px-0.5 text-xs font-black text-orange-300" aria-hidden="true">
+                      /
                     </li>
                   )}
                 </React.Fragment>
@@ -95,8 +81,7 @@ export function NavBar({ crumbs = [], onHome }) {
           </ol>
         </nav>
 
-        {/* Right side — decorative batik accent (desktop only) */}
-        <div className="pointer-events-none ml-auto hidden shrink-0 rounded-full border-2 border-orange-200 bg-white/80 px-5 py-2 text-base font-black uppercase tracking-wide text-orange-500 shadow-sm sm:inline-flex">
+        <div className="pointer-events-none hidden h-11 shrink-0 items-center justify-center rounded-xl border border-orange-200/70 bg-white/70 px-3 text-[0.68rem] font-black uppercase tracking-[0.16em] text-orange-500 shadow-sm md:flex">
           Javanesia
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { playAudioFile } from './useAudioFile.js';
+import { getSoundEffectVolume } from './useSoundEffectVolume.js';
 
 const RESULT_AUDIO = {
   perfect: '/assets/sounds/result-sampurna.mp3',
@@ -16,6 +17,9 @@ const PRELOAD_SOURCES = Object.values(RESULT_AUDIO);
 
 function speakFallback(text) {
   try {
+    const volume = getSoundEffectVolume();
+    if (volume <= 0) return;
+
     if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
       return;
     }
@@ -35,7 +39,7 @@ function speakFallback(text) {
     utterance.lang = selectedVoice?.lang || 'id-ID';
     utterance.rate = 0.95;
     utterance.pitch = 1;
-    utterance.volume = 1;
+    utterance.volume = volume;
     window.speechSynthesis.speak(utterance);
   } catch {
     // Ignore unsupported speech synthesis.
@@ -54,6 +58,7 @@ function prepareResultSounds() {
 
 function playResultVoice(src, fallbackText) {
   playAudioFile(src, {
+    volume: getSoundEffectVolume(),
     onError: () => speakFallback(fallbackText),
   });
 }

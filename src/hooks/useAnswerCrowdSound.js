@@ -1,3 +1,5 @@
+import { getSoundEffectVolume } from './useSoundEffectVolume.js';
+
 const CORRECT_CROWD_SOUND_SRC = '/assets/sounds/bener.mp3';
 const WRONG_CROWD_SOUND_SRC = '/assets/sounds/salah.mp3';
 
@@ -62,9 +64,12 @@ function playTone(ctx, { delay, duration, frequency, volume, type = 'sine' }) {
 
 function playSoundEffect(src, onError) {
   try {
+    const volume = getSoundEffectVolume();
+    if (volume <= 0) return;
+
     const audio = new Audio(src);
     audio.preload = 'auto';
-    audio.volume = 1;
+    audio.volume = volume;
     audio.play().catch(onError);
   } catch {
     onError?.();
@@ -73,12 +78,15 @@ function playSoundEffect(src, onError) {
 
 function playGeneratedCorrectCrowd() {
   try {
+    const effectVolume = getSoundEffectVolume();
+    if (effectVolume <= 0) return;
+
     const ctx = createAudioContext();
     [0, 0.05, 0.1, 0.17, 0.24, 0.33, 0.43, 0.54, 0.66].forEach((delay) => {
       playNoiseBurst(ctx, {
         delay,
         duration: 0.16,
-        volume: 0.58,
+        volume: 0.58 * effectVolume,
         frequency: 1200 + Math.random() * 1300,
         q: 0.7,
       });
@@ -91,12 +99,15 @@ function playGeneratedCorrectCrowd() {
 
 function playGeneratedWrongCrowd() {
   try {
+    const effectVolume = getSoundEffectVolume();
+    if (effectVolume <= 0) return;
+
     const ctx = createAudioContext();
     [0, 0.06, 0.13, 0.22, 0.32, 0.44, 0.58].forEach((delay) => {
       playNoiseBurst(ctx, {
         delay,
         duration: 0.22,
-        volume: 0.2,
+        volume: 0.2 * effectVolume,
         frequency: 850 + Math.random() * 850,
         q: 0.45,
       });
@@ -111,7 +122,7 @@ function playGeneratedWrongCrowd() {
         delay: note.delay,
         duration: 0.22,
         frequency: note.frequency,
-        volume: 0.07,
+        volume: 0.07 * effectVolume,
         type: 'triangle',
       });
     });

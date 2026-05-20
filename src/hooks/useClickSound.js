@@ -6,9 +6,14 @@
  *   const playClick = useClickSound();
  *   <button onClick={() => { playClick(); doSomething(); }}>...</button>
  */
+import { getSoundEffectVolume } from './useSoundEffectVolume.js';
+
 export function useClickSound({ frequency = 520, duration = 0.08, volume = 0.18 } = {}) {
   const play = () => {
     try {
+      const effectiveVolume = volume * getSoundEffectVolume();
+      if (effectiveVolume <= 0) return;
+
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
       const oscillator = ctx.createOscillator();
@@ -22,7 +27,7 @@ export function useClickSound({ frequency = 520, duration = 0.08, volume = 0.18 
       // Slight pitch drop for a natural "tap" feel
       oscillator.frequency.exponentialRampToValueAtTime(frequency * 0.75, ctx.currentTime + duration);
 
-      gainNode.gain.setValueAtTime(volume, ctx.currentTime);
+      gainNode.gain.setValueAtTime(effectiveVolume, ctx.currentTime);
       // Quick fade-out to avoid click artifacts
       gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
 

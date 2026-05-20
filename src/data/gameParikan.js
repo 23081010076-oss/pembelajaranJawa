@@ -231,8 +231,8 @@ export const gameLevels = [
     label: 'Tingkat 3',
     subtitle: 'Mahir',
     emoji: '🌟',
-    color: '#ef4444',
-    shadow: 'rgba(239,68,68,0.35)',
+    color: '#0ea5e9',
+    shadow: 'rgba(14,165,233,0.35)',
     description: 'Pilih 3 tema, banjur tulisen parikanmu dhewe!',
     // Tingkat 3 memakai mekanisme khusus: pilih 3 dari 10 tema
     // questions diisi dinamis saat user memilih tema

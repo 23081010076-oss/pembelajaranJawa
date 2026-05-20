@@ -1,4 +1,5 @@
 import { playAudioFile } from './useAudioFile.js';
+import { getSoundEffectVolume } from './useSoundEffectVolume.js';
 
 const FEEDBACK_AUDIO = {
   correct: '/assets/sounds/feedback-benar.mp3',
@@ -7,6 +8,9 @@ const FEEDBACK_AUDIO = {
 
 function speakFeedback(text) {
   try {
+    const volume = getSoundEffectVolume();
+    if (volume <= 0) return;
+
     if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
       return;
     }
@@ -26,7 +30,7 @@ function speakFeedback(text) {
     utterance.lang = selectedVoice?.lang || 'id-ID';
     utterance.rate = 0.95;
     utterance.pitch = text === 'Bener' ? 1.08 : 0.9;
-    utterance.volume = 1;
+    utterance.volume = volume;
 
     window.speechSynthesis.speak(utterance);
   } catch {
@@ -37,12 +41,14 @@ function speakFeedback(text) {
 export function useFeedbackSound() {
   const playCorrect = () => {
     playAudioFile(FEEDBACK_AUDIO.correct, {
+      volume: getSoundEffectVolume(),
       onError: () => speakFeedback('Bener'),
     });
   };
 
   const playWrong = () => {
     playAudioFile(FEEDBACK_AUDIO.wrong, {
+      volume: getSoundEffectVolume(),
       onError: () => speakFeedback('Salah'),
     });
   };

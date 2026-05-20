@@ -459,11 +459,13 @@ function LevelSelect({ scores, onSelect, onReset }) {
               className={`group relative flex flex-col items-center gap-4 overflow-hidden rounded-3xl border-4 p-6 text-center font-black text-white shadow-2xl transition-all duration-300
                 ${isAvailable
                   ? 'cursor-pointer hover:-translate-y-2 hover:scale-[1.03] active:translate-y-0 active:scale-100'
-                  : 'cursor-not-allowed opacity-50 grayscale'
+                  : 'cursor-not-allowed saturate-[0.55]'
                 }`}
               style={{
                 borderColor: `${level.color}cc`,
-                background: `linear-gradient(145deg, ${level.color}dd, ${level.color}88)`,
+                background: isAvailable
+                  ? `linear-gradient(145deg, color-mix(in srgb, ${level.color} 72%, white), ${level.color})`
+                  : `linear-gradient(145deg, color-mix(in srgb, ${level.color} 38%, white), color-mix(in srgb, ${level.color} 52%, #64748b))`,
                 boxShadow: isAvailable ? `0 12px 40px ${level.shadow}, 0 4px 0 ${level.color}66` : undefined,
               }}
               aria-label={`${level.label} — ${level.subtitle}${!isAvailable ? ' (terkunci)' : ''}`}

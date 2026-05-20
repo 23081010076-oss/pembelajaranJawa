@@ -1,21 +1,27 @@
 import { useState } from 'react';
-import { BookOpen, ChevronRight, User } from 'lucide-react';
-import { setStudentName } from '../hooks/useStudentName.js';
+import { BookOpen, ChevronRight, Hash, School, User } from 'lucide-react';
+import { setStudentProfile } from '../hooks/useStudentName.js';
 import { useClickSound } from '../hooks/useClickSound.js';
 
 export function LoginPage({ onLogin }) {
   const playClick = useClickSound();
   const [name, setName] = useState('');
+  const [studentClass, setStudentClass] = useState('');
+  const [absen, setAbsen] = useState('');
   const [error, setError] = useState('');
+  const [errorField, setErrorField] = useState('');
   const [shaking, setShaking] = useState(false);
-  const [focused, setFocused] = useState(false);
+  const [focusedField, setFocusedField] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const trimmed = name.trim();
+    const trimmedClass = studentClass.trim();
+    const trimmedAbsen = absen.trim();
 
     if (!trimmed) {
       setError('Tulis jenengmu dhisik, ya!');
+      setErrorField('name');
       setShaking(true);
       setTimeout(() => setShaking(false), 600);
       return;
@@ -23,19 +29,46 @@ export function LoginPage({ onLogin }) {
 
     if (trimmed.length < 2) {
       setError('Jeneng kurang, minimal 2 huruf.');
+      setErrorField('name');
+      setShaking(true);
+      setTimeout(() => setShaking(false), 600);
+      return;
+    }
+
+    if (!trimmedClass) {
+      setError('Tulis kelasmu dhisik, ya!');
+      setErrorField('studentClass');
+      setShaking(true);
+      setTimeout(() => setShaking(false), 600);
+      return;
+    }
+
+    if (!trimmedAbsen) {
+      setError('Tulis nomer absenmu dhisik, ya!');
+      setErrorField('absen');
+      setShaking(true);
+      setTimeout(() => setShaking(false), 600);
+      return;
+    }
+
+    if (Number.parseInt(trimmedAbsen, 10) < 1) {
+      setError('Nomer absen kudu luwih saka 0.');
+      setErrorField('absen');
       setShaking(true);
       setTimeout(() => setShaking(false), 600);
       return;
     }
 
     playClick();
-    setStudentName(trimmed);
-    onLogin(trimmed);
+    setStudentProfile({ name: trimmed, studentClass: trimmedClass, absen: trimmedAbsen });
+    onLogin({ name: trimmed, studentClass: trimmedClass, absen: trimmedAbsen });
   };
 
-  const handleChange = (e) => {
-    setName(e.target.value);
-    if (error) setError('');
+  const clearError = () => {
+    if (error) {
+      setError('');
+      setErrorField('');
+    }
   };
 
   return (
@@ -117,12 +150,12 @@ export function LoginPage({ onLogin }) {
           </p>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-3">
             {/* Input nama */}
-            <div className={`login-input-wrap ${shaking ? 'login-shake' : ''}`}>
+            <div className={`login-input-wrap ${shaking && errorField === 'name' ? 'login-shake' : ''}`}>
               <label htmlFor="student-name" className="sr-only">Nama siswa</label>
               <div
-                className={`login-input-field ${focused ? 'login-input-focused' : ''} ${error ? 'login-input-error' : ''}`}
+                className={`login-input-field ${focusedField === 'name' ? 'login-input-focused' : ''} ${errorField === 'name' ? 'login-input-error' : ''}`}
               >
                 <User
                   size={18}
@@ -133,9 +166,9 @@ export function LoginPage({ onLogin }) {
                   id="student-name"
                   type="text"
                   value={name}
-                  onChange={handleChange}
-                  onFocus={() => setFocused(true)}
-                  onBlur={() => setFocused(false)}
+                  onChange={(e) => { setName(e.target.value); clearError(); }}
+                  onFocus={() => setFocusedField('name')}
+                  onBlur={() => setFocusedField('')}
                   placeholder="Tulis jenengmu ing kene..."
                   maxLength={40}
                   autoComplete="name"
@@ -143,12 +176,70 @@ export function LoginPage({ onLogin }) {
                   className="login-input"
                 />
               </div>
-              {error && (
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              {/* Input kelas */}
+              <div className={`login-input-wrap ${shaking && errorField === 'studentClass' ? 'login-shake' : ''}`}>
+                <label htmlFor="student-class" className="sr-only">Kelas</label>
+                <div
+                  className={`login-input-field ${focusedField === 'studentClass' ? 'login-input-focused' : ''} ${errorField === 'studentClass' ? 'login-input-error' : ''}`}
+                >
+                  <School
+                    size={18}
+                    className="login-input-icon"
+                    aria-hidden="true"
+                  />
+                  <input
+                    id="student-class"
+                    type="text"
+                    value={studentClass}
+                    onChange={(e) => { setStudentClass(e.target.value); clearError(); }}
+                    onFocus={() => setFocusedField('studentClass')}
+                    onBlur={() => setFocusedField('')}
+                    placeholder="Kelas..."
+                    maxLength={20}
+                    autoComplete="off"
+                    className="login-input"
+                  />
+                </div>
+              </div>
+
+              {/* Input absen */}
+              <div className={`login-input-wrap ${shaking && errorField === 'absen' ? 'login-shake' : ''}`}>
+                <label htmlFor="student-absen" className="sr-only">Nomor absen</label>
+                <div
+                  className={`login-input-field ${focusedField === 'absen' ? 'login-input-focused' : ''} ${errorField === 'absen' ? 'login-input-error' : ''}`}
+                >
+                  <Hash
+                    size={18}
+                    className="login-input-icon"
+                    aria-hidden="true"
+                  />
+                  <input
+                    id="student-absen"
+                    type="number"
+                    inputMode="numeric"
+                    min="1"
+                    value={absen}
+                    onChange={(e) => { setAbsen(e.target.value); clearError(); }}
+                    onFocus={() => setFocusedField('absen')}
+                    onBlur={() => setFocusedField('')}
+                    placeholder="Absen..."
+                    autoComplete="off"
+                    className="login-input"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {error && (
+              <div className="login-input-wrap">
                 <p className="login-error" role="alert" aria-live="polite">
                   {error}
                 </p>
-              )}
-            </div>
+              </div>
+            )}
 
             {/* Submit */}
             <button

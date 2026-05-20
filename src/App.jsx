@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { mainMenu } from './data/mainMenu.js';
 import { materiList } from './data/materi.js';
 import { videoList } from './data/videos.js';
@@ -19,7 +19,7 @@ import { GamePage } from './pages/GamePage.jsx';
 import { AboutPage } from './pages/AboutPage.jsx';
 import { GuidePage } from './pages/GuidePage.jsx';
 import { LearningPathPage } from './pages/LearningPathPage.jsx';
-import { getStudentName, clearStudentName } from './hooks/useStudentName.js';
+import { getStudentAbsen, getStudentClass, getStudentName, clearStudentName } from './hooks/useStudentName.js';
 
 // Cek apakah splash sudah ditampilkan di sesi ini
 const hasSeenSplash = () => {
@@ -37,12 +37,16 @@ export default function App() {
   const [selectedLearning, setSelectedLearning] = useState(mainMenu[0]);
   const [activeMenu, setActiveMenu] = useState(null);
   const [activeMateriIndex, setActiveMateriIndex] = useState(0);
+  const isRestoringHistoryRef = useRef(false);
+  const lastHistoryKeyRef = useRef('');
   // Splash hanya tampil jika belum pernah muncul di sesi ini
   const [showSplash, setShowSplash] = useState(() => !hasSeenSplash());
   // Opening tampil setelah splash, sebelum home
   const [showOpening, setShowOpening] = useState(true);
   // Login — cek apakah nama siswa sudah tersimpan
   const [studentName, setStudentName] = useState(() => getStudentName());
+  const [studentClass, setStudentClass] = useState(() => getStudentClass());
+  const [studentAbsen, setStudentAbsen] = useState(() => getStudentAbsen());
   const [showLogin, setShowLogin] = useState(false);
 
   const handleSplashDone = () => {
@@ -58,14 +62,24 @@ export default function App() {
     setShowOpening(false);
   };
 
-  const handleLogin = (name) => {
-    setStudentName(name);
+  const handleLogin = (profile) => {
+    if (typeof profile === 'string') {
+      setStudentName(profile);
+      setStudentClass(getStudentClass());
+      setStudentAbsen(getStudentAbsen());
+    } else {
+      setStudentName(profile.name);
+      setStudentClass(profile.studentClass);
+      setStudentAbsen(profile.absen);
+    }
     setShowLogin(false);
   };
 
   const handleLogout = () => {
     clearStudentName();
     setStudentName(null);
+    setStudentClass(null);
+    setStudentAbsen(null);
     setShowLogin(true);
     setPage('home');
   };
@@ -112,6 +126,52 @@ export default function App() {
   };
 
   const activeMateri = materiList[activeMateriIndex];
+
+  useEffect(() => {
+    const handlePopState = (event) => {
+      const state = event.state;
+      if (!state?.javanesia) return;
+
+      isRestoringHistoryRef.current = true;
+      setActiveMenu(null);
+      setPage(state.page ?? 'home');
+      setActiveMateriIndex(Number.isInteger(state.activeMateriIndex) ? state.activeMateriIndex : 0);
+      setSelectedLearning(
+        mainMenu.find((item) => item.title === state.selectedLearningTitle) ?? mainMenu[0],
+      );
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  useEffect(() => {
+    const historyState = {
+      javanesia: true,
+      page,
+      selectedLearningTitle: selectedLearning.title,
+      activeMateriIndex,
+    };
+    const historyKey = JSON.stringify(historyState);
+
+    if (!lastHistoryKeyRef.current) {
+      window.history.replaceState(historyState, '', window.location.href);
+      lastHistoryKeyRef.current = historyKey;
+      return;
+    }
+
+    if (isRestoringHistoryRef.current) {
+      isRestoringHistoryRef.current = false;
+      lastHistoryKeyRef.current = historyKey;
+      return;
+    }
+
+    if (historyKey !== lastHistoryKeyRef.current) {
+      window.history.pushState(historyState, '', window.location.href);
+      lastHistoryKeyRef.current = historyKey;
+    }
+  }, [page, selectedLearning.title, activeMateriIndex]);
 
   // ── Breadcrumb config per page ──────────────────────────────────────────────
   const pageCrumbs = {
@@ -177,6 +237,8 @@ export default function App() {
                   onOpenGuide={() => { setPage('guide'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                   onOpenPath={() => { setPage('path'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                   studentName={studentName}
+                  studentClass={studentClass}
+                  studentAbsen={studentAbsen}
                   onLogout={handleLogout}
                 />
               )}

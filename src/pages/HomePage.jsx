@@ -1,8 +1,17 @@
-import { HelpCircle, Map, LogOut } from 'lucide-react';
+import { Hash, HelpCircle, LogOut, Map, School } from 'lucide-react';
 import { MenuButton } from '../components/MenuButton.jsx';
 import { useClickSound } from '../hooks/useClickSound.js';
 
-export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, studentName, onLogout }) {
+function getInitials(name) {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join('');
+}
+
+export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, studentName, studentClass, studentAbsen, onLogout }) {
   const playClick = useClickSound();
 
   const handleOpenGuide = () => {
@@ -45,18 +54,43 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, stu
 
         {/* Greeting siswa */}
         {studentName && (
-          <div className="mt-4 animate-[fadeInUp_1.1s_ease-out_both] flex items-center gap-2 rounded-full border-2 border-white/90 bg-[#d97811] px-4 py-2 shadow-[0_6px_0_rgba(126,68,18,0.22),0_12px_24px_rgba(46,29,16,0.22)]">
-            <span className="text-sm font-bold text-white drop-shadow-sm">
-             {greeting}, <span className="text-white">{studentName}</span>!
-            </span>
+          <div className="mt-5 animate-[fadeInUp_1.1s_ease-out_both] flex w-full max-w-xl items-center gap-3 rounded-2xl border-2 border-white/90 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(255,235,202,0.94))] p-3 text-left shadow-[0_7px_0_rgba(126,68,18,0.16),0_18px_36px_rgba(46,29,16,0.2)] sm:w-auto sm:min-w-[430px]">
+            <div className="grid size-12 shrink-0 place-items-center rounded-2xl border-2 border-orange-200 bg-[#d97811] text-base font-black uppercase text-white shadow-[0_5px_12px_rgba(126,68,18,0.28)]">
+              {getInitials(studentName)}
+            </div>
+
+            <div className="min-w-0 flex-1">
+              <span className="block text-[0.72rem] font-black uppercase tracking-[0.16em] text-orange-500">
+                {greeting}
+              </span>
+              <span className="block truncate text-base font-black leading-tight text-[#3d1f00]">
+                {studentName}
+              </span>
+              {(studentClass || studentAbsen) && (
+                <span className="mt-1 flex flex-wrap items-center gap-1.5 text-[0.68rem] font-black uppercase tracking-wide text-[#8a541d]">
+                  {studentClass && (
+                    <span className="inline-flex items-center gap-1 rounded-full border border-orange-200 bg-orange-50 px-2 py-0.5">
+                      <School size={12} aria-hidden="true" />
+                      Kelas {studentClass}
+                    </span>
+                  )}
+                  {studentAbsen && (
+                    <span className="inline-flex items-center gap-1 rounded-full border border-orange-200 bg-orange-50 px-2 py-0.5">
+                      <Hash size={12} aria-hidden="true" />
+                      Absen {studentAbsen}
+                    </span>
+                  )}
+                </span>
+              )}
+            </div>
             <button
               type="button"
               onClick={handleLogout}
               title="Ganti nama"
-              className="ml-1 flex items-center gap-1 rounded-full border border-white/80 bg-white px-2.5 py-1 text-xs font-bold text-orange-600 shadow-sm transition-all hover:bg-orange-50 hover:text-orange-700"
+              className="grid size-10 shrink-0 place-items-center rounded-xl border-2 border-orange-200 bg-white text-orange-600 shadow-sm transition-all hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-50 hover:text-orange-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 sm:inline-flex sm:w-auto sm:px-3"
             >
               <LogOut size={12} aria-hidden="true" />
-              Ganti
+              <span className="hidden text-xs font-black uppercase sm:inline">Ganti</span>
             </button>
           </div>
         )}

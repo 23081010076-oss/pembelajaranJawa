@@ -1,21 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Volume2, VolumeX } from 'lucide-react';
+import { Sparkles, Volume1, Volume2, VolumeX } from 'lucide-react';
+import { useSoundEffectVolume } from '../hooks/useSoundEffectVolume.js';
+
+const DEFAULT_VOLUME = 0.25;
+
+function readSavedVolume() {
+  if (typeof window === 'undefined') return DEFAULT_VOLUME;
+
+  const savedVolume = window.localStorage.getItem('javanesia-backsound-volume');
+  const parsedVolume = Number.parseFloat(savedVolume);
+
+  if (Number.isNaN(parsedVolume)) return DEFAULT_VOLUME;
+  return Math.min(1, Math.max(0, parsedVolume));
+}
 
 export function BackgroundMusic({ isPlayingApp }) {
   const [isMuted, setIsMuted] = useState(false);
+  const [isVolumeOpen, setIsVolumeOpen] = useState(false);
+  const [volume, setVolume] = useState(readSavedVolume);
+  const [soundEffectVolume, setSoundEffectVolume] = useSoundEffectVolume();
   const audioRef = useRef(null);
+  const effectiveVolume = isMuted ? 0 : volume;
+  const VolumeIcon = isMuted || volume === 0 ? VolumeX : volume < 0.5 ? Volume1 : Volume2;
 
   // Efek untuk memutar atau memberhentikan lagu
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
+    audio.volume = volume;
+
     if (isPlayingApp) {
-      audio.volume = 0.25; // Volume background yang nyaman
-      
       // Coba putar otomatis
       const tryPlay = () => {
-        if (audio.paused && !isMuted) {
+        if (audio.paused && !isMuted && volume > 0) {
           audio.play().catch(() => {
             // Jika diblokir browser, abaikan saja, karena listener di bawah
             // akan mencoba lagi saat ada interaksi.
@@ -45,21 +63,36 @@ export function BackgroundMusic({ isPlayingApp }) {
     } else {
       audio.pause();
     }
-  }, [isPlayingApp, isMuted]);
+  }, [isPlayingApp, isMuted, volume]);
 
   // Efek untuk handle mute/unmute manual via tombol
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.muted = isMuted;
+      audioRef.current.volume = volume;
+      audioRef.current.muted = isMuted || volume === 0;
       // Jika di-unmute oleh user dan status app playing, coba paksa play lagi
-      if (!isMuted && isPlayingApp) {
+      if (!isMuted && volume > 0 && isPlayingApp) {
         audioRef.current.play().catch(() => {});
       }
     }
-  }, [isMuted, isPlayingApp]);
+  }, [isMuted, volume, isPlayingApp]);
 
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
+  useEffect(() => {
+    window.localStorage.setItem('javanesia-backsound-volume', String(volume));
+  }, [volume]);
+
+  const toggleVolumePanel = () => {
+    setIsVolumeOpen((value) => !value);
+  };
+
+  const handleVolumeChange = (event) => {
+    const nextVolume = Number(event.target.value) / 100;
+    setVolume(nextVolume);
+    setIsMuted(nextVolume === 0);
+  };
+
+  const handleSoundEffectVolumeChange = (event) => {
+    setSoundEffectVolume(Number(event.target.value) / 100);
   };
 
   if (!isPlayingApp) return null;
@@ -72,15 +105,72 @@ export function BackgroundMusic({ isPlayingApp }) {
         loop
         preload="auto"
       />
-      <button
-        type="button"
-        onClick={toggleMute}
-        className="fixed right-3 top-[74px] z-[999] grid size-11 place-items-center rounded-full border-2 border-orange-200 bg-orange-100 text-orange-600 shadow-[0_8px_20px_rgba(46,29,16,0.15)] transition-all hover:-translate-y-1 hover:bg-orange-200 hover:shadow-[0_12px_24px_rgba(46,29,16,0.2)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 md:bottom-8 md:right-8 md:top-auto md:size-[52px]"
-        aria-label={isMuted ? 'Nyalakan Musik Latar' : 'Matikan Musik Latar'}
-        title={isMuted ? 'Nyalakan Musik Latar' : 'Matikan Musik Latar'}
-      >
-        {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
-      </button>
+      <div className={`fixed right-3 top-[74px] z-[999] flex items-start gap-2 border-2 border-orange-200 bg-white px-2 py-2 text-orange-600 shadow-[0_8px_20px_rgba(46,29,16,0.15)] md:bottom-8 md:right-8 md:top-auto ${isVolumeOpen ? 'rounded-2xl' : 'rounded-full'}`}>
+        <button
+          type="button"
+          onClick={toggleVolumePanel}
+          className="grid size-9 place-items-center rounded-full bg-orange-100 transition-all hover:-translate-y-0.5 hover:bg-orange-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 md:size-10"
+          aria-expanded={isVolumeOpen}
+          aria-controls="backsound-volume-panel"
+          aria-label="Atur Volume Musik Latar"
+          title="Atur Volume Musik Latar"
+        >
+          <VolumeIcon size={22} />
+        </button>
+
+        {isVolumeOpen && (
+          <div id="backsound-volume-panel" className="grid min-w-[185px] gap-2 py-0.5">
+            <div className="flex items-center gap-2">
+              <span className="w-10 text-[0.65rem] font-black uppercase tracking-wide text-orange-700" aria-hidden="true">
+                Musik
+              </span>
+              <label className="sr-only" htmlFor="backsound-volume">
+                Volume Musik Latar
+              </label>
+              <input
+                id="backsound-volume"
+                type="range"
+                min="0"
+                max="100"
+                value={Math.round(effectiveVolume * 100)}
+                onChange={handleVolumeChange}
+                className="h-2 w-20 cursor-pointer md:w-24"
+                style={{ accentColor: '#f97316' }}
+                aria-label="Volume Musik Latar"
+                title={`Volume Musik Latar ${Math.round(effectiveVolume * 100)}%`}
+              />
+              <span className="w-9 text-right text-xs font-black tabular-nums text-orange-700" aria-hidden="true">
+                {Math.round(effectiveVolume * 100)}%
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="flex w-10 items-center gap-1 text-[0.65rem] font-black uppercase tracking-wide text-orange-700" aria-hidden="true">
+                <Sparkles size={11} />
+                Efek
+              </span>
+              <label className="sr-only" htmlFor="sound-effect-volume">
+                Volume Efek Game
+              </label>
+              <input
+                id="sound-effect-volume"
+                type="range"
+                min="0"
+                max="100"
+                value={Math.round(soundEffectVolume * 100)}
+                onChange={handleSoundEffectVolumeChange}
+                className="h-2 w-20 cursor-pointer md:w-24"
+                style={{ accentColor: '#16a34a' }}
+                aria-label="Volume Efek Game"
+                title={`Volume Efek Game ${Math.round(soundEffectVolume * 100)}%`}
+              />
+              <span className="w-9 text-right text-xs font-black tabular-nums text-green-700" aria-hidden="true">
+                {Math.round(soundEffectVolume * 100)}%
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
     </>
   );
 }
