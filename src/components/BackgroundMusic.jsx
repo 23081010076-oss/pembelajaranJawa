@@ -14,7 +14,7 @@ function readSavedVolume() {
   return Math.min(1, Math.max(0, parsedVolume));
 }
 
-export function BackgroundMusic({ isPlayingApp }) {
+export function BackgroundMusic({ isPlayingApp, hasTopNav = false }) {
   const [isMuted, setIsMuted] = useState(false);
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
   const [volume, setVolume] = useState(readSavedVolume);
@@ -105,7 +105,7 @@ export function BackgroundMusic({ isPlayingApp }) {
         loop
         preload="auto"
       />
-      <div className={`fixed right-3 top-[74px] z-[999] flex items-start gap-2 border-2 border-orange-200 bg-white px-2 py-2 text-orange-600 shadow-[0_8px_20px_rgba(46,29,16,0.15)] md:bottom-8 md:right-8 md:top-auto ${isVolumeOpen ? 'rounded-2xl' : 'rounded-full'}`}>
+      <div className={`fixed right-3 z-[999] flex items-start gap-2 border-2 border-orange-200 bg-white px-2 py-2 text-orange-600 shadow-[0_8px_20px_rgba(46,29,16,0.15)] ${hasTopNav ? 'top-[136px]' : 'top-[74px]'} md:bottom-8 md:right-8 md:top-auto ${isVolumeOpen ? 'rounded-2xl' : 'rounded-full'}`}>
         <button
           type="button"
           onClick={toggleVolumePanel}

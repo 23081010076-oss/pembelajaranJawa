@@ -292,7 +292,7 @@ export default function App() {
       )}
 
       {/* Musik Latar diputar setelah melewati splash */}
-      <BackgroundMusic isPlayingApp={!showSplash} />
+      <BackgroundMusic isPlayingApp={!showSplash} hasTopNav={!showOpening && !showLogin && page !== 'home'} />
 
     </main>
   );
