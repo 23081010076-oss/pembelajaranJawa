@@ -36,6 +36,13 @@ export const learningPathSteps = [
     targetPage: 'game',
   },
   {
+    id: 'evaluasi',
+    title: 'Evaluasi',
+    subtitle: 'Nggarap soal evaluasi pungkasan lan entuk sertifikat.',
+    actionLabel: 'Mulai Evaluasi',
+    targetPage: 'evaluasi',
+  },
+  {
     id: 'hasil',
     title: 'Hasil',
     subtitle: 'Deleng ringkesan progres belajar.',
