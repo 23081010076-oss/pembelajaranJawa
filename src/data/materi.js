@@ -24,7 +24,7 @@ export const materiList = [
     },
   },
   {
-    title: 'Cirine Parikan',
+    title: 'Titikane Parikan',
     short: 'Tandha-tandha utama parikan.',
     body:
       'Parikan nduweni irama, ana gegayutan swara ing pungkasan tembung, lan isine ringkes. Tembung-tembunge biasane prasaja supaya gampang dielingi lan diucapake.',
@@ -144,7 +144,7 @@ export const materiList = [
     },
   },
   {
-    title: 'Cara Ngerakit Parikan',
+    title: 'Cara Ngrakit Parikan',
     short: 'Langkah gawe parikan.',
     body:
       'Miwiti saka nemtokake pesen, banjur goleki tembung sampiran sing swarane cocog. Sawise kuwi rapekna jumlah baris lan iramane supaya parikan katon runtut.',
@@ -172,7 +172,8 @@ export const materiList = [
     short: 'Conto loro larik.',
     body:
       'Parikan rong gatra dumadi saka rong baris. Baris kapisan biasane sampiran, baris kapindho isine pesen.',
-    example: 'Mlaku-mlaku menyang taman, sinau sregep dadi nyaman.',
+    example: `Mlaku-mlaku menyang taman,
+    sinau sregep dadi nyaman.`,
     audioSrc: '/assets/sounds/materi-08-rong-gatra.mp3',
     stimulus: {
       image: '/assets/Komik/Comic_Materi8.png',

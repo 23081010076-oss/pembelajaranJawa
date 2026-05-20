@@ -11,6 +11,7 @@ export const mainMenu = [
       'Peserta didik mampu mengidentifikasi ciri-ciri, struktur sampiran, dan isi pada parikan.',
       'Peserta didik mampu menjelaskan nilai unggah-ungguh basa yang digunakan dalam parikan.',
       'Peserta didik mampu membuat parikan sederhana secara kreatif, runtut, dan sesuai kaidah bahasa Jawa.',
+      'Peserta didik mampu menulis dan mengembangkan kosakata baru dengan menggunakan basa rinengga/lalongèt untuk menyajikan gagasan sesuai unggah-ungguh basa/onḍhâgghâ bhâsa.',
     ],
   },
   {

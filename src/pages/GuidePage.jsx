@@ -38,7 +38,7 @@ export function GuidePage() {
           Petunjuk Siswa
         </div>
         <h1 className="mt-3 text-[clamp(2rem,5vw,3rem)] font-black leading-none drop-shadow-md">
-          Petunjuk Penggunaan
+          Pandhuan Kanggo Nggunakake Medhia Javanesia
         </h1>
         <p className="mt-3 max-w-2xl text-sm font-bold leading-relaxed text-white/85">
           Petunjuk iki mung kanggo mbantu nggunakake tombol lan fitur utama. Urutan sinau utama ana ing Alur Belajar.
