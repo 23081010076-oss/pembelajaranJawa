@@ -137,8 +137,8 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, stu
           </button>
         </div>
 
-        <section className="mt-4 w-full max-w-3xl animate-[fadeInUp_1.18s_ease-out_both] overflow-hidden rounded-[22px] border-[3px] border-white/90 bg-white/92 text-left shadow-[0_8px_0_rgba(126,68,18,0.13),0_18px_36px_rgba(46,29,16,0.18)] backdrop-blur-sm">
-          <div className="h-2 bg-[linear-gradient(90deg,#22c55e,#ff9700,#38bdf8)]" />
+        <section className="mt-4 w-full max-w-3xl animate-[fadeInUp_1.18s_ease-out_both] overflow-hidden rounded-[18px] border-[3px] border-white/90 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(255,247,232,0.94))] text-left shadow-[0_7px_0_rgba(126,68,18,0.12),0_16px_30px_rgba(46,29,16,0.16)] backdrop-blur-sm">
+          <div className="h-1.5 bg-[#d97706]" />
           <div className="grid gap-3 p-4 sm:grid-cols-[1fr_auto] sm:items-center sm:p-5">
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
@@ -155,7 +155,7 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, stu
               <div className="mt-3 flex items-center gap-3">
                 <div className="h-3 flex-1 overflow-hidden rounded-full bg-orange-100 ring-1 ring-orange-200/70">
                   <div
-                    className="h-full rounded-full bg-[linear-gradient(90deg,#22c55e,#ff9700)] transition-all duration-500"
+                    className="h-full rounded-full bg-[linear-gradient(90deg,#f59e0b,#d97706)] transition-all duration-500"
                     style={{ width: `${evaluationPercent}%` }}
                   />
                 </div>
@@ -166,19 +166,19 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, stu
             </div>
 
             <div className="grid grid-cols-3 gap-2 sm:w-[310px]">
-              <div className="rounded-2xl bg-emerald-50 px-3 py-2.5 text-center ring-1 ring-emerald-200">
-                <BookOpenCheck className="mx-auto text-emerald-600" size={18} aria-hidden="true" />
-                <p className="mt-1 text-[0.62rem] font-black uppercase tracking-wide text-emerald-700">Materi</p>
+              <div className="rounded-[14px] border border-orange-100 bg-white/86 px-3 py-2.5 text-center">
+                <BookOpenCheck className="mx-auto text-orange-600" size={18} aria-hidden="true" />
+                <p className="mt-1 text-[0.62rem] font-black uppercase tracking-wide text-[#9a5a1a]">Materi</p>
                 <p className="text-base font-black leading-tight text-[#213f2a]">{materiStats.completedCount}/{materiStats.total}</p>
               </div>
-              <div className="rounded-2xl bg-orange-50 px-3 py-2.5 text-center ring-1 ring-orange-200">
+              <div className="rounded-[14px] border border-orange-100 bg-white/86 px-3 py-2.5 text-center">
                 <Gamepad2 className="mx-auto text-orange-500" size={18} aria-hidden="true" />
-                <p className="mt-1 text-[0.62rem] font-black uppercase tracking-wide text-orange-700">Game</p>
+                <p className="mt-1 text-[0.62rem] font-black uppercase tracking-wide text-[#9a5a1a]">Game</p>
                 <p className="text-base font-black leading-tight text-[#4a2b12]">{gameStats.playedLevels}/{gameLevelTotal}</p>
               </div>
-              <div className="rounded-2xl bg-sky-50 px-3 py-2.5 text-center ring-1 ring-sky-200">
-                <BarChart3 className="mx-auto text-sky-600" size={18} aria-hidden="true" />
-                <p className="mt-1 text-[0.62rem] font-black uppercase tracking-wide text-sky-700">Skor</p>
+              <div className="rounded-[14px] border border-orange-100 bg-white/86 px-3 py-2.5 text-center">
+                <BarChart3 className="mx-auto text-orange-600" size={18} aria-hidden="true" />
+                <p className="mt-1 text-[0.62rem] font-black uppercase tracking-wide text-[#9a5a1a]">Skor</p>
                 <p className="text-base font-black leading-tight text-[#17314a]">{gameStats.bestSingleScore}</p>
               </div>
             </div>
