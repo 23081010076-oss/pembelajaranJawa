@@ -1,6 +1,14 @@
-import { Hash, HelpCircle, LogOut, Map, School } from 'lucide-react';
+import { BarChart3, BookOpenCheck, ClipboardCheck, Gamepad2, Hash, HelpCircle, LogOut, Map, School } from 'lucide-react';
 import { MenuButton } from '../components/MenuButton.jsx';
 import { useClickSound } from '../hooks/useClickSound.js';
+import { useLocalStorage } from '../hooks/useLocalStorage.js';
+import { materiList } from '../data/materi.js';
+import {
+  LEARNING_PROGRESS_KEY,
+  getGameProgressStats,
+  getMateriProgressStats,
+  initialLearningProgress,
+} from '../utils/learningProgress.js';
 
 function getInitials(name) {
   return name
@@ -13,6 +21,13 @@ function getInitials(name) {
 
 export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, studentName, studentClass, studentAbsen, onLogout }) {
   const playClick = useClickSound();
+  const [learningProgress] = useLocalStorage(LEARNING_PROGRESS_KEY, initialLearningProgress);
+  const [gameScores] = useLocalStorage('javanesia-game-scores', {});
+  const materiStats = getMateriProgressStats(materiList, learningProgress);
+  const gameStats = getGameProgressStats(gameScores);
+  const gameLevelTotal = 3;
+  const gamePercent = Math.round((Math.min(gameStats.playedLevels, gameLevelTotal) / gameLevelTotal) * 100);
+  const evaluationPercent = Math.round((materiStats.percent + gamePercent) / 2);
 
   const handleOpenGuide = () => {
     playClick();
@@ -36,6 +51,14 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, stu
     hour < 15 ? 'Sugeng Siang' :
     hour < 18 ? 'Sugeng Sonten' :
                 'Sugeng Ndalu';
+
+  const evaluationSuggestion = materiStats.completedCount === 0
+    ? 'Miwiti saka materi dhisik, banjur coba latihan lan game.'
+    : materiStats.completedCount < materiStats.total
+    ? `Terusna materi sing durung rampung. Pungkasan dibuka: ${materiStats.lastMateri?.title ?? 'Materi Parikan'}.`
+    : gameStats.playedLevels === 0
+    ? 'Materi wis rampung. Saiki coba Game Parikan kanggo ngecek pemahaman.'
+    : 'Apik. Delengen tinjauan jawaban game kanggo ngerti bagean sing perlu dibaleni.';
 
   return (
     <div className="mx-auto flex w-full max-w-[1200px] flex-col items-center justify-center gap-10 px-4 sm:gap-12 sm:px-6 lg:gap-14 lg:px-8">
@@ -113,6 +136,54 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, stu
             Petunjuk
           </button>
         </div>
+
+        <section className="mt-4 w-full max-w-3xl animate-[fadeInUp_1.18s_ease-out_both] overflow-hidden rounded-[18px] border-[3px] border-white/90 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(255,247,232,0.94))] text-left shadow-[0_7px_0_rgba(126,68,18,0.12),0_16px_30px_rgba(46,29,16,0.16)] backdrop-blur-sm">
+          <div className="h-1.5 bg-[#d97706]" />
+          <div className="grid gap-3 p-4 sm:grid-cols-[1fr_auto] sm:items-center sm:p-5">
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-500 px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.16em] text-white shadow-[0_4px_10px_rgba(194,91,20,0.24)]">
+                  <ClipboardCheck size={13} aria-hidden="true" />
+                  Ringkesan Sinau
+                </span>
+              </div>
+
+              <p className="mt-3 text-sm font-black leading-snug text-[#3d1f00] sm:text-[0.95rem]">
+                {evaluationSuggestion}
+              </p>
+
+              <div className="mt-3 flex items-center gap-3">
+                <div className="h-3 flex-1 overflow-hidden rounded-full bg-orange-100 ring-1 ring-orange-200/70">
+                  <div
+                    className="h-full rounded-full bg-[linear-gradient(90deg,#f59e0b,#d97706)] transition-all duration-500"
+                    style={{ width: `${evaluationPercent}%` }}
+                  />
+                </div>
+                <span className="min-w-11 text-right text-sm font-black text-orange-600">
+                  {evaluationPercent}%
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 sm:w-[310px]">
+              <div className="rounded-[14px] border border-orange-100 bg-white/86 px-3 py-2.5 text-center">
+                <BookOpenCheck className="mx-auto text-orange-600" size={18} aria-hidden="true" />
+                <p className="mt-1 text-[0.62rem] font-black uppercase tracking-wide text-[#9a5a1a]">Materi</p>
+                <p className="text-base font-black leading-tight text-[#213f2a]">{materiStats.completedCount}/{materiStats.total}</p>
+              </div>
+              <div className="rounded-[14px] border border-orange-100 bg-white/86 px-3 py-2.5 text-center">
+                <Gamepad2 className="mx-auto text-orange-500" size={18} aria-hidden="true" />
+                <p className="mt-1 text-[0.62rem] font-black uppercase tracking-wide text-[#9a5a1a]">Game</p>
+                <p className="text-base font-black leading-tight text-[#4a2b12]">{gameStats.playedLevels}/{gameLevelTotal}</p>
+              </div>
+              <div className="rounded-[14px] border border-orange-100 bg-white/86 px-3 py-2.5 text-center">
+                <BarChart3 className="mx-auto text-orange-600" size={18} aria-hidden="true" />
+                <p className="mt-1 text-[0.62rem] font-black uppercase tracking-wide text-[#9a5a1a]">Skor</p>
+                <p className="text-base font-black leading-tight text-[#17314a]">{gameStats.bestSingleScore}</p>
+              </div>
+            </div>
+          </div>
+        </section>
       </header>
 
       <nav 

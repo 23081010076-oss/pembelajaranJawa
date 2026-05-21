@@ -5,7 +5,12 @@ export const mainMenu = [
     page: 'learning',
     eyebrow: 'Capaian Pembelajaran',
     body:
-      'Fase D Berdasarkan Elemen Menulis  = Peserta didik mampu menulis dan mengembangkan kosakata baru dengan menggunakan basa rinengga/lalongèt untuk menyajikan gagasan sesuai unggah-ungguh basa/onḍhâgghâ bhâsa.',
+      'Peserta didik mampu menulis dan mengembangkan kosakata baru dengan menggunakan basa rinengga/lalongèt untuk menyajikan gagasan sesuai unggah-ungguh basa/onḍhâgghâ bhâsa.',
+    phase: {
+      fase: 'D',
+      element: 'Menulis',
+    },
+    points: [],
   },
   {
     title: 'Tujuan Pembelajaran',

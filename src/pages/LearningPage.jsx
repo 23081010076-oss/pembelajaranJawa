@@ -3,7 +3,9 @@ import { CheckCircle2, Sparkles } from 'lucide-react';
 import { MenuIcon } from '../components/Icon.jsx';
 
 export function LearningPage({ item }) {
-  const hasPoints = item.points && item.points.length > 0;
+  const hasPoints = Array.isArray(item.points) && item.points.length > 0;
+  const isCapaian = item.title === 'Capaian Pembelajaran';
+
   return (
     <div className="mx-auto flex w-full max-w-[1100px] flex-col gap-7 px-4 py-2 sm:px-6 lg:px-8">
       <header className="relative overflow-hidden rounded-[8px] border border-white/80 bg-white/82 px-5 py-6 text-center shadow-[0_18px_40px_rgba(77,48,24,0.16)] backdrop-blur-md sm:px-8 sm:py-8">
@@ -18,14 +20,38 @@ export function LearningPage({ item }) {
         <h1 className="mt-4 text-[clamp(2.1rem,5vw,4.1rem)] font-black uppercase leading-[0.95] text-[#2b1d12]">
           {item.title}
         </h1>
-        {hasPoints && item.body && (
+        {!isCapaian && item.body && (
           <p className="mx-auto mt-4 max-w-3xl text-base font-semibold leading-relaxed text-[#6b4a2d] sm:text-lg">
             {item.body}
           </p>
         )}
       </header>
 
-      {hasPoints ? (
+      {isCapaian ? (
+        <section className="mx-auto w-full max-w-4xl" aria-label={item.eyebrow ?? item.title}>
+          <article className="overflow-hidden rounded-[8px] border border-white/85 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(255,247,232,0.93))] shadow-[0_14px_34px_rgba(77,48,24,0.14)] backdrop-blur-sm">
+            <div className="h-2 bg-[#d97706]" />
+            <div className="grid gap-5 p-5 sm:p-7 lg:grid-cols-[180px_1fr] lg:p-8">
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                <div className="rounded-[8px] border border-orange-200 bg-white/82 px-4 py-3">
+                  <p className="text-[0.68rem] font-black uppercase tracking-[0.16em] text-[#9a5a1a]">Fase</p>
+                  <p className="mt-1 text-4xl font-black leading-none text-[#2b1d12]">{item.phase?.fase ?? 'D'}</p>
+                </div>
+                <div className="rounded-[8px] border border-orange-200 bg-white/82 px-4 py-3">
+                  <p className="text-[0.68rem] font-black uppercase tracking-[0.16em] text-[#9a5a1a]">Elemen</p>
+                  <p className="mt-1 text-2xl font-black leading-none text-[#2b1d12]">{item.phase?.element ?? 'Menulis'}</p>
+                </div>
+              </div>
+
+              <div className="min-w-0 border-t border-orange-100 pt-5 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
+                <p className="text-[clamp(1.18rem,2.35vw,1.65rem)] font-black leading-relaxed text-[#2b1d12]">
+                  {item.body}
+                </p>
+              </div>
+            </div>
+          </article>
+        </section>
+      ) : hasPoints ? (
         <section className="grid gap-4 sm:gap-5" aria-label={item.eyebrow ?? item.title}>
           {item.points.map((point, index) => (
             <article

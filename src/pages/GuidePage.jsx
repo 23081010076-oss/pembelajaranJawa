@@ -32,13 +32,13 @@ const guideSteps = [
 export function GuidePage() {
   return (
     <div className="mx-auto flex w-full max-w-[980px] flex-col gap-6 px-4 py-2 sm:px-6">
-      <header className="overflow-hidden rounded-3xl border-4 border-white/80 bg-gradient-to-r from-[#ff9b2f] to-[#ffba73] px-6 py-7 text-white shadow-[0_8px_40px_rgba(46,29,16,0.18)] sm:px-8">
+      <header className="overflow-hidden rounded-[18px] border-[3px] border-white/85 bg-gradient-to-r from-[#ff9b2f] to-[#ffba73] px-6 py-7 text-white shadow-[0_7px_0_rgba(126,68,18,0.12),0_16px_32px_rgba(46,29,16,0.16)] sm:px-8">
         <div className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-1.5 text-xs font-black uppercase tracking-widest">
           <Sparkles size={14} aria-hidden="true" />
           Petunjuk Siswa
         </div>
         <h1 className="mt-3 text-[clamp(2rem,5vw,3rem)] font-black leading-none drop-shadow-md">
-          Petunjuk Penggunaan
+          Pandhuan Kanggo Nggunakake Medhia Javanesia
         </h1>
         <p className="mt-3 max-w-2xl text-sm font-bold leading-relaxed text-white/85">
           Petunjuk iki mung kanggo mbantu nggunakake tombol lan fitur utama. Urutan sinau utama ana ing Alur Belajar.
@@ -52,9 +52,9 @@ export function GuidePage() {
           return (
             <article
               key={step.title}
-              className="relative overflow-hidden rounded-2xl border-4 border-white/85 bg-white/95 p-5 shadow-[0_8px_28px_rgba(78,45,21,0.16)]"
+              className="relative overflow-hidden rounded-[18px] border-[3px] border-white/85 bg-white/95 p-5 shadow-[0_8px_24px_rgba(78,45,21,0.13)]"
             >
-              <span className="pointer-events-none absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-orange-400 to-teal-500" aria-hidden="true" />
+              <span className="pointer-events-none absolute inset-x-0 top-0 h-1.5 bg-[#d97706]" aria-hidden="true" />
               <div className="flex items-start gap-4">
                 <div className="grid size-12 shrink-0 place-items-center rounded-2xl bg-orange-100 text-orange-500 shadow-inner">
                   <Icon size={24} aria-hidden="true" />

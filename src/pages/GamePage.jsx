@@ -229,6 +229,25 @@ function buildComposeReview(q, text, scoring, teacherFeedback, questionNum) {
     isCorrect: scoring.points >= 8,
     points: scoring.points,
     maxPoints: 10,
+    criteria: [
+      {
+        label: 'Kata kunci',
+        ok: scoring.hasKeyword,
+        value: scoring.hasKeyword ? 'Wis mlebu' : `Durung katon: ${q.keyword}`,
+      },
+      {
+        label: 'Jumlah larik',
+        ok: scoring.validLines,
+        value: `${scoring.lineCount} larik`,
+      },
+      {
+        label: 'Wanda',
+        ok: scoring.allSyllablesOk,
+        value: scoring.syllableCounts.length > 0
+          ? scoring.syllableCounts.map((count, index) => `${index + 1}: ${count}`).join(', ')
+          : 'Durung kebaca',
+      },
+    ],
     explanation: teacherFeedback?.suggestions?.[0] ?? teacherFeedback?.strengths?.[0] ?? 'Parikanmu wis dinilai saka kata kunci, jumlah baris, suku kata, lan purwakanthi.',
     issues,
   };
@@ -366,7 +385,7 @@ function ProgressBar({ current, total, color }) {
 }
 
 // ── Level selection screen ───────────────────────────────────────────────────
-function LevelSelect({ scores, onSelect, onReset }) {
+function LevelSelect({ scores, savedResults, onSelect, onReset, onViewResult }) {
   const [showGuide, setShowGuide] = useState(false);
   const playClick = useClickSound();
   const maxScore = gameLevels.reduce((sum, level) => sum + getLevelMaxScore(level), 0);
@@ -486,7 +505,9 @@ function LevelSelect({ scores, onSelect, onReset }) {
                 <div className="mt-1 text-sm font-bold uppercase tracking-widest text-white/80">{level.subtitle}</div>
               </div>
 
-              <p className="text-xs font-semibold leading-snug text-white/75">{level.description}</p>
+              <p className="text-xs font-semibold leading-snug text-white/75">
+                {level.description}
+              </p>
 
               {best > 0 && levelMaxScore > 0 && (
                 <div className="w-full">
@@ -503,6 +524,23 @@ function LevelSelect({ scores, onSelect, onReset }) {
                   {best > 0 ? 'Main Maneh' : 'Miwiti'}
                   <ChevronRight size={14} aria-hidden="true" />
                 </span>
+              )}
+
+              {/* Tombol lihat hasil terakhir */}
+              {savedResults?.[level.id] && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    playClick();
+                    onViewResult(level, savedResults[level.id]);
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-full border-2 border-white/60 bg-white/20 px-3 py-1 text-xs font-black uppercase tracking-wide text-white/90 shadow-sm backdrop-blur-sm transition hover:bg-white/30 hover:border-white/80"
+                  aria-label={`Lihat hasil terakhir ${level.label}`}
+                >
+                  <Trophy size={11} aria-hidden="true" />
+                  Lihat Hasil
+                </button>
               )}
 
               {!hasQuestions && (
@@ -1070,7 +1108,7 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
     setSelected(prev => {
       const already = prev.find(t => t.id === theme.id);
       if (already) return prev.filter(t => t.id !== theme.id);
-      if (prev.length >= needed) return prev; // sudah cukup, tidak bisa tambah
+      if (prev.length >= needed) return prev;
       return [...prev, theme];
     });
   };
@@ -1078,7 +1116,6 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
   const handleStart = () => {
     if (selected.length < needed) return;
     playClick();
-    // Buat questions dari tema yang dipilih
     const questions = selected.map((t, i) => ({
       id: `t3_selected_${i}`,
       type: 'compose',
@@ -1092,63 +1129,86 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
 
   return (
     <div className="mx-auto flex w-full max-w-[780px] flex-col gap-6 px-4 py-2">
-      {/* Header */}
+
+      {/* ── Header bar ── */}
       <div className="flex items-center gap-3">
         <button
           type="button"
           onClick={() => { playClick(); onBack(); }}
-          className="rounded-xl border-2 border-white bg-white/95 px-3 py-2 text-xs font-black uppercase text-[#2e1d10] shadow-md transition hover:bg-white hover:-translate-y-0.5"
+          className="rounded-xl border-2 border-white bg-white px-3 py-2 text-xs font-black uppercase text-[#2e1d10] shadow-md transition hover:bg-orange-50 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
         >
           ← Bali
         </button>
         <div
-          className="flex items-center gap-2 rounded-full border-2 px-4 py-1.5 text-sm font-black shadow-md"
-          style={{ borderColor: level.color, background: 'white', color: level.color }}
+          className="flex items-center gap-2 rounded-full border-2 bg-white px-4 py-1.5 text-sm font-black shadow-md"
+          style={{ borderColor: level.color, color: level.color }}
         >
           {level.label} — {level.subtitle}
         </div>
       </div>
 
-      {/* Instruksi */}
+      {/* ── Instruksi card ── */}
       <div
-        className="rounded-3xl p-5 text-white shadow-xl"
-        style={{ background: `linear-gradient(135deg, ${level.color}dd, ${level.color}99)` }}
+        className="relative overflow-hidden rounded-3xl p-5 text-white shadow-2xl"
+        style={{
+          background: `linear-gradient(135deg, ${level.color}, color-mix(in srgb, ${level.color} 70%, #1e3a5f))`,
+          boxShadow: `0 12px 40px ${level.shadow ?? level.color + '55'}`,
+        }}
       >
-        <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-black uppercase tracking-widest">
+        {/* Decorative inner highlight */}
+        <span className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br from-white/20 via-transparent to-transparent" />
+        <span className="pointer-events-none absolute inset-1 rounded-[20px] border border-white/20" />
+
+        <div className="relative mb-3 inline-flex items-center gap-2 rounded-full bg-white/25 px-3 py-1.5 text-xs font-black uppercase tracking-widest shadow-sm">
           <Sparkles size={12} aria-hidden="true" />
           Pituduh Pitakon
         </div>
-        <h2 className="text-xl font-black leading-snug">Pitakon Latihan Nulis Parikan</h2>
-        <div className="mt-3 flex flex-col gap-1.5 text-sm font-semibold text-white/90">
+        <h2 className="relative text-xl font-black leading-snug drop-shadow-sm">
+          Pitakon Latihan Nulis Parikan
+        </h2>
+        <div className="relative mt-3 flex flex-col gap-1.5 text-sm font-semibold text-white/95">
           <p>Gawea parikan dhewe kanthi basa Jawa. Parikanmu kudu:</p>
-          <ul className="mt-1 flex flex-col gap-1 pl-2">
-            <li className="flex items-start gap-2"><span className="text-yellow-300 mt-0.5">✦</span> Ana 2 utawa 4 larik</li>
-            <li className="flex items-start gap-2"><span className="text-yellow-300 mt-0.5">✦</span> Migunakake purwakanthi swara (rima)</li>
-            <li className="flex items-start gap-2"><span className="text-yellow-300 mt-0.5">✦</span> Isi cocog karo tema sing kapilih</li>
+          <ul className="mt-1.5 flex flex-col gap-1.5 pl-1">
+            {[
+              'Ana 2 utawa 4 larik',
+              'Migunakake purwakanthi swara (rima)',
+              'Isi cocog karo tema sing kapilih',
+            ].map((rule) => (
+              <li key={rule} className="flex items-start gap-2">
+                <span className="mt-0.5 shrink-0 text-yellow-300" aria-hidden="true">✦</span>
+                <span>{rule}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
 
-      {/* Pilih tema */}
+      {/* ── Pilih tema section ── */}
       <div>
-        <div className="mb-3 flex items-center justify-between">
-          <h3 className="text-base font-black text-white drop-shadow">
+        {/* Section header */}
+        <div className="mb-4 flex items-center justify-between">
+          <h3 className="text-base font-black text-[#2e1d10] drop-shadow-sm">
             Pilih {needed} Tema
           </h3>
           <span
-            className="rounded-full px-3 py-1 text-sm font-black"
+            className="rounded-full px-4 py-1.5 text-sm font-black shadow-md transition-all"
             style={{
-              background: selected.length === needed ? level.color : 'rgba(255,255,255,0.2)',
-              color: 'white',
+              background: selected.length === needed
+                ? `linear-gradient(135deg, ${level.color}, color-mix(in srgb, ${level.color} 80%, #1e3a5f))`
+                : 'white',
+              color: selected.length === needed ? 'white' : '#9b8a78',
+              border: selected.length === needed ? 'none' : '2px solid #e5d9cc',
+              boxShadow: selected.length === needed ? `0 4px 16px ${level.color}55` : 'none',
             }}
           >
             {selected.length}/{needed} dipilih
           </span>
         </div>
 
+        {/* Theme cards grid */}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {level.themePool.map((theme) => {
-            const isSelected = selected.find(t => t.id === theme.id);
+            const isSelected = !!selected.find(t => t.id === theme.id);
             const isDisabled = !isSelected && selected.length >= needed;
             const selIdx = selected.findIndex(t => t.id === theme.id);
 
@@ -1158,50 +1218,77 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
                 type="button"
                 disabled={isDisabled}
                 onClick={() => toggle(theme)}
-                className={`group relative flex items-start gap-3 rounded-2xl border-2 p-4 text-left transition-all duration-200
+                className={`group relative flex items-start gap-3 rounded-2xl border-2 p-4 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-4
                   ${isSelected
-                    ? 'scale-[1.02] shadow-lg'
+                    ? 'scale-[1.02] shadow-xl'
                     : isDisabled
-                    ? 'cursor-not-allowed opacity-40'
-                    : 'hover:-translate-y-0.5 hover:shadow-md cursor-pointer'
+                    ? 'cursor-not-allowed opacity-50 grayscale-[30%]'
+                    : 'cursor-pointer hover:-translate-y-0.5 hover:shadow-lg'
                   }`}
                 style={{
-                  borderColor: isSelected ? level.color : 'rgba(255,255,255,0.3)',
+                  borderColor: isSelected ? level.color : '#e5d9cc',
                   background: isSelected
-                    ? `linear-gradient(135deg, ${level.color}22, ${level.color}11)`
-                    : 'rgba(255,255,255,0.1)',
-                  backdropFilter: 'blur(8px)',
+                    ? `linear-gradient(135deg, color-mix(in srgb, ${level.color} 12%, white), color-mix(in srgb, ${level.color} 6%, white))`
+                    : 'white',
+                  boxShadow: isSelected
+                    ? `0 8px 28px ${level.color}33, 0 0 0 1px ${level.color}44`
+                    : '0 2px 8px rgba(46,29,16,0.08)',
+                  // eslint-disable-next-line no-dupe-keys
+                  '--tw-ring-color': level.color + '44',
                 }}
               >
-                {/* Nomor urut / centang */}
+                {/* Subtle inner glow when selected */}
+                {isSelected && (
+                  <span
+                    className="pointer-events-none absolute inset-0 rounded-2xl"
+                    style={{ background: `linear-gradient(135deg, ${level.color}10, transparent)` }}
+                  />
+                )}
+
+                {/* Nomor urut / placeholder */}
                 <div
-                  className="flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-black transition-all"
+                  className="relative flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-black transition-all duration-200"
                   style={{
-                    background: isSelected ? level.color : 'rgba(255,255,255,0.2)',
-                    color: 'white',
-                    boxShadow: isSelected ? `0 0 12px ${level.color}66` : 'none',
+                    background: isSelected
+                      ? `linear-gradient(135deg, ${level.color}, color-mix(in srgb, ${level.color} 80%, #1e3a5f))`
+                      : '#f3ede6',
+                    color: isSelected ? 'white' : '#b7a090',
+                    boxShadow: isSelected ? `0 4px 12px ${level.color}55` : 'none',
                   }}
                 >
-                  {isSelected ? selIdx + 1 : <span className="text-white/60 text-xs">○</span>}
+                  {isSelected
+                    ? <span className="text-sm font-black">{selIdx + 1}</span>
+                    : <span className="text-xs">○</span>
+                  }
                 </div>
 
-                <div className="flex-1 min-w-0">
+                {/* Content */}
+                <div className="relative flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="text-xl leading-none" aria-hidden="true">{theme.emoji}</span>
                     <span
-                      className="text-sm font-black"
-                      style={{ color: isSelected ? 'white' : 'rgba(255,255,255,0.9)' }}
+                      className="text-sm font-black leading-tight"
+                      style={{ color: isSelected ? level.color : '#2e1d10' }}
                     >
                       {theme.theme}
                     </span>
                   </div>
-                  <p className="mt-1 text-xs font-semibold text-white/60 leading-snug">
+                  <p
+                    className="mt-1 text-xs font-semibold leading-snug"
+                    style={{ color: isSelected ? '#5a3a22' : '#9b8a78' }}
+                  >
                     {theme.description}
                   </p>
                 </div>
 
+                {/* Checkmark */}
                 {isSelected && (
-                  <CheckCircle2 size={18} className="shrink-0 mt-0.5" style={{ color: level.color }} aria-hidden="true" />
+                  <CheckCircle2
+                    size={18}
+                    className="relative shrink-0 mt-0.5 transition-all"
+                    style={{ color: level.color }}
+                    aria-hidden="true"
+                  />
                 )}
               </button>
             );
@@ -1209,18 +1296,19 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
         </div>
       </div>
 
-      {/* Tombol mulai */}
+      {/* ── Tombol mulai ── */}
       <button
         type="button"
         disabled={selected.length < needed}
         onClick={handleStart}
-        className="flex w-full items-center justify-center gap-2 rounded-2xl py-4 text-lg font-black uppercase text-white shadow-xl transition-all hover:-translate-y-1 disabled:opacity-40 disabled:cursor-not-allowed disabled:translate-y-0"
+        className="flex w-full items-center justify-center gap-2 rounded-2xl py-4 text-lg font-black uppercase text-white shadow-xl transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl active:translate-y-0 disabled:cursor-not-allowed disabled:translate-y-0 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-4"
         style={{
           background: selected.length === needed
-            ? `linear-gradient(135deg, ${level.color}, ${level.color}bb)`
-            : 'rgba(255,255,255,0.15)',
-          border: '2px solid rgba(255,255,255,0.3)',
-          boxShadow: selected.length === needed ? `0 8px 32px ${level.color}66` : 'none',
+            ? `linear-gradient(135deg, ${level.color}, color-mix(in srgb, ${level.color} 75%, #1e3a5f))`
+            : '#d4c4b4',
+          border: selected.length === needed ? `2px solid ${level.color}cc` : '2px solid #c4b4a4',
+          boxShadow: selected.length === needed ? `0 8px 32px ${level.color}55, 0 2px 0 ${level.color}88` : 'none',
+          '--tw-ring-color': level.color + '44',
         }}
       >
         {selected.length < needed
@@ -1341,10 +1429,19 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
     : { msg: 'Kamu gagal, coba lagi!', sub: 'Sinau maneh banjur coba saka awal.' };
 
   const s = (delay) => ({ animation: `cardSlideUp 0.5s cubic-bezier(0.16,1,0.3,1) ${delay}s both` });
+  const polishedFeedback = pct === 100
+    ? { msg: 'Sampurna!', sub: 'Kabeh wangsulanmu wis trep. Pertahankan cara sinau iki.' }
+    : pct >= 80
+    ? { msg: 'Apik banget!', sub: 'Asilmu wis kuwat, tinggal ngencengi bagean cilik sing durung trep.' }
+    : pct >= 70
+    ? { msg: 'Wis lulus.', sub: 'Nilaimu wis cukup, nanging isih ana bagean sing bisa dirapikake.' }
+    : pct >= 50
+    ? { msg: 'Lumayan.', sub: 'Ana sawetara konsep sing perlu diwaca maneh sadurunge nyoba maneh.' }
+    : { msg: 'Ayo coba maneh.', sub: 'Baleni materi kunci dhisik, banjur kerjakake maneh kanthi luwih tenang.' };
 
   return (
     <div
-      className="mx-auto flex w-full max-w-[760px] flex-col items-center gap-5 px-4 py-2 text-center"
+      className="mx-auto flex w-full max-w-[860px] flex-col items-center gap-5 px-4 py-2"
       style={{ animation: 'resultContentIn 0.4s ease-out both' }}
     >
         {/* ── Ikon + glow ── */}
@@ -1370,60 +1467,63 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
               animation: 'iconSpring 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.05s both',
             }}
           >
-            <span className="text-6xl leading-none" aria-hidden="true"
-              style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))' }}>
-              {pct === 100 ? '🏆' : pct >= 80 ? '🌟' : pct >= 50 ? '👍' : '💪'}
-            </span>
+            <Trophy
+              size={54}
+              aria-hidden="true"
+              className="text-[#fff7d6]"
+              strokeWidth={2.6}
+              style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.28))' }}
+            />
           </div>
         </div>
 
         {/* ── Bintang ── */}
-        <div className="flex gap-3" style={s(0.08)}>
+        <div className="flex gap-2" style={s(0.08)} aria-label={`${starsEarned} saka 3 bintang`}>
           {[0, 1, 2].map(i => (
-            <span
+            <Star
               key={i}
               aria-hidden="true"
               style={{
-                fontSize: '2.2rem',
-                lineHeight: 1,
                 opacity: 0,
                 animation: i < starsEarned
                   ? `starPop 0.55s cubic-bezier(0.34,1.56,0.64,1) ${0.1 + i * 0.12}s both`
                   : `resultSubFadeUp 0.4s ease-out ${0.1 + i * 0.12}s both`,
-                filter: i < starsEarned ? 'drop-shadow(0 0 10px #facc15)' : 'none',
+                filter: i < starsEarned ? 'drop-shadow(0 4px 10px rgba(246,183,60,0.35))' : 'none',
               }}
-            >
-              {i < starsEarned ? '⭐' : '☆'}
-            </span>
+              size={30}
+              fill={i < starsEarned ? '#f6b73c' : 'transparent'}
+              strokeWidth={2.6}
+              className={i < starsEarned ? 'text-[#f6b73c]' : 'text-[#d7c8b7]'}
+            />
           ))}
         </div>
 
         {/* ── Skor besar ── */}
         <div style={s(0.15)}>
           <div
-            className="text-[clamp(3.5rem,10vw,5.5rem)] font-black leading-none text-[#2e1d10]"
-            style={{ filter: `drop-shadow(0 4px 12px ${level.color}44)` }}
+            className="text-center text-[clamp(3.2rem,9vw,5rem)] font-black leading-none text-[#2e1d10]"
+            style={{ filter: `drop-shadow(0 4px 12px ${level.color}33)` }}
           >
             {displayScore}
-            <span className="text-[0.45em] text-gray-400">/{maxScore}</span>
+            <span className="text-[0.45em] text-[#9b8a78]">/{maxScore}</span>
           </div>
-          <div className="mt-1 text-base font-black text-gray-500 tracking-wide">
+          <div className="mt-1 text-center text-base font-black tracking-wide text-[#7a5a3a]">
             {pct}% {isCompose ? 'skor' : 'bener'}
           </div>
         </div>
 
         {/* ── Progress bar animasi ── */}
-        <div className="w-full" style={s(0.22)}>
-          <div className="h-3 w-full overflow-hidden rounded-full bg-white/15">
+        <div className="w-full max-w-[640px]" style={s(0.22)}>
+          <div className="h-3 w-full overflow-hidden rounded-full border border-white/70 bg-[#eadfce] shadow-inner">
             <div
               className="h-full rounded-full"
               style={{
                 '--target-width': `${pct}%`,
                 background: isSuccess
-                  ? `linear-gradient(90deg, ${level.color}, #facc15, ${level.color})`
-                  : 'linear-gradient(90deg, #64748b, #94a3b8)',
+                  ? `linear-gradient(90deg, ${level.color}, color-mix(in srgb, ${level.color} 72%, #f6b73c))`
+                  : 'linear-gradient(90deg, #9ca3af, #6b7280)',
                 animation: 'progressFill 1s cubic-bezier(0.16,1,0.3,1) 0.3s both',
-                boxShadow: isSuccess ? `0 0 12px ${level.color}88` : 'none',
+                boxShadow: isSuccess ? `0 0 14px ${level.color}66` : 'none',
               }}
             />
           </div>
@@ -1431,35 +1531,35 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
 
         {/* ── Feedback card ── */}
         <div
-          className="w-full rounded-3xl bg-white px-6 py-5 shadow-sm ring-1 ring-gray-200"
+          className="w-full rounded-[24px] border border-[#eadfce] bg-[#fffaf2] px-6 py-5 text-center shadow-[0_14px_34px_rgba(79,49,26,0.10)]"
           style={s(0.28)}
         >
           <p className="text-xl font-black text-[#2e1d10]">
-            {resultFeedback.msg}
+            {polishedFeedback.msg}
           </p>
-          <p className="mt-1 text-sm font-semibold text-gray-500">{resultFeedback.sub}</p>
+          <p className="mx-auto mt-1 max-w-xl text-sm font-semibold leading-relaxed text-[#7a5a3a]">{polishedFeedback.sub}</p>
         </div>
 
         {/* Detail evaluasi */}
         {reviewItems.length > 0 && (
           <div
-            className="w-full rounded-3xl bg-white p-4 text-left shadow-sm ring-1 ring-gray-200 sm:p-5"
+            className="w-full rounded-[26px] border border-[#eadfce] bg-[#fffdf8] p-4 text-left shadow-[0_16px_36px_rgba(79,49,26,0.10)] sm:p-5"
             style={s(0.33)}
           >
             <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-xs font-black uppercase tracking-widest text-gray-400">Tinjauan Wangsulan</p>
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-[#b7791f]">Tinjauan Wangsulan</p>
                 <h3 className="text-xl font-black text-[#2e1d10]">
                   {wrongReviews.length > 0 ? `${wrongReviews.length} bagian perlu dibenahi` : 'Kabeh wangsulan wis apik'}
                 </h3>
               </div>
-              <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-black text-gray-600">
+              <span className="rounded-full border border-[#eadfce] bg-[#fff7ed] px-3 py-1 text-xs font-black text-[#7a5030]">
                 {reviewItems.length - wrongReviews.length}/{reviewItems.length} tuntas
               </span>
             </div>
 
             {wrongReviews.length === 0 ? (
-              <div className="mt-4 rounded-2xl border border-emerald-300/40 bg-emerald-400/15 px-4 py-3 text-sm font-bold leading-relaxed text-emerald-50">
+              <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-bold leading-relaxed text-emerald-800">
                 Ora ana wangsulan salah. Terusna latihan gawe parikan supaya luwih lancar lan kreatif.
               </div>
             ) : (
@@ -1467,14 +1567,14 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
                 {wrongReviews.map((item) => (
                   <article
                     key={item.id}
-                    className="rounded-2xl border border-gray-100 bg-gray-50 p-4 text-[#2e1d10] shadow-sm"
+                    className="rounded-[22px] border border-[#eadfce] bg-white p-4 text-[#2e1d10] shadow-[0_10px_24px_rgba(79,49,26,0.07)]"
                   >
                     <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                      <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-black uppercase tracking-wide text-red-700">
-                        {item.title}
+                      <span className="rounded-full border border-[#eadfce] bg-[#fffaf2] px-3 py-1 text-xs font-black uppercase tracking-wide text-[#7a5030]">
+                        {item.type === 'compose' ? `Evaluasi ${item.title}` : item.title}
                       </span>
                       {item.type === 'compose' && (
-                        <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-black text-amber-800">
+                        <span className="rounded-full border border-amber-200 bg-[#fff7ed] px-3 py-1 text-xs font-black text-amber-800 shadow-sm">
                           Skor {item.points}/{item.maxPoints}
                         </span>
                       )}
@@ -1482,33 +1582,58 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
 
                     <div className="grid gap-3 text-sm font-semibold leading-relaxed">
                       <div>
-                        <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-orange-500">Pitakon</p>
-                        <p className="whitespace-pre-line rounded-xl bg-orange-50 px-3 py-2">{item.prompt}</p>
+                        <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-[#b7791f]">Pitakon</p>
+                        <p className="whitespace-pre-line rounded-xl border border-[#f1e6d6] bg-[#fffaf2] px-3 py-2">{item.prompt}</p>
                       </div>
+                      {item.type === 'compose' && item.criteria?.length > 0 && (
+                        <div>
+                          <p className="mb-2 text-[0.68rem] font-black uppercase tracking-widest text-[#7a5030]">Rubrik Penilaian</p>
+                          <div className="grid gap-2 sm:grid-cols-3">
+                            {item.criteria.map((criterion) => (
+                              <div
+                                key={criterion.label}
+                                className={`rounded-xl border bg-white px-3 py-2 shadow-sm ${
+                                  criterion.ok ? 'border-emerald-100' : 'border-amber-200'
+                                }`}
+                              >
+                                <div className="flex items-center gap-2">
+                                  {criterion.ok ? (
+                                    <CheckCircle2 size={15} className="shrink-0 text-emerald-600" aria-hidden="true" />
+                                  ) : (
+                                    <AlertCircle size={15} className="shrink-0 text-amber-600" aria-hidden="true" />
+                                  )}
+                                  <p className="text-[0.68rem] font-black uppercase tracking-wider text-[#7a5030]">{criterion.label}</p>
+                                </div>
+                                <p className="mt-1 text-xs font-bold leading-snug text-[#2e1d10]">{criterion.value}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                       <div className="grid gap-3 sm:grid-cols-2">
                         <div>
-                          <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-red-500">Wangsulanmu</p>
-                          <p className="whitespace-pre-line rounded-xl bg-red-50 px-3 py-2 text-red-800">
+                          <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-red-600">Wangsulanmu</p>
+                          <p className="min-h-[72px] whitespace-pre-line rounded-xl border border-red-100 bg-white px-3 py-2 text-[#6f2a1d]">
                             {item.userAnswer || 'Durung ana wangsulan'}
                           </p>
                         </div>
                         <div>
-                          <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-green-600">
+                          <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-emerald-700">
                             {item.type === 'compose' ? 'Kriteria Bener' : 'Wangsulan Bener'}
                           </p>
-                          <p className="whitespace-pre-line rounded-xl bg-green-50 px-3 py-2 text-green-800">
+                          <p className="min-h-[72px] whitespace-pre-line rounded-xl border border-emerald-100 bg-white px-3 py-2 text-emerald-800">
                             {item.correctAnswer}
                           </p>
                         </div>
                       </div>
                       <div>
-                        <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-sky-600">Katrangan</p>
-                        <p className="rounded-xl bg-sky-50 px-3 py-2 text-sky-900">{item.explanation}</p>
+                        <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-[#2f7c8c]">Katrangan</p>
+                        <p className="rounded-xl border border-[#dbeafe] bg-white px-3 py-2 text-[#24566a]">{item.explanation}</p>
                       </div>
                       {item.recommendation && (
                         <div>
-                          <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-amber-600">Rekomendasi Ngulang</p>
-                          <p className="rounded-xl bg-amber-50 px-3 py-2 text-amber-900">{item.recommendation}</p>
+                          <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-amber-700">Rekomendasi Ngulang</p>
+                          <p className="rounded-xl border border-amber-100 bg-[#fffaf2] px-3 py-2 text-amber-900">{item.recommendation}</p>
                         </div>
                       )}
                     </div>
@@ -1518,7 +1643,7 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
             )}
 
             {recommendations.length > 1 && (
-              <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-bold leading-relaxed text-amber-900">
+              <div className="mt-4 rounded-2xl border border-[#eadfce] bg-[#fffaf2] px-4 py-3 text-sm font-bold leading-relaxed text-[#7a5030]">
                 <p className="mb-2 text-xs font-black uppercase tracking-widest text-amber-600">Ringkesan Materi Baleni</p>
                 <ul className="grid gap-1.5">
                   {recommendations.map((item) => (
@@ -1533,9 +1658,9 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
         {/* ── Parikan hadiah ── */}
         {pct >= 80 && (
           <div
-            className="w-full rounded-3xl px-5 py-4 ring-2 ring-amber-300"
+            className="w-full rounded-[24px] border border-[#e8c77c] px-5 py-4 text-center shadow-[0_12px_28px_rgba(146,95,22,0.10)]"
             style={{
-              background: 'linear-gradient(135deg, #fffbeb, #ffedd5)',
+              background: 'linear-gradient(135deg, #fffaf0, #fff3d7)',
               ...s(0.36),
             }}
           >
@@ -1583,6 +1708,7 @@ export function GamePage() {
   const [lastReview, setLastReview] = useState([]);
   const [level3Questions, setLevel3Questions] = useState(null); // soal dinamis tingkat 3
   const [scores, setScores] = useLocalStorage('javanesia-game-scores', {});
+  const [savedResults, setSavedResults] = useLocalStorage('javanesia-game-results', {});
   const { prepareResultSounds, playApplause, playEncourage, playFailed } = useResultSound();
 
   const handleSelectLevel = (level) => {
@@ -1617,6 +1743,11 @@ export function GamePage() {
     setScores((prev) => ({
       ...prev,
       [activeLevel.id]: Math.max(prev[activeLevel.id] ?? 0, finalScore),
+    }));
+    // Simpan hasil terakhir per level ke localStorage
+    setSavedResults((prev) => ({
+      ...prev,
+      [activeLevel.id]: { score: finalScore, review },
     }));
     setLevel3Questions(null);
     setScreen('result');
@@ -1657,16 +1788,32 @@ export function GamePage() {
 
   const handleReset = () => {
     setScores({});
+    setSavedResults({});
     setScreen('select');
     setActiveLevel(null);
     setLastReview([]);
     setLevel3Questions(null);
   };
 
+  // Buka hasil tersimpan dari halaman pilih tingkat
+  const handleViewResult = (level, saved) => {
+    setActiveLevel(level);
+    setLastScore(saved.score);
+    setLastReview(saved.review ?? []);
+    setScreen('result');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="mx-auto w-full max-w-[1100px]">
       {screen === 'select' && (
-        <LevelSelect scores={scores} onSelect={handleSelectLevel} onReset={handleReset} />
+        <LevelSelect
+          scores={scores}
+          savedResults={savedResults}
+          onSelect={handleSelectLevel}
+          onReset={handleReset}
+          onViewResult={handleViewResult}
+        />
       )}
       {screen === 'theme-select' && activeLevel && (
         <ThemeSelectScreen

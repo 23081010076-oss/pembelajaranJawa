@@ -188,13 +188,13 @@ function MiniActivity({ activity }) {
   };
 
   return (
-    <section className="mt-7 overflow-hidden rounded-2xl border-2 border-teal-200 bg-gradient-to-br from-teal-50 via-white to-orange-50 p-5 shadow-sm sm:p-6">
+    <section className="mt-7 overflow-hidden rounded-[18px] border-2 border-orange-200 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(255,247,232,0.94))] p-5 shadow-sm sm:p-6">
       <div className="flex items-start gap-3">
-        <div className="grid size-11 shrink-0 place-items-center rounded-2xl bg-teal-100 text-teal-600 shadow-inner">
+        <div className="grid size-11 shrink-0 place-items-center rounded-[14px] bg-orange-100 text-orange-600 shadow-inner">
           <ListChecks size={23} aria-hidden="true" />
         </div>
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.15em] text-teal-600">
+          <p className="text-xs font-black uppercase tracking-[0.15em] text-orange-500">
             Coba Saiki
           </p>
           <h2 className="mt-1 text-xl font-black leading-tight text-[#3f2918]">
@@ -213,10 +213,10 @@ function MiniActivity({ activity }) {
               key={option}
               type="button"
               onClick={() => { playClick(); setAnswer(optionIndex); setChecked(false); }}
-              className={`rounded-2xl border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 ${
+              className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
                 safeAnswer === optionIndex
-                  ? 'border-teal-400 bg-teal-100 text-teal-800'
-                  : 'border-white bg-white text-[#4f2912] hover:border-teal-200'
+                  ? 'border-orange-400 bg-orange-100 text-orange-800'
+                  : 'border-white bg-white text-[#4f2912] hover:border-orange-200'
               }`}
             >
               {option}
@@ -234,10 +234,10 @@ function MiniActivity({ activity }) {
                 key={option}
                 type="button"
                 onClick={() => toggleMulti(optionIndex)}
-                className={`rounded-2xl border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 ${
+                className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
                   selected
-                    ? 'border-teal-400 bg-teal-100 text-teal-800'
-                    : 'border-white bg-white text-[#4f2912] hover:border-teal-200'
+                    ? 'border-orange-400 bg-orange-100 text-orange-800'
+                    : 'border-white bg-white text-[#4f2912] hover:border-orange-200'
                 }`}
               >
                 {selected ? '✓ ' : ''}
@@ -251,7 +251,7 @@ function MiniActivity({ activity }) {
       {activity.type === 'classify' && (
         <div className="mt-4 grid gap-3">
           {activity.lines.map((line, lineIndex) => (
-            <div key={line} className="rounded-2xl border-2 border-white bg-white p-4">
+            <div key={line} className="rounded-[14px] border-2 border-white bg-white p-4">
               <p className="text-base font-black leading-snug text-[#5d351d]">{line}</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {activity.categories.map((category) => (
@@ -263,9 +263,9 @@ function MiniActivity({ activity }) {
                       setChecked(false);
                       setAnswer((current) => ({ ...(current ?? {}), [lineIndex]: category }));
                     }}
-                    className={`rounded-full border-2 px-4 py-2 text-xs font-black uppercase tracking-wide transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 ${
+                    className={`rounded-full border-2 px-4 py-2 text-xs font-black uppercase tracking-wide transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
                       safeAnswer?.[lineIndex] === category
-                        ? 'border-teal-400 bg-teal-100 text-teal-800'
+                        ? 'border-orange-400 bg-orange-100 text-orange-800'
                         : 'border-orange-100 bg-orange-50 text-orange-700 hover:border-orange-200'
                     }`}
                   >
@@ -280,7 +280,7 @@ function MiniActivity({ activity }) {
 
       {activity.type === 'order' && (
         <div className="mt-4 grid gap-4">
-          <div className="rounded-2xl border-2 border-white bg-white p-4">
+          <div className="rounded-[14px] border-2 border-white bg-white p-4">
             <p className="text-xs font-black uppercase tracking-[0.14em] text-orange-500">Urutanmu</p>
             <div className="mt-3 grid gap-2">
               {safeAnswer.length === 0 ? (
@@ -289,7 +289,7 @@ function MiniActivity({ activity }) {
                 </p>
               ) : (
                 safeAnswer.map((step, stepIndex) => (
-                  <div key={`${step}-${stepIndex}`} className="rounded-xl bg-teal-50 px-3 py-2 text-sm font-black text-teal-800">
+                  <div key={`${step}-${stepIndex}`} className="rounded-xl bg-orange-50 px-3 py-2 text-sm font-black text-orange-800">
                     {stepIndex + 1}. {step}
                   </div>
                 ))
@@ -310,10 +310,10 @@ function MiniActivity({ activity }) {
                     setChecked(false);
                     setAnswer((current) => [...(current ?? []), step]);
                   }}
-                  className={`rounded-2xl border-2 px-4 py-3 text-left text-sm font-black leading-snug transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 ${
+                  className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
                     selected
                       ? 'cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400'
-                      : 'border-white bg-white text-[#4f2912] hover:-translate-y-0.5 hover:border-teal-200'
+                      : 'border-white bg-white text-[#4f2912] hover:-translate-y-0.5 hover:border-orange-200'
                   }`}
                 >
                   {step}
@@ -342,9 +342,9 @@ function MiniActivity({ activity }) {
           type="button"
           onClick={handleCheck}
           disabled={!canCheck}
-          className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-black uppercase tracking-wide shadow-sm transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 ${
+          className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-black uppercase tracking-wide shadow-sm transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
             canCheck
-              ? 'bg-teal-600 text-white hover:-translate-y-0.5 hover:bg-teal-700'
+              ? 'bg-orange-500 text-white hover:-translate-y-0.5 hover:bg-orange-600'
               : 'cursor-not-allowed bg-stone-200 text-stone-500'
           }`}
         >
@@ -360,6 +360,86 @@ function MiniActivity({ activity }) {
           Coba Maneh
         </button>
       </div>
+    </section>
+  );
+}
+
+function MateriEnrichment({ enrichment }) {
+  if (!enrichment) return null;
+
+  const hasKeyPoints = Array.isArray(enrichment.keyPoints) && enrichment.keyPoints.length > 0;
+  const hasAnalysis = Array.isArray(enrichment.analysis) && enrichment.analysis.length > 0;
+
+  if (!hasKeyPoints && !hasAnalysis && !enrichment.note) return null;
+
+  return (
+    <section className="mt-7 grid gap-4">
+      {hasKeyPoints && (
+        <div className="rounded-[18px] border-2 border-orange-200 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(255,247,232,0.94))] p-5 shadow-sm sm:p-6">
+          <div className="mb-4 flex items-center gap-3">
+            <div className="grid size-10 shrink-0 place-items-center rounded-[14px] bg-orange-100 text-orange-600 shadow-inner">
+              <ListChecks size={21} aria-hidden="true" />
+            </div>
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.15em] text-orange-500">
+                Titik Penting
+              </p>
+              <h2 className="text-lg font-black leading-tight text-[#3f2918]">
+                Sing kudu dielingi
+              </h2>
+            </div>
+          </div>
+          <div className="grid gap-2 sm:grid-cols-3">
+            {enrichment.keyPoints.map((point, pointIndex) => (
+              <div key={point} className="rounded-xl border border-orange-100 bg-white/88 px-4 py-3">
+                <span className="mb-2 inline-grid size-6 place-items-center rounded-full bg-orange-500 text-xs font-black text-white">
+                  {pointIndex + 1}
+                </span>
+                <p className="text-sm font-bold leading-relaxed text-[#5d351d]">
+                  {point}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {hasAnalysis && (
+        <div className="rounded-[18px] border-2 border-orange-200 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(255,247,232,0.94))] p-5 shadow-sm sm:p-6">
+          <div className="mb-4 flex items-center gap-3">
+            <div className="grid size-10 shrink-0 place-items-center rounded-[14px] bg-orange-100 text-orange-600 shadow-inner">
+              <BookOpen size={21} aria-hidden="true" />
+            </div>
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.15em] text-orange-500">
+                Bedhah Tuladha
+              </p>
+              <h2 className="text-lg font-black leading-tight text-[#3f2918]">
+                Delengen bageane
+              </h2>
+            </div>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {enrichment.analysis.map((item) => (
+              <div key={`${item.label}-${item.text}`} className="rounded-xl border border-orange-100 bg-white/90 px-4 py-3">
+                <p className="text-[0.68rem] font-black uppercase tracking-[0.14em] text-orange-500">
+                  {item.label}
+                </p>
+                <p className="mt-1 text-sm font-bold leading-relaxed text-[#4f2912]">
+                  {item.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {enrichment.note && (
+        <div className="rounded-2xl border-2 border-amber-200 bg-amber-50 px-4 py-3 text-sm font-black leading-relaxed text-amber-800 sm:px-5">
+          <span className="mr-2 text-amber-500" aria-hidden="true">Cathetan:</span>
+          {enrichment.note}
+        </div>
+      )}
     </section>
   );
 }
@@ -632,6 +712,8 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
               </div>
             </div>
           )}
+
+          <MateriEnrichment enrichment={item.enrichment} />
 
           <MiniActivity activity={miniActivity} />
 
