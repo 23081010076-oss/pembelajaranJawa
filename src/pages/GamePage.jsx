@@ -229,6 +229,25 @@ function buildComposeReview(q, text, scoring, teacherFeedback, questionNum) {
     isCorrect: scoring.points >= 8,
     points: scoring.points,
     maxPoints: 10,
+    criteria: [
+      {
+        label: 'Kata kunci',
+        ok: scoring.hasKeyword,
+        value: scoring.hasKeyword ? 'Wis mlebu' : `Durung katon: ${q.keyword}`,
+      },
+      {
+        label: 'Jumlah larik',
+        ok: scoring.validLines,
+        value: `${scoring.lineCount} larik`,
+      },
+      {
+        label: 'Wanda',
+        ok: scoring.allSyllablesOk,
+        value: scoring.syllableCounts.length > 0
+          ? scoring.syllableCounts.map((count, index) => `${index + 1}: ${count}`).join(', ')
+          : 'Durung kebaca',
+      },
+    ],
     explanation: teacherFeedback?.suggestions?.[0] ?? teacherFeedback?.strengths?.[0] ?? 'Parikanmu wis dinilai saka kata kunci, jumlah baris, suku kata, lan purwakanthi.',
     issues,
   };
@@ -1391,23 +1410,23 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
         </div>
 
         {/* ── Bintang ── */}
-        <div className="flex gap-3" style={s(0.08)}>
+        <div className="flex gap-2" style={s(0.08)} aria-label={`${starsEarned} saka 3 bintang`}>
           {[0, 1, 2].map(i => (
-            <span
+            <Star
               key={i}
               aria-hidden="true"
               style={{
-                fontSize: '2.2rem',
-                lineHeight: 1,
                 opacity: 0,
                 animation: i < starsEarned
                   ? `starPop 0.55s cubic-bezier(0.34,1.56,0.64,1) ${0.1 + i * 0.12}s both`
                   : `resultSubFadeUp 0.4s ease-out ${0.1 + i * 0.12}s both`,
-                filter: i < starsEarned ? 'drop-shadow(0 0 10px #facc15)' : 'none',
+                filter: i < starsEarned ? 'drop-shadow(0 4px 10px rgba(246,183,60,0.35))' : 'none',
               }}
-            >
-              {i < starsEarned ? '⭐' : '☆'}
-            </span>
+              size={30}
+              fill={i < starsEarned ? '#f6b73c' : 'transparent'}
+              strokeWidth={2.6}
+              className={i < starsEarned ? 'text-[#f6b73c]' : 'text-[#d7c8b7]'}
+            />
           ))}
         </div>
 
@@ -1483,11 +1502,11 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
                     className="rounded-[22px] border border-[#eadfce] bg-white p-4 text-[#2e1d10] shadow-[0_10px_24px_rgba(79,49,26,0.07)]"
                   >
                     <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                      <span className="rounded-full border border-red-100 bg-white px-3 py-1 text-xs font-black uppercase tracking-wide text-red-700">
-                        {item.title}
+                      <span className="rounded-full border border-[#eadfce] bg-[#fffaf2] px-3 py-1 text-xs font-black uppercase tracking-wide text-[#7a5030]">
+                        {item.type === 'compose' ? `Evaluasi ${item.title}` : item.title}
                       </span>
                       {item.type === 'compose' && (
-                        <span className="rounded-full border border-amber-200 bg-[#fff7ed] px-3 py-1 text-xs font-black text-amber-800">
+                        <span className="rounded-full border border-amber-200 bg-[#fff7ed] px-3 py-1 text-xs font-black text-amber-800 shadow-sm">
                           Skor {item.points}/{item.maxPoints}
                         </span>
                       )}
@@ -1498,18 +1517,43 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
                         <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-[#b7791f]">Pitakon</p>
                         <p className="whitespace-pre-line rounded-xl border border-[#f1e6d6] bg-[#fffaf2] px-3 py-2">{item.prompt}</p>
                       </div>
+                      {item.type === 'compose' && item.criteria?.length > 0 && (
+                        <div>
+                          <p className="mb-2 text-[0.68rem] font-black uppercase tracking-widest text-[#7a5030]">Rubrik Penilaian</p>
+                          <div className="grid gap-2 sm:grid-cols-3">
+                            {item.criteria.map((criterion) => (
+                              <div
+                                key={criterion.label}
+                                className={`rounded-xl border bg-white px-3 py-2 shadow-sm ${
+                                  criterion.ok ? 'border-emerald-100' : 'border-amber-200'
+                                }`}
+                              >
+                                <div className="flex items-center gap-2">
+                                  {criterion.ok ? (
+                                    <CheckCircle2 size={15} className="shrink-0 text-emerald-600" aria-hidden="true" />
+                                  ) : (
+                                    <AlertCircle size={15} className="shrink-0 text-amber-600" aria-hidden="true" />
+                                  )}
+                                  <p className="text-[0.68rem] font-black uppercase tracking-wider text-[#7a5030]">{criterion.label}</p>
+                                </div>
+                                <p className="mt-1 text-xs font-bold leading-snug text-[#2e1d10]">{criterion.value}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                       <div className="grid gap-3 sm:grid-cols-2">
                         <div>
                           <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-red-600">Wangsulanmu</p>
-                          <p className="whitespace-pre-line rounded-xl border border-red-100 bg-white px-3 py-2 text-[#6f2a1d]">
+                          <p className="min-h-[72px] whitespace-pre-line rounded-xl border border-red-100 bg-white px-3 py-2 text-[#6f2a1d]">
                             {item.userAnswer || 'Durung ana wangsulan'}
                           </p>
                         </div>
                         <div>
-                          <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-green-600">
+                          <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-emerald-700">
                             {item.type === 'compose' ? 'Kriteria Bener' : 'Wangsulan Bener'}
                           </p>
-                          <p className="whitespace-pre-line rounded-xl border border-emerald-100 bg-white px-3 py-2 text-emerald-800">
+                          <p className="min-h-[72px] whitespace-pre-line rounded-xl border border-emerald-100 bg-white px-3 py-2 text-emerald-800">
                             {item.correctAnswer}
                           </p>
                         </div>
