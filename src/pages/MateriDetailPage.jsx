@@ -364,6 +364,86 @@ function MiniActivity({ activity }) {
   );
 }
 
+function MateriEnrichment({ enrichment }) {
+  if (!enrichment) return null;
+
+  const hasKeyPoints = Array.isArray(enrichment.keyPoints) && enrichment.keyPoints.length > 0;
+  const hasAnalysis = Array.isArray(enrichment.analysis) && enrichment.analysis.length > 0;
+
+  if (!hasKeyPoints && !hasAnalysis && !enrichment.note) return null;
+
+  return (
+    <section className="mt-7 grid gap-4">
+      {hasKeyPoints && (
+        <div className="rounded-2xl border-2 border-orange-200 bg-gradient-to-br from-white via-orange-50 to-white p-5 shadow-sm sm:p-6">
+          <div className="mb-4 flex items-center gap-3">
+            <div className="grid size-10 shrink-0 place-items-center rounded-2xl bg-orange-100 text-orange-600 shadow-inner">
+              <ListChecks size={21} aria-hidden="true" />
+            </div>
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.15em] text-orange-500">
+                Titik Penting
+              </p>
+              <h2 className="text-lg font-black leading-tight text-[#3f2918]">
+                Sing kudu dielingi
+              </h2>
+            </div>
+          </div>
+          <div className="grid gap-2 sm:grid-cols-3">
+            {enrichment.keyPoints.map((point, pointIndex) => (
+              <div key={point} className="rounded-xl border border-orange-100 bg-white/88 px-4 py-3">
+                <span className="mb-2 inline-grid size-6 place-items-center rounded-full bg-orange-500 text-xs font-black text-white">
+                  {pointIndex + 1}
+                </span>
+                <p className="text-sm font-bold leading-relaxed text-[#5d351d]">
+                  {point}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {hasAnalysis && (
+        <div className="rounded-2xl border-2 border-teal-200 bg-gradient-to-br from-teal-50 via-white to-orange-50 p-5 shadow-sm sm:p-6">
+          <div className="mb-4 flex items-center gap-3">
+            <div className="grid size-10 shrink-0 place-items-center rounded-2xl bg-teal-100 text-teal-600 shadow-inner">
+              <BookOpen size={21} aria-hidden="true" />
+            </div>
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.15em] text-teal-600">
+                Bedhah Tuladha
+              </p>
+              <h2 className="text-lg font-black leading-tight text-[#3f2918]">
+                Delengen bageane
+              </h2>
+            </div>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {enrichment.analysis.map((item) => (
+              <div key={`${item.label}-${item.text}`} className="rounded-xl border border-teal-100 bg-white/90 px-4 py-3">
+                <p className="text-[0.68rem] font-black uppercase tracking-[0.14em] text-teal-600">
+                  {item.label}
+                </p>
+                <p className="mt-1 text-sm font-bold leading-relaxed text-[#4f2912]">
+                  {item.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {enrichment.note && (
+        <div className="rounded-2xl border-2 border-amber-200 bg-amber-50 px-4 py-3 text-sm font-black leading-relaxed text-amber-800 sm:px-5">
+          <span className="mr-2 text-amber-500" aria-hidden="true">Cathetan:</span>
+          {enrichment.note}
+        </div>
+      )}
+    </section>
+  );
+}
+
 export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, hasPrev, onBackToList }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPreparingAudio, setIsPreparingAudio] = useState(false);
@@ -632,6 +712,8 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
               </div>
             </div>
           )}
+
+          <MateriEnrichment enrichment={item.enrichment} />
 
           <MiniActivity activity={miniActivity} />
 

@@ -5,14 +5,12 @@ export const mainMenu = [
     page: 'learning',
     eyebrow: 'Capaian Pembelajaran',
     body:
-      'Siswa bisa mangerteni teges, ciri, struktur, lan tuladha parikan kanthi runtut. Siswa uga bisa nggawe parikan prasaja nganggo basa Jawa sing trep.',
-    points: [
-      'Peserta didik mampu memahami pengertian parikan sebagai salah satu bentuk sastra lisan Jawa.',
-      'Peserta didik mampu mengidentifikasi ciri-ciri, struktur sampiran, dan isi pada parikan.',
-      'Peserta didik mampu menjelaskan nilai unggah-ungguh basa yang digunakan dalam parikan.',
-      'Peserta didik mampu membuat parikan sederhana secara kreatif, runtut, dan sesuai kaidah bahasa Jawa.',
       'Peserta didik mampu menulis dan mengembangkan kosakata baru dengan menggunakan basa rinengga/lalongèt untuk menyajikan gagasan sesuai unggah-ungguh basa/onḍhâgghâ bhâsa.',
-    ],
+    phase: {
+      fase: 'D',
+      element: 'Menulis',
+    },
+    points: [],
   },
   {
     title: 'Tujuan Pembelajaran',
