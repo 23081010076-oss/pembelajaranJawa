@@ -385,7 +385,7 @@ function ProgressBar({ current, total, color }) {
 }
 
 // ── Level selection screen ───────────────────────────────────────────────────
-function LevelSelect({ scores, onSelect, onReset }) {
+function LevelSelect({ scores, savedResults, onSelect, onReset, onViewResult }) {
   const [showGuide, setShowGuide] = useState(false);
   const playClick = useClickSound();
   const maxScore = gameLevels.reduce((sum, level) => sum + getLevelMaxScore(level), 0);
@@ -524,6 +524,23 @@ function LevelSelect({ scores, onSelect, onReset }) {
                   {best > 0 ? 'Main Maneh' : 'Miwiti'}
                   <ChevronRight size={14} aria-hidden="true" />
                 </span>
+              )}
+
+              {/* Tombol lihat hasil terakhir */}
+              {savedResults?.[level.id] && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    playClick();
+                    onViewResult(level, savedResults[level.id]);
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-full border-2 border-white/60 bg-white/20 px-3 py-1 text-xs font-black uppercase tracking-wide text-white/90 shadow-sm backdrop-blur-sm transition hover:bg-white/30 hover:border-white/80"
+                  aria-label={`Lihat hasil terakhir ${level.label}`}
+                >
+                  <Trophy size={11} aria-hidden="true" />
+                  Lihat Hasil
+                </button>
               )}
 
               {!hasQuestions && (
@@ -1691,6 +1708,7 @@ export function GamePage() {
   const [lastReview, setLastReview] = useState([]);
   const [level3Questions, setLevel3Questions] = useState(null); // soal dinamis tingkat 3
   const [scores, setScores] = useLocalStorage('javanesia-game-scores', {});
+  const [savedResults, setSavedResults] = useLocalStorage('javanesia-game-results', {});
   const { prepareResultSounds, playApplause, playEncourage, playFailed } = useResultSound();
 
   const handleSelectLevel = (level) => {
@@ -1725,6 +1743,11 @@ export function GamePage() {
     setScores((prev) => ({
       ...prev,
       [activeLevel.id]: Math.max(prev[activeLevel.id] ?? 0, finalScore),
+    }));
+    // Simpan hasil terakhir per level ke localStorage
+    setSavedResults((prev) => ({
+      ...prev,
+      [activeLevel.id]: { score: finalScore, review },
     }));
     setLevel3Questions(null);
     setScreen('result');
@@ -1765,16 +1788,32 @@ export function GamePage() {
 
   const handleReset = () => {
     setScores({});
+    setSavedResults({});
     setScreen('select');
     setActiveLevel(null);
     setLastReview([]);
     setLevel3Questions(null);
   };
 
+  // Buka hasil tersimpan dari halaman pilih tingkat
+  const handleViewResult = (level, saved) => {
+    setActiveLevel(level);
+    setLastScore(saved.score);
+    setLastReview(saved.review ?? []);
+    setScreen('result');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="mx-auto w-full max-w-[1100px]">
       {screen === 'select' && (
-        <LevelSelect scores={scores} onSelect={handleSelectLevel} onReset={handleReset} />
+        <LevelSelect
+          scores={scores}
+          savedResults={savedResults}
+          onSelect={handleSelectLevel}
+          onReset={handleReset}
+          onViewResult={handleViewResult}
+        />
       )}
       {screen === 'theme-select' && activeLevel && (
         <ThemeSelectScreen
