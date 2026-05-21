@@ -1091,7 +1091,7 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
     setSelected(prev => {
       const already = prev.find(t => t.id === theme.id);
       if (already) return prev.filter(t => t.id !== theme.id);
-      if (prev.length >= needed) return prev; // sudah cukup, tidak bisa tambah
+      if (prev.length >= needed) return prev;
       return [...prev, theme];
     });
   };
@@ -1099,7 +1099,6 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
   const handleStart = () => {
     if (selected.length < needed) return;
     playClick();
-    // Buat questions dari tema yang dipilih
     const questions = selected.map((t, i) => ({
       id: `t3_selected_${i}`,
       type: 'compose',
@@ -1110,65 +1109,89 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
     }));
     onStart(questions);
   };
+
   return (
     <div className="mx-auto flex w-full max-w-[780px] flex-col gap-6 px-4 py-2">
-      {/* Header */}
+
+      {/* ── Header bar ── */}
       <div className="flex items-center gap-3">
         <button
           type="button"
           onClick={() => { playClick(); onBack(); }}
-          className="rounded-xl border-2 border-white bg-white/95 px-3 py-2 text-xs font-black uppercase text-[#2e1d10] shadow-md transition hover:bg-white hover:-translate-y-0.5"
+          className="rounded-xl border-2 border-white bg-white px-3 py-2 text-xs font-black uppercase text-[#2e1d10] shadow-md transition hover:bg-orange-50 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
         >
           ← Bali
         </button>
         <div
-          className="flex items-center gap-2 rounded-full border-2 px-4 py-1.5 text-sm font-black shadow-md"
-          style={{ borderColor: level.color, background: 'white', color: level.color }}
+          className="flex items-center gap-2 rounded-full border-2 bg-white px-4 py-1.5 text-sm font-black shadow-md"
+          style={{ borderColor: level.color, color: level.color }}
         >
           {level.label} — {level.subtitle}
         </div>
       </div>
 
-      {/* Instruksi */}
+      {/* ── Instruksi card ── */}
       <div
-        className="rounded-3xl p-5 text-white shadow-xl"
-        style={{ background: `linear-gradient(135deg, ${level.color}dd, ${level.color}99)` }}
+        className="relative overflow-hidden rounded-3xl p-5 text-white shadow-2xl"
+        style={{
+          background: `linear-gradient(135deg, ${level.color}, color-mix(in srgb, ${level.color} 70%, #1e3a5f))`,
+          boxShadow: `0 12px 40px ${level.shadow ?? level.color + '55'}`,
+        }}
       >
-        <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-black uppercase tracking-widest">
+        {/* Decorative inner highlight */}
+        <span className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br from-white/20 via-transparent to-transparent" />
+        <span className="pointer-events-none absolute inset-1 rounded-[20px] border border-white/20" />
+
+        <div className="relative mb-3 inline-flex items-center gap-2 rounded-full bg-white/25 px-3 py-1.5 text-xs font-black uppercase tracking-widest shadow-sm">
           <Sparkles size={12} aria-hidden="true" />
           Pituduh Pitakon
         </div>
-        <h2 className="text-xl font-black leading-snug">Pitakon Latihan Nulis Parikan</h2>
-        <div className="mt-3 flex flex-col gap-1.5 text-sm font-semibold text-white/90">
+        <h2 className="relative text-xl font-black leading-snug drop-shadow-sm">
+          Pitakon Latihan Nulis Parikan
+        </h2>
+        <div className="relative mt-3 flex flex-col gap-1.5 text-sm font-semibold text-white/95">
           <p>Gawea parikan dhewe kanthi basa Jawa. Parikanmu kudu:</p>
-          <ul className="mt-1 flex flex-col gap-1 pl-2">
-            <li className="flex items-start gap-2"><span className="text-yellow-300 mt-0.5">✦</span> Ana 2 utawa 4 larik</li>
-            <li className="flex items-start gap-2"><span className="text-yellow-300 mt-0.5">✦</span> Migunakake purwakanthi swara (rima)</li>
-            <li className="flex items-start gap-2"><span className="text-yellow-300 mt-0.5">✦</span> Isi cocog karo tema sing kapilih</li>
+          <ul className="mt-1.5 flex flex-col gap-1.5 pl-1">
+            {[
+              'Ana 2 utawa 4 larik',
+              'Migunakake purwakanthi swara (rima)',
+              'Isi cocog karo tema sing kapilih',
+            ].map((rule) => (
+              <li key={rule} className="flex items-start gap-2">
+                <span className="mt-0.5 shrink-0 text-yellow-300" aria-hidden="true">✦</span>
+                <span>{rule}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
 
-      {/* Pilih tema */}
+      {/* ── Pilih tema section ── */}
       <div>
-        <div className="mb-3 flex items-center justify-between">
-          <h3 className="text-base font-black text-white drop-shadow">
+        {/* Section header */}
+        <div className="mb-4 flex items-center justify-between">
+          <h3 className="text-base font-black text-[#2e1d10] drop-shadow-sm">
             Pilih {needed} Tema
           </h3>
           <span
-            className="rounded-full px-3 py-1 text-sm font-black"
+            className="rounded-full px-4 py-1.5 text-sm font-black shadow-md transition-all"
             style={{
-              background: selected.length === needed ? level.color : 'rgba(255,255,255,0.2)',
-              color: 'white',
+              background: selected.length === needed
+                ? `linear-gradient(135deg, ${level.color}, color-mix(in srgb, ${level.color} 80%, #1e3a5f))`
+                : 'white',
+              color: selected.length === needed ? 'white' : '#9b8a78',
+              border: selected.length === needed ? 'none' : '2px solid #e5d9cc',
+              boxShadow: selected.length === needed ? `0 4px 16px ${level.color}55` : 'none',
             }}
           >
             {selected.length}/{needed} dipilih
           </span>
         </div>
 
+        {/* Theme cards grid */}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {level.themePool.map((theme) => {
-            const isSelected = selected.find(t => t.id === theme.id);
+            const isSelected = !!selected.find(t => t.id === theme.id);
             const isDisabled = !isSelected && selected.length >= needed;
             const selIdx = selected.findIndex(t => t.id === theme.id);
 
@@ -1178,50 +1201,77 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
                 type="button"
                 disabled={isDisabled}
                 onClick={() => toggle(theme)}
-                className={`group relative flex items-start gap-3 rounded-2xl border-2 p-4 text-left transition-all duration-200
+                className={`group relative flex items-start gap-3 rounded-2xl border-2 p-4 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-4
                   ${isSelected
-                    ? 'scale-[1.02] shadow-lg'
+                    ? 'scale-[1.02] shadow-xl'
                     : isDisabled
-                    ? 'cursor-not-allowed opacity-40'
-                    : 'hover:-translate-y-0.5 hover:shadow-md cursor-pointer'
+                    ? 'cursor-not-allowed opacity-50 grayscale-[30%]'
+                    : 'cursor-pointer hover:-translate-y-0.5 hover:shadow-lg'
                   }`}
                 style={{
-                  borderColor: isSelected ? level.color : 'rgba(255,255,255,0.3)',
+                  borderColor: isSelected ? level.color : '#e5d9cc',
                   background: isSelected
-                    ? `linear-gradient(135deg, ${level.color}22, ${level.color}11)`
-                    : 'rgba(255,255,255,0.1)',
-                  backdropFilter: 'blur(8px)',
+                    ? `linear-gradient(135deg, color-mix(in srgb, ${level.color} 12%, white), color-mix(in srgb, ${level.color} 6%, white))`
+                    : 'white',
+                  boxShadow: isSelected
+                    ? `0 8px 28px ${level.color}33, 0 0 0 1px ${level.color}44`
+                    : '0 2px 8px rgba(46,29,16,0.08)',
+                  // eslint-disable-next-line no-dupe-keys
+                  '--tw-ring-color': level.color + '44',
                 }}
               >
-                {/* Nomor urut / centang */}
+                {/* Subtle inner glow when selected */}
+                {isSelected && (
+                  <span
+                    className="pointer-events-none absolute inset-0 rounded-2xl"
+                    style={{ background: `linear-gradient(135deg, ${level.color}10, transparent)` }}
+                  />
+                )}
+
+                {/* Nomor urut / placeholder */}
                 <div
-                  className="flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-black transition-all"
+                  className="relative flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-black transition-all duration-200"
                   style={{
-                    background: isSelected ? level.color : 'rgba(255,255,255,0.2)',
-                    color: 'white',
-                    boxShadow: isSelected ? `0 0 12px ${level.color}66` : 'none',
+                    background: isSelected
+                      ? `linear-gradient(135deg, ${level.color}, color-mix(in srgb, ${level.color} 80%, #1e3a5f))`
+                      : '#f3ede6',
+                    color: isSelected ? 'white' : '#b7a090',
+                    boxShadow: isSelected ? `0 4px 12px ${level.color}55` : 'none',
                   }}
                 >
-                  {isSelected ? selIdx + 1 : <span className="text-white/60 text-xs">○</span>}
+                  {isSelected
+                    ? <span className="text-sm font-black">{selIdx + 1}</span>
+                    : <span className="text-xs">○</span>
+                  }
                 </div>
 
-                <div className="flex-1 min-w-0">
+                {/* Content */}
+                <div className="relative flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="text-xl leading-none" aria-hidden="true">{theme.emoji}</span>
                     <span
-                      className="text-sm font-black"
-                      style={{ color: isSelected ? 'white' : 'rgba(255,255,255,0.9)' }}
+                      className="text-sm font-black leading-tight"
+                      style={{ color: isSelected ? level.color : '#2e1d10' }}
                     >
                       {theme.theme}
                     </span>
                   </div>
-                  <p className="mt-1 text-xs font-semibold text-white/60 leading-snug">
+                  <p
+                    className="mt-1 text-xs font-semibold leading-snug"
+                    style={{ color: isSelected ? '#5a3a22' : '#9b8a78' }}
+                  >
                     {theme.description}
                   </p>
                 </div>
 
+                {/* Checkmark */}
                 {isSelected && (
-                  <CheckCircle2 size={18} className="shrink-0 mt-0.5" style={{ color: level.color }} aria-hidden="true" />
+                  <CheckCircle2
+                    size={18}
+                    className="relative shrink-0 mt-0.5 transition-all"
+                    style={{ color: level.color }}
+                    aria-hidden="true"
+                  />
                 )}
               </button>
             );
@@ -1229,18 +1279,19 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
         </div>
       </div>
 
-      {/* Tombol mulai */}
+      {/* ── Tombol mulai ── */}
       <button
         type="button"
         disabled={selected.length < needed}
         onClick={handleStart}
-        className="flex w-full items-center justify-center gap-2 rounded-2xl py-4 text-lg font-black uppercase text-white shadow-xl transition-all hover:-translate-y-1 disabled:opacity-40 disabled:cursor-not-allowed disabled:translate-y-0"
+        className="flex w-full items-center justify-center gap-2 rounded-2xl py-4 text-lg font-black uppercase text-white shadow-xl transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl active:translate-y-0 disabled:cursor-not-allowed disabled:translate-y-0 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-4"
         style={{
           background: selected.length === needed
-            ? `linear-gradient(135deg, ${level.color}, ${level.color}bb)`
-            : 'rgba(255,255,255,0.15)',
-          border: '2px solid rgba(255,255,255,0.3)',
-          boxShadow: selected.length === needed ? `0 8px 32px ${level.color}66` : 'none',
+            ? `linear-gradient(135deg, ${level.color}, color-mix(in srgb, ${level.color} 75%, #1e3a5f))`
+            : '#d4c4b4',
+          border: selected.length === needed ? `2px solid ${level.color}cc` : '2px solid #c4b4a4',
+          boxShadow: selected.length === needed ? `0 8px 32px ${level.color}55, 0 2px 0 ${level.color}88` : 'none',
+          '--tw-ring-color': level.color + '44',
         }}
       >
         {selected.length < needed
