@@ -486,7 +486,9 @@ function LevelSelect({ scores, onSelect, onReset }) {
                 <div className="mt-1 text-sm font-bold uppercase tracking-widest text-white/80">{level.subtitle}</div>
               </div>
 
-              <p className="text-xs font-semibold leading-snug text-white/75">{level.description}</p>
+              <p className="text-xs font-semibold leading-snug text-white/75">
+                {level.description}
+              </p>
 
               {best > 0 && levelMaxScore > 0 && (
                 <div className="w-full">
@@ -1089,7 +1091,6 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
     }));
     onStart(questions);
   };
-
   return (
     <div className="mx-auto flex w-full max-w-[780px] flex-col gap-6 px-4 py-2">
       {/* Header */}
@@ -1341,10 +1342,19 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
     : { msg: 'Kamu gagal, coba lagi!', sub: 'Sinau maneh banjur coba saka awal.' };
 
   const s = (delay) => ({ animation: `cardSlideUp 0.5s cubic-bezier(0.16,1,0.3,1) ${delay}s both` });
+  const polishedFeedback = pct === 100
+    ? { msg: 'Sampurna!', sub: 'Kabeh wangsulanmu wis trep. Pertahankan cara sinau iki.' }
+    : pct >= 80
+    ? { msg: 'Apik banget!', sub: 'Asilmu wis kuwat, tinggal ngencengi bagean cilik sing durung trep.' }
+    : pct >= 70
+    ? { msg: 'Wis lulus.', sub: 'Nilaimu wis cukup, nanging isih ana bagean sing bisa dirapikake.' }
+    : pct >= 50
+    ? { msg: 'Lumayan.', sub: 'Ana sawetara konsep sing perlu diwaca maneh sadurunge nyoba maneh.' }
+    : { msg: 'Ayo coba maneh.', sub: 'Baleni materi kunci dhisik, banjur kerjakake maneh kanthi luwih tenang.' };
 
   return (
     <div
-      className="mx-auto flex w-full max-w-[760px] flex-col items-center gap-5 px-4 py-2 text-center"
+      className="mx-auto flex w-full max-w-[860px] flex-col items-center gap-5 px-4 py-2"
       style={{ animation: 'resultContentIn 0.4s ease-out both' }}
     >
         {/* ── Ikon + glow ── */}
@@ -1370,10 +1380,13 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
               animation: 'iconSpring 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.05s both',
             }}
           >
-            <span className="text-6xl leading-none" aria-hidden="true"
-              style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))' }}>
-              {pct === 100 ? '🏆' : pct >= 80 ? '🌟' : pct >= 50 ? '👍' : '💪'}
-            </span>
+            <Trophy
+              size={54}
+              aria-hidden="true"
+              className="text-[#fff7d6]"
+              strokeWidth={2.6}
+              style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.28))' }}
+            />
           </div>
         </div>
 
@@ -1401,29 +1414,29 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
         {/* ── Skor besar ── */}
         <div style={s(0.15)}>
           <div
-            className="text-[clamp(3.5rem,10vw,5.5rem)] font-black leading-none text-[#2e1d10]"
-            style={{ filter: `drop-shadow(0 4px 12px ${level.color}44)` }}
+            className="text-center text-[clamp(3.2rem,9vw,5rem)] font-black leading-none text-[#2e1d10]"
+            style={{ filter: `drop-shadow(0 4px 12px ${level.color}33)` }}
           >
             {displayScore}
-            <span className="text-[0.45em] text-gray-400">/{maxScore}</span>
+            <span className="text-[0.45em] text-[#9b8a78]">/{maxScore}</span>
           </div>
-          <div className="mt-1 text-base font-black text-gray-500 tracking-wide">
+          <div className="mt-1 text-center text-base font-black tracking-wide text-[#7a5a3a]">
             {pct}% {isCompose ? 'skor' : 'bener'}
           </div>
         </div>
 
         {/* ── Progress bar animasi ── */}
-        <div className="w-full" style={s(0.22)}>
-          <div className="h-3 w-full overflow-hidden rounded-full bg-white/15">
+        <div className="w-full max-w-[640px]" style={s(0.22)}>
+          <div className="h-3 w-full overflow-hidden rounded-full border border-white/70 bg-[#eadfce] shadow-inner">
             <div
               className="h-full rounded-full"
               style={{
                 '--target-width': `${pct}%`,
                 background: isSuccess
-                  ? `linear-gradient(90deg, ${level.color}, #facc15, ${level.color})`
-                  : 'linear-gradient(90deg, #64748b, #94a3b8)',
+                  ? `linear-gradient(90deg, ${level.color}, color-mix(in srgb, ${level.color} 72%, #f6b73c))`
+                  : 'linear-gradient(90deg, #9ca3af, #6b7280)',
                 animation: 'progressFill 1s cubic-bezier(0.16,1,0.3,1) 0.3s both',
-                boxShadow: isSuccess ? `0 0 12px ${level.color}88` : 'none',
+                boxShadow: isSuccess ? `0 0 14px ${level.color}66` : 'none',
               }}
             />
           </div>
@@ -1431,35 +1444,35 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
 
         {/* ── Feedback card ── */}
         <div
-          className="w-full rounded-3xl bg-white px-6 py-5 shadow-sm ring-1 ring-gray-200"
+          className="w-full rounded-[24px] border border-[#eadfce] bg-[#fffaf2] px-6 py-5 text-center shadow-[0_14px_34px_rgba(79,49,26,0.10)]"
           style={s(0.28)}
         >
           <p className="text-xl font-black text-[#2e1d10]">
-            {resultFeedback.msg}
+            {polishedFeedback.msg}
           </p>
-          <p className="mt-1 text-sm font-semibold text-gray-500">{resultFeedback.sub}</p>
+          <p className="mx-auto mt-1 max-w-xl text-sm font-semibold leading-relaxed text-[#7a5a3a]">{polishedFeedback.sub}</p>
         </div>
 
         {/* Detail evaluasi */}
         {reviewItems.length > 0 && (
           <div
-            className="w-full rounded-3xl bg-white p-4 text-left shadow-sm ring-1 ring-gray-200 sm:p-5"
+            className="w-full rounded-[26px] border border-[#eadfce] bg-[#fffdf8] p-4 text-left shadow-[0_16px_36px_rgba(79,49,26,0.10)] sm:p-5"
             style={s(0.33)}
           >
             <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-xs font-black uppercase tracking-widest text-gray-400">Tinjauan Wangsulan</p>
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-[#b7791f]">Tinjauan Wangsulan</p>
                 <h3 className="text-xl font-black text-[#2e1d10]">
                   {wrongReviews.length > 0 ? `${wrongReviews.length} bagian perlu dibenahi` : 'Kabeh wangsulan wis apik'}
                 </h3>
               </div>
-              <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-black text-gray-600">
+              <span className="rounded-full border border-[#eadfce] bg-[#fff7ed] px-3 py-1 text-xs font-black text-[#7a5030]">
                 {reviewItems.length - wrongReviews.length}/{reviewItems.length} tuntas
               </span>
             </div>
 
             {wrongReviews.length === 0 ? (
-              <div className="mt-4 rounded-2xl border border-emerald-300/40 bg-emerald-400/15 px-4 py-3 text-sm font-bold leading-relaxed text-emerald-50">
+              <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-bold leading-relaxed text-emerald-800">
                 Ora ana wangsulan salah. Terusna latihan gawe parikan supaya luwih lancar lan kreatif.
               </div>
             ) : (
@@ -1467,14 +1480,14 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
                 {wrongReviews.map((item) => (
                   <article
                     key={item.id}
-                    className="rounded-2xl border border-gray-100 bg-gray-50 p-4 text-[#2e1d10] shadow-sm"
+                    className="rounded-[22px] border border-[#eadfce] bg-white p-4 text-[#2e1d10] shadow-[0_10px_24px_rgba(79,49,26,0.07)]"
                   >
                     <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                      <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-black uppercase tracking-wide text-red-700">
+                      <span className="rounded-full border border-red-100 bg-white px-3 py-1 text-xs font-black uppercase tracking-wide text-red-700">
                         {item.title}
                       </span>
                       {item.type === 'compose' && (
-                        <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-black text-amber-800">
+                        <span className="rounded-full border border-amber-200 bg-[#fff7ed] px-3 py-1 text-xs font-black text-amber-800">
                           Skor {item.points}/{item.maxPoints}
                         </span>
                       )}
@@ -1482,13 +1495,13 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
 
                     <div className="grid gap-3 text-sm font-semibold leading-relaxed">
                       <div>
-                        <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-orange-500">Pitakon</p>
-                        <p className="whitespace-pre-line rounded-xl bg-orange-50 px-3 py-2">{item.prompt}</p>
+                        <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-[#b7791f]">Pitakon</p>
+                        <p className="whitespace-pre-line rounded-xl border border-[#f1e6d6] bg-[#fffaf2] px-3 py-2">{item.prompt}</p>
                       </div>
                       <div className="grid gap-3 sm:grid-cols-2">
                         <div>
-                          <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-red-500">Wangsulanmu</p>
-                          <p className="whitespace-pre-line rounded-xl bg-red-50 px-3 py-2 text-red-800">
+                          <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-red-600">Wangsulanmu</p>
+                          <p className="whitespace-pre-line rounded-xl border border-red-100 bg-white px-3 py-2 text-[#6f2a1d]">
                             {item.userAnswer || 'Durung ana wangsulan'}
                           </p>
                         </div>
@@ -1496,19 +1509,19 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
                           <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-green-600">
                             {item.type === 'compose' ? 'Kriteria Bener' : 'Wangsulan Bener'}
                           </p>
-                          <p className="whitespace-pre-line rounded-xl bg-green-50 px-3 py-2 text-green-800">
+                          <p className="whitespace-pre-line rounded-xl border border-emerald-100 bg-white px-3 py-2 text-emerald-800">
                             {item.correctAnswer}
                           </p>
                         </div>
                       </div>
                       <div>
-                        <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-sky-600">Katrangan</p>
-                        <p className="rounded-xl bg-sky-50 px-3 py-2 text-sky-900">{item.explanation}</p>
+                        <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-[#2f7c8c]">Katrangan</p>
+                        <p className="rounded-xl border border-[#dbeafe] bg-white px-3 py-2 text-[#24566a]">{item.explanation}</p>
                       </div>
                       {item.recommendation && (
                         <div>
-                          <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-amber-600">Rekomendasi Ngulang</p>
-                          <p className="rounded-xl bg-amber-50 px-3 py-2 text-amber-900">{item.recommendation}</p>
+                          <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-amber-700">Rekomendasi Ngulang</p>
+                          <p className="rounded-xl border border-amber-100 bg-[#fffaf2] px-3 py-2 text-amber-900">{item.recommendation}</p>
                         </div>
                       )}
                     </div>
@@ -1518,7 +1531,7 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
             )}
 
             {recommendations.length > 1 && (
-              <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-bold leading-relaxed text-amber-900">
+              <div className="mt-4 rounded-2xl border border-[#eadfce] bg-[#fffaf2] px-4 py-3 text-sm font-bold leading-relaxed text-[#7a5030]">
                 <p className="mb-2 text-xs font-black uppercase tracking-widest text-amber-600">Ringkesan Materi Baleni</p>
                 <ul className="grid gap-1.5">
                   {recommendations.map((item) => (
@@ -1533,9 +1546,9 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
         {/* ── Parikan hadiah ── */}
         {pct >= 80 && (
           <div
-            className="w-full rounded-3xl px-5 py-4 ring-2 ring-amber-300"
+            className="w-full rounded-[24px] border border-[#e8c77c] px-5 py-4 text-center shadow-[0_12px_28px_rgba(146,95,22,0.10)]"
             style={{
-              background: 'linear-gradient(135deg, #fffbeb, #ffedd5)',
+              background: 'linear-gradient(135deg, #fffaf0, #fff3d7)',
               ...s(0.36),
             }}
           >
