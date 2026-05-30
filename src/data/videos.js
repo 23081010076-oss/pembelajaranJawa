@@ -5,19 +5,24 @@ export const videoList = [
     embedUrl: 'https://youtu.be/X16jdQeqW6E?si=8OeJAVWU4zqDZXy-',
     videoId: 'X16jdQeqW6E',
   },
-
   {
     title: 'Struktur lan Paugeran Parikan',
     description: 'Mangerteni ciri-ciri, struktur (sampiran lan isi), sarta paugeran nalika nggawe parikan.',
-    embedUrl: 'https://youtu.be/DUaqQAiIiTc?si=uElufC_qsDrazcNY',
+    embedUrl: ' https://youtu.be/_ZLNLi7iggU?si=X7cWRQORcq8pykI2',
     videoId: 'DUaqQAiIiTc',
   },
-
   {
     title: 'Tuladha Parikan Basa Jawa',
     description: 'Maneka warna tuladha parikan (2 gatra lan 4 gatra) supaya luwih gamblang lan gampang dipraktèkaké.',
-    embedUrl: 'https://youtu.be/bgzSY9woZEE?si=P-5IAXFpPpHDMDzF',
-    videoId: 'bgzSY9woZEE',
+    videos: [
+      {
+        embedUrl: 'https://youtu.be/bgzSY9woZEE?si=P-5IAXFpPpHDMDzF',
+        videoId: 'bgzSY9woZEE',
+      },
+      {
+        embedUrl: 'https://youtu.be/EK4-mUPTv6o?si=hiouoWdWoCnAvJ_w',
+        videoId: 'EK4-mUPTv6o',
+      },
+    ],
   },
-
 ];
