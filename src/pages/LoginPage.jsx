@@ -60,8 +60,10 @@ export function LoginPage({ onLogin }) {
     }
 
     playClick();
-    setStudentProfile({ name: trimmed, studentClass: trimmedClass, absen: trimmedAbsen });
-    onLogin({ name: trimmed, studentClass: trimmedClass, absen: trimmedAbsen });
+    setTimeout(() => {
+      setStudentProfile({ name: trimmed, studentClass: trimmedClass, absen: trimmedAbsen });
+      onLogin({ name: trimmed, studentClass: trimmedClass, absen: trimmedAbsen });
+    }, 10);
   };
 
   const clearError = () => {
@@ -244,7 +246,7 @@ export function LoginPage({ onLogin }) {
             {/* Submit */}
             <button
               type="submit"
-              className="group relative w-full overflow-hidden rounded-2xl border-4 border-white/90 bg-[#ffba73] px-6 py-4 font-black text-white shadow-[0_6px_0_rgba(72,64,56,0.25),0_12px_28px_rgba(46,29,16,0.18)] transition-all duration-200 hover:-translate-y-1 hover:bg-[#ffac5e] hover:shadow-[0_10px_0_rgba(72,64,56,0.2),0_18px_32px_rgba(46,29,16,0.22)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-0"
+              className="group relative w-full overflow-hidden rounded-2xl border-4 border-white/90 bg-[#ffba73] px-6 py-4 font-black text-white shadow-[0_6px_0_rgba(72,64,56,0.25),0_12px_28px_rgba(46,29,16,0.18)] transition-all duration-200 hover:-translate-y-1 hover:bg-[#ffac5e] hover:shadow-[0_10px_0_rgba(72,64,56,0.2),0_18px_32px_rgba(46,29,16,0.22)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-[3px] active:shadow-[0_2px_0_rgba(72,64,56,0.25),0_4px_10px_rgba(46,29,16,0.1)]"
             >
               <span className="pointer-events-none absolute inset-1 rounded-xl border border-white/40" />
               <span className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b from-white/20 to-transparent" />

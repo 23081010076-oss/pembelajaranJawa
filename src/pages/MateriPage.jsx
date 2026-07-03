@@ -59,8 +59,13 @@ export function MateriPage({ materiItems, onOpenMateri }) {
             <button
             key={item.title}
             type="button"
-            onClick={() => { playClick(); onOpenMateri(item); }}
-            className={`group relative flex min-w-0 flex-col gap-2.5 overflow-hidden rounded-[1.15rem] border-[3px] bg-white/92 p-4 text-left shadow-[0_5px_0_rgba(95,60,31,0.14),0_10px_20px_rgba(78,45,21,0.10)] backdrop-blur-sm transition-all duration-200 hover:-translate-y-1.5 hover:border-orange-300 hover:shadow-[0_10px_0_rgba(95,60,31,0.12),0_18px_30px_rgba(78,45,21,0.18)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 active:translate-y-0 sm:gap-3 sm:rounded-2xl sm:border-4 sm:p-5 animate-[fadeInUp_0.55s_ease-out] ${
+            onClick={() => {
+              playClick();
+              setTimeout(() => {
+                onOpenMateri(item);
+              }, 10);
+            }}
+            className={`group relative flex min-w-0 flex-col gap-2.5 overflow-hidden rounded-[1.15rem] border-[3px] bg-white/92 p-4 text-left shadow-[0_5px_0_rgba(95,60,31,0.14),0_10px_20px_rgba(78,45,21,0.10)] backdrop-blur-sm transition-all duration-200 hover:-translate-y-1.5 hover:border-orange-300 hover:shadow-[0_10px_0_rgba(95,60,31,0.12),0_18px_30px_rgba(78,45,21,0.18)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 active:translate-y-[2px] active:shadow-[0_2px_0_rgba(95,60,31,0.14),0_4px_8px_rgba(78,45,21,0.06)] sm:gap-3 sm:rounded-2xl sm:border-4 sm:p-5 animate-[fadeInUp_0.55s_ease-out] ${
               isCompleted ? 'border-green-300' : isVisited ? 'border-orange-300' : 'border-white/90'
             }`}
             style={{ '--stagger-delay': `${index * 80}ms`, animationDelay: `${index * 0.08}s`, animationFillMode: 'both' }}

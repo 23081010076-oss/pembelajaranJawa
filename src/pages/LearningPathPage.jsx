@@ -153,7 +153,7 @@ export function LearningPathPage({ onNavigate }) {
                       className={`inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-xs font-black uppercase tracking-wide shadow-sm transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
                         isLocked
                           ? 'cursor-not-allowed bg-stone-200 text-stone-500'
-                          : 'bg-orange-500 text-white hover:-translate-y-0.5 hover:bg-orange-600'
+                          : 'bg-orange-500 text-white hover:-translate-y-0.5 hover:bg-orange-600 active:translate-y-0 active:scale-95'
                       }`}
                     >
                       {step.id === 'game' || step.id === 'gawe-parikan' ? <Gamepad2 size={15} aria-hidden="true" /> : <Sparkles size={15} aria-hidden="true" />}
@@ -168,8 +168,8 @@ export function LearningPathPage({ onNavigate }) {
                         isLocked
                           ? 'cursor-not-allowed border-stone-200 bg-white/60 text-stone-400'
                           : isDone
-                          ? 'border-green-300 bg-green-50 text-green-700 hover:bg-green-100'
-                          : 'border-orange-200 bg-white text-orange-600 hover:border-orange-300 hover:bg-orange-50'
+                          ? 'border-green-300 bg-green-50 text-green-700 hover:bg-green-100 active:translate-y-0 active:scale-95'
+                          : 'border-orange-200 bg-white text-orange-600 hover:border-orange-300 hover:bg-orange-50 active:translate-y-0 active:scale-95'
                       }`}
                     >
                       {isDone ? <CheckCircle2 size={15} aria-hidden="true" /> : <Circle size={15} aria-hidden="true" />}
@@ -245,7 +245,7 @@ export function LearningPathPage({ onNavigate }) {
           <button
             type="button"
             onClick={resetProgress}
-            className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-orange-200 bg-white px-4 py-2 text-xs font-black uppercase tracking-wide text-orange-600 transition hover:border-orange-300 hover:bg-orange-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
+            className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-orange-200 bg-white px-4 py-2 text-xs font-black uppercase tracking-wide text-orange-600 transition hover:border-orange-300 hover:bg-orange-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-0 active:scale-95"
           >
             <RotateCcw size={15} aria-hidden="true" />
             Reset Semua Progres

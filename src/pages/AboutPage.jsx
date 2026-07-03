@@ -50,7 +50,7 @@ function ProfileCard({ icon: Icon, label, person, accent = '#ff9b2f', onOpen }) 
       onClick={onOpen}
       className={`group relative w-full overflow-hidden rounded-2xl border-4 border-white/85 bg-white/95 p-5 text-left shadow-[0_8px_28px_rgba(78,45,21,0.16)] ${
         isInteractive
-          ? 'transition hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(78,45,21,0.2)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200'
+          ? 'transition hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(78,45,21,0.2)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-0 active:scale-[0.99] active:shadow-md'
           : ''
       }`}
     >
@@ -132,7 +132,7 @@ function ProfileModal({ icon: Icon, label, person, accent, onClose }) {
           <button
             type="button"
             onClick={onClose}
-            className="absolute right-4 top-4 z-10 grid size-10 place-items-center rounded-full bg-white/90 text-[#4f2912] shadow-md transition hover:bg-orange-500 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 lg:hidden"
+            className="absolute right-4 top-4 z-10 grid size-10 place-items-center rounded-full bg-white/90 text-[#4f2912] shadow-md transition hover:bg-orange-500 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:scale-90 lg:hidden"
             aria-label="Tutup detail profil"
           >
             <X size={22} aria-hidden="true" />
@@ -154,7 +154,7 @@ function ProfileModal({ icon: Icon, label, person, accent, onClose }) {
           <button
             type="button"
             onClick={onClose}
-            className="absolute right-5 top-5 hidden size-10 place-items-center rounded-full bg-orange-50 text-orange-500 shadow-sm transition hover:bg-orange-500 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 lg:grid"
+            className="absolute right-5 top-5 hidden size-10 place-items-center rounded-full bg-orange-50 text-orange-500 shadow-sm transition hover:bg-orange-500 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:scale-90 lg:grid"
             aria-label="Tutup detail profil"
           >
             <X size={22} aria-hidden="true" />

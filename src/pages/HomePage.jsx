@@ -110,7 +110,7 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, stu
               type="button"
               onClick={handleLogout}
               title="Ganti nama"
-              className="grid size-10 shrink-0 place-items-center rounded-xl border-2 border-orange-200 bg-white text-orange-600 shadow-sm transition-all hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-50 hover:text-orange-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 sm:inline-flex sm:w-auto sm:px-3"
+              className="grid size-10 shrink-0 place-items-center rounded-xl border-2 border-orange-200 bg-white text-orange-600 shadow-sm transition-all hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-50 hover:text-orange-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-0 active:scale-95 sm:inline-flex sm:w-auto sm:px-3"
             >
               <LogOut size={12} aria-hidden="true" />
               <span className="hidden text-xs font-black uppercase sm:inline">Ganti</span>
@@ -122,7 +122,7 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, stu
           <button
             type="button"
             onClick={handleOpenPath}
-            className="inline-flex items-center gap-2 rounded-full border-2 border-white/95 bg-orange-500 px-5 py-2 text-sm font-black uppercase tracking-wide text-white shadow-[0_5px_0_rgba(95,60,31,0.18),0_10px_20px_rgba(46,29,16,0.14)] transition hover:-translate-y-0.5 hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
+            className="inline-flex items-center gap-2 rounded-full border-2 border-white/95 bg-orange-500 px-5 py-2 text-sm font-black uppercase tracking-wide text-white shadow-[0_5px_0_rgba(95,60,31,0.18),0_10px_20px_rgba(46,29,16,0.14)] transition hover:-translate-y-0.5 hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-px active:shadow-[0_2px_0_rgba(95,60,31,0.18),0_4px_10px_rgba(46,29,16,0.1)] active:scale-98"
           >
             <Map size={17} aria-hidden="true" />
             Alur Belajar
@@ -130,7 +130,7 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, stu
           <button
             type="button"
             onClick={handleOpenGuide}
-            className="inline-flex items-center gap-2 rounded-full border-2 border-white/90 bg-white/90 px-5 py-2 text-sm font-black uppercase tracking-wide text-orange-500 shadow-[0_5px_0_rgba(95,60,31,0.18),0_10px_20px_rgba(46,29,16,0.14)] transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
+            className="inline-flex items-center gap-2 rounded-full border-2 border-white/90 bg-white/90 px-5 py-2 text-sm font-black uppercase tracking-wide text-orange-500 shadow-[0_5px_0_rgba(95,60,31,0.18),0_10px_20px_rgba(46,29,16,0.14)] transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-px active:shadow-[0_2px_0_rgba(95,60,31,0.18),0_4px_10px_rgba(46,29,16,0.1)] active:scale-98"
           >
             <HelpCircle size={17} aria-hidden="true" />
             Petunjuk

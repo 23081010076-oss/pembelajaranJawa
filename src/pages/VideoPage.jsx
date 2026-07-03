@@ -70,7 +70,7 @@ export function VideoPage({ videos }) {
         <button
           type="button"
           onClick={handleBack}
-          className="inline-flex w-fit items-center gap-2 rounded-xl border-2 border-white/80 bg-white/80 px-4 py-2 text-sm font-black text-[#7a4f2e] shadow-md backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
+          className="inline-flex w-fit items-center gap-2 rounded-xl border-2 border-white/80 bg-white/80 px-4 py-2 text-sm font-black text-[#7a4f2e] shadow-md backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-0 active:scale-95"
         >
           <ArrowLeft size={16} aria-hidden="true" />
           Bali menyang Daftar Video
@@ -221,7 +221,7 @@ function VideoCard({ video, compact = false, thumbError, onThumbError, onClick }
       <button
         type="button"
         onClick={onClick}
-        className="group flex w-full items-center gap-3 overflow-hidden rounded-2xl border-2 border-white/80 bg-white/90 p-3 text-left shadow-md transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
+        className="group flex w-full items-center gap-3 overflow-hidden rounded-2xl border-2 border-white/80 bg-white/90 p-3 text-left shadow-md transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-0 active:scale-95"
       >
         {/* Thumbnail */}
         <div className="relative aspect-video w-28 shrink-0 overflow-hidden rounded-xl bg-black">
@@ -248,7 +248,7 @@ function VideoCard({ video, compact = false, thumbError, onThumbError, onClick }
     <button
       type="button"
       onClick={onClick}
-      className="group relative flex w-full flex-col overflow-hidden rounded-3xl border-4 border-white/90 bg-white shadow-[0_6px_0_rgba(95,60,31,0.15),0_12px_28px_rgba(78,45,21,0.14)] transition-all duration-200 hover:-translate-y-2 hover:shadow-[0_10px_0_rgba(95,60,31,0.12),0_20px_36px_rgba(78,45,21,0.2)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 active:translate-y-0"
+      className="group relative flex w-full flex-col overflow-hidden rounded-3xl border-4 border-white/90 bg-white shadow-[0_6px_0_rgba(95,60,31,0.15),0_12px_28px_rgba(78,45,21,0.14)] transition-all duration-200 hover:-translate-y-2 hover:shadow-[0_10px_0_rgba(95,60,31,0.12),0_20px_36px_rgba(78,45,21,0.2)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 active:translate-y-[3px] active:shadow-[0_2px_0_rgba(95,60,31,0.15),0_4px_10px_rgba(78,45,21,0.08)]"
       aria-label={`Putar video: ${video.title}`}
     >
       {/* Thumbnail */}
