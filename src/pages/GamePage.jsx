@@ -1795,6 +1795,12 @@ export function GamePage({ studentStorageId }) {
   };
 
   const handleReset = () => {
+    const confirmed = window.confirm(
+      'Reset skor game kanggo siswa iki?\n\nData skor lan hasil game ing identitas sing lagi aktif bakal dibusak.'
+    );
+
+    if (!confirmed) return;
+
     setScores({});
     setSavedResults({});
     setScreen('select');

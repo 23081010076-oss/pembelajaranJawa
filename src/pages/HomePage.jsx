@@ -1,7 +1,8 @@
-import { BarChart3, BookOpenCheck, ClipboardCheck, Gamepad2, Hash, HelpCircle, LogOut, Map, School } from 'lucide-react';
+import { BarChart3, BookOpenCheck, ClipboardCheck, Gamepad2, Hash, HelpCircle, LogOut, Map, RotateCcw, School } from 'lucide-react';
 import { MenuButton } from '../components/MenuButton.jsx';
 import { useClickSound } from '../hooks/useClickSound.js';
 import { useStudentLocalStorage } from '../hooks/useLocalStorage.js';
+import { learningPathSteps } from '../data/learningPath.js';
 import { materiList } from '../data/materi.js';
 import {
   LEARNING_PROGRESS_KEY,
@@ -9,6 +10,8 @@ import {
   getMateriProgressStats,
   initialLearningProgress,
 } from '../utils/learningProgress.js';
+
+const initialLearningPathProgress = Object.fromEntries(learningPathSteps.map((step) => [step.id, false]));
 
 function getInitials(name) {
   return name
@@ -21,13 +24,17 @@ function getInitials(name) {
 
 export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, studentName, studentClass, studentAbsen, onLogout }) {
   const playClick = useClickSound();
-  const [learningProgress] = useStudentLocalStorage(LEARNING_PROGRESS_KEY, initialLearningProgress);
-  const [gameScores] = useStudentLocalStorage('javanesia-game-scores', {});
+  const [learningProgress, setLearningProgress] = useStudentLocalStorage(LEARNING_PROGRESS_KEY, initialLearningProgress);
+  const [learningPathProgress, setLearningPathProgress] = useStudentLocalStorage('javanesia-learning-path', initialLearningPathProgress);
+  const [gameScores, setGameScores] = useStudentLocalStorage('javanesia-game-scores', {});
+  const [, setGameResults] = useStudentLocalStorage('javanesia-game-results', {});
   const materiStats = getMateriProgressStats(materiList, learningProgress);
   const gameStats = getGameProgressStats(gameScores);
   const gameLevelTotal = 3;
   const gamePercent = Math.round((Math.min(gameStats.playedLevels, gameLevelTotal) / gameLevelTotal) * 100);
   const evaluationPercent = Math.round((materiStats.percent + gamePercent) / 2);
+  const hasLearningPathProgress = Object.values(learningPathProgress ?? {}).some(Boolean);
+  const hasAnyProgress = materiStats.visitedCount > 0 || materiStats.completedCount > 0 || gameStats.playedLevels > 0 || hasLearningPathProgress;
 
   const handleOpenGuide = () => {
     playClick();
@@ -42,6 +49,21 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, stu
   const handleLogout = () => {
     playClick();
     onLogout?.();
+  };
+
+  const handleResetProgress = () => {
+    if (!hasAnyProgress) return;
+    playClick();
+    const confirmed = window.confirm(
+      'Reset progres siswa iki?\n\nData materi, alur belajar, skor game, lan hasil game kanggo identitas sing lagi aktif bakal dibusak.'
+    );
+
+    if (!confirmed) return;
+
+    setLearningProgress(initialLearningProgress);
+    setLearningPathProgress(initialLearningPathProgress);
+    setGameScores({});
+    setGameResults({});
   };
 
   // Sapaan waktu berdasarkan jam
@@ -146,6 +168,16 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, stu
                   <ClipboardCheck size={13} aria-hidden="true" />
                   Ringkesan Sinau
                 </span>
+                <button
+                  type="button"
+                  onClick={handleResetProgress}
+                  disabled={!hasAnyProgress}
+                  title={hasAnyProgress ? 'Reset progres siswa iki' : 'Belum ada progres yang bisa direset'}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-orange-200 bg-white/86 px-3 py-1 text-[0.66rem] font-black uppercase tracking-[0.12em] text-orange-600 shadow-sm transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-px active:scale-95 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:border-orange-200 disabled:hover:bg-white/86 disabled:hover:text-orange-600"
+                >
+                  <RotateCcw size={12} aria-hidden="true" />
+                  Reset Progres
+                </button>
               </div>
 
               <p className="mt-3 text-sm font-black leading-snug text-[#3d1f00] sm:text-[0.95rem]">

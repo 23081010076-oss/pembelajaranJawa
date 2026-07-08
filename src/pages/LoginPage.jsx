@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BookOpen, ChevronRight, Hash, School, User } from 'lucide-react';
+import { BookOpen, ChevronRight, Hash, Info, School, User } from 'lucide-react';
 import { setStudentProfile } from '../hooks/useStudentName.js';
 import { useClickSound } from '../hooks/useClickSound.js';
 
@@ -233,6 +233,13 @@ export function LoginPage({ onLogin }) {
                   />
                 </div>
               </div>
+            </div>
+
+            <div className="flex items-start gap-2 rounded-2xl border border-orange-200 bg-orange-50/80 px-3 py-2.5 text-left text-xs font-bold leading-relaxed text-[#7a5030]">
+              <Info size={15} className="mt-0.5 shrink-0 text-orange-500" aria-hidden="true" />
+              <p>
+                Progres bakal kebuka maneh yen jeneng, kelas, lan absen padha karo sing tau mlebu sadurunge.
+              </p>
             </div>
 
             {error && (

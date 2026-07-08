@@ -48,6 +48,12 @@ export function LearningPathPage({ onNavigate }) {
 
   const resetProgress = () => {
     playClick();
+    const confirmed = window.confirm(
+      'Reset kabeh progres siswa iki?\n\nData alur belajar, materi, lan skor game kanggo identitas sing lagi aktif bakal dibusak.'
+    );
+
+    if (!confirmed) return;
+
     setProgress(initialProgress);
     setLearningProgress(initialLearningProgress);
     setGameScores({});
