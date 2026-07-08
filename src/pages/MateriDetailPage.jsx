@@ -3,7 +3,7 @@ import { CheckCircle2, ChevronLeft, ChevronRight, ListChecks, RotateCcw, Volume2
 import { materiActivities } from '../data/materiActivities.js';
 import { useClickSound } from '../hooks/useClickSound.js';
 import { playAudioFile } from '../hooks/useAudioFile.js';
-import { useLocalStorage } from '../hooks/useLocalStorage.js';
+import { useStudentLocalStorage } from '../hooks/useLocalStorage.js';
 import {
   LEARNING_PROGRESS_KEY,
   initialLearningProgress,
@@ -452,7 +452,7 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
   const [touchEnd, setTouchEnd] = useState(null);
   const narrationRef = useRef(null);
   const playClick = useClickSound();
-  const [learningProgress, setLearningProgress] = useLocalStorage(LEARNING_PROGRESS_KEY, initialLearningProgress);
+  const [learningProgress, setLearningProgress] = useStudentLocalStorage(LEARNING_PROGRESS_KEY, initialLearningProgress);
 
   const lines = item.example ? item.example.split('\n') : [];
   const stimulus = item.stimulus ?? buildFallbackStimulus(index, item.title);

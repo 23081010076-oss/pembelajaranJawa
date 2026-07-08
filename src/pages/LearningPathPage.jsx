@@ -4,7 +4,7 @@ import { learningPathSteps } from '../data/learningPath.js';
 import { mainMenu } from '../data/mainMenu.js';
 import { materiList } from '../data/materi.js';
 import { useClickSound } from '../hooks/useClickSound.js';
-import { useLocalStorage } from '../hooks/useLocalStorage.js';
+import { useStudentLocalStorage } from '../hooks/useLocalStorage.js';
 import {
   LEARNING_PROGRESS_KEY,
   getGameProgressStats,
@@ -29,9 +29,9 @@ function getLearningItem(title) {
 
 export function LearningPathPage({ onNavigate }) {
   const playClick = useClickSound();
-  const [progress, setProgress] = useLocalStorage('javanesia-learning-path', initialProgress);
-  const [learningProgress, setLearningProgress] = useLocalStorage(LEARNING_PROGRESS_KEY, initialLearningProgress);
-  const [gameScores, setGameScores] = useLocalStorage('javanesia-game-scores', {});
+  const [progress, setProgress] = useStudentLocalStorage('javanesia-learning-path', initialProgress);
+  const [learningProgress, setLearningProgress] = useStudentLocalStorage(LEARNING_PROGRESS_KEY, initialLearningProgress);
+  const [gameScores, setGameScores] = useStudentLocalStorage('javanesia-game-scores', {});
   const completedCount = learningPathSteps.filter((step) => progress[step.id]).length;
   const progressPercent = Math.round((completedCount / learningPathSteps.length) * 100);
   const materiStats = getMateriProgressStats(materiList, learningProgress);

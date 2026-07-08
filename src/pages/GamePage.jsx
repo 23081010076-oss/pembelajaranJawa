@@ -5,7 +5,7 @@ import { useClickSound } from '../hooks/useClickSound.js';
 import { useFeedbackSound } from '../hooks/useFeedbackSound.js';
 import { useResultSound } from '../hooks/useResultSound.js';
 import { useAnswerCrowdSound } from '../hooks/useAnswerCrowdSound.js';
-import { useLocalStorage } from '../hooks/useLocalStorage.js';
+import { useStudentLocalStorage } from '../hooks/useLocalStorage.js';
 
 // ── Suku kata counter ────────────────────────────────────────────────────────
 // Hitung suku kata sederhana: pisah per vokal cluster
@@ -1701,15 +1701,23 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
 }
 
 // ── Main GamePage ────────────────────────────────────────────────────────────
-export function GamePage() {
+export function GamePage({ studentStorageId }) {
   const [screen, setScreen] = useState('select');
   const [activeLevel, setActiveLevel] = useState(null);
   const [lastScore, setLastScore] = useState(0);
   const [lastReview, setLastReview] = useState([]);
   const [level3Questions, setLevel3Questions] = useState(null); // soal dinamis tingkat 3
-  const [scores, setScores] = useLocalStorage('javanesia-game-scores', {});
-  const [savedResults, setSavedResults] = useLocalStorage('javanesia-game-results', {});
+  const [scores, setScores] = useStudentLocalStorage('javanesia-game-scores', {});
+  const [savedResults, setSavedResults] = useStudentLocalStorage('javanesia-game-results', {});
   const { prepareResultSounds, playApplause, playEncourage, playFailed } = useResultSound();
+
+  useEffect(() => {
+    setScreen('select');
+    setActiveLevel(null);
+    setLastScore(0);
+    setLastReview([]);
+    setLevel3Questions(null);
+  }, [studentStorageId]);
 
   const handleSelectLevel = (level) => {
     prepareResultSounds();

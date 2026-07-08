@@ -1,7 +1,7 @@
 import { BarChart3, BookOpenCheck, ClipboardCheck, Gamepad2, Hash, HelpCircle, LogOut, Map, School } from 'lucide-react';
 import { MenuButton } from '../components/MenuButton.jsx';
 import { useClickSound } from '../hooks/useClickSound.js';
-import { useLocalStorage } from '../hooks/useLocalStorage.js';
+import { useStudentLocalStorage } from '../hooks/useLocalStorage.js';
 import { materiList } from '../data/materi.js';
 import {
   LEARNING_PROGRESS_KEY,
@@ -21,8 +21,8 @@ function getInitials(name) {
 
 export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, studentName, studentClass, studentAbsen, onLogout }) {
   const playClick = useClickSound();
-  const [learningProgress] = useLocalStorage(LEARNING_PROGRESS_KEY, initialLearningProgress);
-  const [gameScores] = useLocalStorage('javanesia-game-scores', {});
+  const [learningProgress] = useStudentLocalStorage(LEARNING_PROGRESS_KEY, initialLearningProgress);
+  const [gameScores] = useStudentLocalStorage('javanesia-game-scores', {});
   const materiStats = getMateriProgressStats(materiList, learningProgress);
   const gameStats = getGameProgressStats(gameScores);
   const gameLevelTotal = 3;

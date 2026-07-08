@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckCircle2, ChevronRight, BookOpen, Circle } from 'lucide-react';
 import { useClickSound } from '../hooks/useClickSound.js';
-import { useLocalStorage } from '../hooks/useLocalStorage.js';
+import { useStudentLocalStorage } from '../hooks/useLocalStorage.js';
 import {
   LEARNING_PROGRESS_KEY,
   getMateriProgressStats,
@@ -11,7 +11,7 @@ import {
 
 export function MateriPage({ materiItems, onOpenMateri }) {
   const playClick = useClickSound();
-  const [learningProgress] = useLocalStorage(LEARNING_PROGRESS_KEY, initialLearningProgress);
+  const [learningProgress] = useStudentLocalStorage(LEARNING_PROGRESS_KEY, initialLearningProgress);
   const normalizedProgress = normalizeLearningProgress(learningProgress);
   const materiStats = getMateriProgressStats(materiItems, normalizedProgress);
 

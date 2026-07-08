@@ -7,6 +7,16 @@ const STORAGE_KEY = 'javanesia-student-name';
 const CLASS_STORAGE_KEY = 'javanesia-student-class';
 const ABSEN_STORAGE_KEY = 'javanesia-student-absen';
 
+function normalizeStoragePart(value) {
+  return String(value ?? '')
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 export function getStudentName() {
   try {
     return localStorage.getItem(STORAGE_KEY) || null;
@@ -29,6 +39,19 @@ export function getStudentAbsen() {
   } catch {
     return null;
   }
+}
+
+export function getStudentStorageId(profile) {
+  const name = normalizeStoragePart(profile?.name ?? getStudentName());
+  const studentClass = normalizeStoragePart(profile?.studentClass ?? getStudentClass());
+  const absen = normalizeStoragePart(profile?.absen ?? getStudentAbsen());
+  const id = [name, studentClass, absen].filter(Boolean).join('__');
+
+  return id || 'guest';
+}
+
+export function getStudentStorageKey(baseKey, profile) {
+  return `${baseKey}::student::${getStudentStorageId(profile)}`;
 }
 
 export function setStudentName(name) {
