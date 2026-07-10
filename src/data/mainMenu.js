@@ -46,6 +46,13 @@ export const mainMenu = [
       'Menu video disiapake kanggo nampilake media pembelajaran parikan. Link utawa file video bisa ditambahake ing tahap berikutnya.',
   },
   {
+    title: 'Evaluasi',
+    icon: 'clipboard',
+    page: 'evaluasi',
+    body:
+      'Uji pemahamanmu babagan parikan Jawa kanthi nggarap evaluasi lan entuk sertifikat.',
+  },
+  {
     title: 'Tentang Pengembang',
     icon: 'info',
     page: 'about',

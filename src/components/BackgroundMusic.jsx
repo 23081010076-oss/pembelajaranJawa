@@ -14,7 +14,7 @@ function readSavedVolume() {
   return Math.min(1, Math.max(0, parsedVolume));
 }
 
-export function BackgroundMusic({ isPlayingApp }) {
+export function BackgroundMusic({ isPlayingApp, hasTopNav = false }) {
   const [isMuted, setIsMuted] = useState(false);
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
   const [volume, setVolume] = useState(readSavedVolume);
@@ -28,12 +28,13 @@ export function BackgroundMusic({ isPlayingApp }) {
     const audio = audioRef.current;
     if (!audio) return;
 
-    audio.volume = volume;
+    audio.volume = effectiveVolume;
+    audio.muted = isMuted || effectiveVolume === 0;
 
     if (isPlayingApp) {
       // Coba putar otomatis
       const tryPlay = () => {
-        if (audio.paused && !isMuted && volume > 0) {
+        if (audio.paused && !isMuted && effectiveVolume > 0) {
           audio.play().catch(() => {
             // Jika diblokir browser, abaikan saja, karena listener di bawah
             // akan mencoba lagi saat ada interaksi.
@@ -68,14 +69,14 @@ export function BackgroundMusic({ isPlayingApp }) {
   // Efek untuk handle mute/unmute manual via tombol
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = volume;
-      audioRef.current.muted = isMuted || volume === 0;
+      audioRef.current.volume = effectiveVolume;
+      audioRef.current.muted = isMuted || effectiveVolume === 0;
       // Jika di-unmute oleh user dan status app playing, coba paksa play lagi
-      if (!isMuted && volume > 0 && isPlayingApp) {
+      if (!isMuted && effectiveVolume > 0 && isPlayingApp) {
         audioRef.current.play().catch(() => {});
       }
     }
-  }, [isMuted, volume, isPlayingApp]);
+  }, [isMuted, effectiveVolume, isPlayingApp]);
 
   useEffect(() => {
     window.localStorage.setItem('javanesia-backsound-volume', String(volume));
@@ -105,7 +106,7 @@ export function BackgroundMusic({ isPlayingApp }) {
         loop
         preload="auto"
       />
-      <div className={`fixed right-3 top-[74px] z-[999] flex items-start gap-2 border-2 border-orange-200 bg-white px-2 py-2 text-orange-600 shadow-[0_8px_20px_rgba(46,29,16,0.15)] md:bottom-8 md:right-8 md:top-auto ${isVolumeOpen ? 'rounded-2xl' : 'rounded-full'}`}>
+      <div className={`fixed right-3 z-[999] flex items-start gap-2 border-2 border-orange-200 bg-white px-2 py-2 text-orange-600 shadow-[0_8px_20px_rgba(46,29,16,0.15)] ${hasTopNav ? 'top-[136px]' : 'top-[74px]'} md:bottom-8 md:right-8 md:top-auto ${isVolumeOpen ? 'rounded-2xl' : 'rounded-full'}`}>
         <button
           type="button"
           onClick={toggleVolumePanel}

@@ -1,4 +1,4 @@
-const VERSION = '2026-05-17-v2';
+const VERSION = '2026-05-21-v5';
 const CORE_CACHE = `javanesia-core-${VERSION}`;
 const RUNTIME_CACHE = `javanesia-runtime-${VERSION}`;
 
@@ -35,15 +35,15 @@ const CORE_ASSETS = [
 ];
 
 const LEARNING_AUDIO_ASSETS = [
-  '/assets/sounds/materi-01-tegese-parikan.mp3',
-  '/assets/sounds/materi-02-cirine-parikan.mp3',
-  '/assets/sounds/materi-03-struktur-parikan.mp3',
-  '/assets/sounds/materi-04-jenis-parikan.mp3',
-  '/assets/sounds/materi-05-paedah-parikan.mp3',
-  '/assets/sounds/materi-06-panggone-ukara.mp3',
-  '/assets/sounds/materi-07-cara-ngerakit.mp3',
-  '/assets/sounds/materi-08-rong-gatra.mp3',
-  '/assets/sounds/materi-09-patang-gatra.mp3',
+  '/assets/sounds/Teegese Parikan.mp3',
+  '/assets/sounds/Titikan Parikan.mp3',
+  '/assets/sounds/Struktur Parikan.mp3',
+  '/assets/sounds/Jenis Parikan.mp3',
+  '/assets/sounds/Paedah Parikan.mp3',
+  '/assets/sounds/Panggone Ukara Ing Parikan.mp3',
+  '/assets/sounds/Cara Ngrakit Parikan.mp3',
+  '/assets/sounds/Tuladha Parikan Rong Gatra.mp3',
+  '/assets/sounds/Tuladha Parikan Patang Gatra.mp3',
 ];
 
 async function cacheQuietly(cacheName, urls) {
@@ -100,6 +100,25 @@ async function networkFirstNavigation(request) {
   }
 }
 
+self.addEventListener('message', (event) => {
+  if (event.data?.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+async function networkFirstAsset(request) {
+  try {
+    const response = await fetch(request, { cache: 'reload' });
+    if (response.ok) {
+      const cache = await caches.open(RUNTIME_CACHE);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch {
+    return caches.match(request);
+  }
+}
+
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;
@@ -112,9 +131,14 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  if (url.pathname.startsWith('/assets/sounds/') || request.destination === 'audio') {
+    event.respondWith(networkFirstAsset(request));
+    return;
+  }
+
   if (
     url.pathname.startsWith('/assets/') ||
-    ['script', 'style', 'image', 'font', 'audio'].includes(request.destination)
+    ['script', 'style', 'image', 'font'].includes(request.destination)
   ) {
     event.respondWith(cacheFirst(request));
   }

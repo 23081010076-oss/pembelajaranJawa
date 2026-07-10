@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Gamepad2, GraduationCap, Info, Target, Video } from 'lucide-react';
+import { BookOpen, ClipboardList, Gamepad2, GraduationCap, Info, Target, Video } from 'lucide-react';
 
 const icons = {
   book: BookOpen,
@@ -8,6 +8,7 @@ const icons = {
   info: Info,
   target: Target,
   video: Video,
+  clipboard: ClipboardList,
 };
 
 export function MenuIcon({ name, size = 26 }) {

@@ -3,6 +3,7 @@ import { CheckCircle2, Sparkles } from 'lucide-react';
 import { MenuIcon } from '../components/Icon.jsx';
 
 export function LearningPage({ item }) {
+  const hasPoints = Array.isArray(item.points) && item.points.length > 0;
   const isCapaian = item.title === 'Capaian Pembelajaran';
 
   return (
@@ -19,7 +20,7 @@ export function LearningPage({ item }) {
         <h1 className="mt-4 text-[clamp(2.1rem,5vw,4.1rem)] font-black uppercase leading-[0.95] text-[#2b1d12]">
           {item.title}
         </h1>
-        {!isCapaian && (
+        {!isCapaian && item.body && (
           <p className="mx-auto mt-4 max-w-3xl text-base font-semibold leading-relaxed text-[#6b4a2d] sm:text-lg">
             {item.body}
           </p>
@@ -50,7 +51,7 @@ export function LearningPage({ item }) {
             </div>
           </article>
         </section>
-      ) : (
+      ) : hasPoints ? (
         <section className="grid gap-4 sm:gap-5" aria-label={item.eyebrow ?? item.title}>
           {item.points.map((point, index) => (
             <article
@@ -68,6 +69,14 @@ export function LearningPage({ item }) {
               </p>
             </article>
           ))}
+        </section>
+      ) : (
+        <section className="grid gap-4 sm:gap-5" aria-label={item.eyebrow ?? item.title}>
+          <article className="group rounded-[8px] border border-white/85 bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(255,246,226,0.9))] p-6 shadow-[0_12px_28px_rgba(77,48,24,0.12)] backdrop-blur-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(77,48,24,0.16)] sm:p-8">
+            <p className="text-justify text-[clamp(1.1rem,2.2vw,1.4rem)] font-extrabold leading-relaxed text-[#352315] hyphens-auto">
+              {item.body}
+            </p>
+          </article>
         </section>
       )}
     </div>

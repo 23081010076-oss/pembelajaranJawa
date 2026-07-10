@@ -19,7 +19,8 @@ import { GamePage } from './pages/GamePage.jsx';
 import { AboutPage } from './pages/AboutPage.jsx';
 import { GuidePage } from './pages/GuidePage.jsx';
 import { LearningPathPage } from './pages/LearningPathPage.jsx';
-import { getStudentAbsen, getStudentClass, getStudentName, clearStudentName, getStudentStorageId } from './hooks/useStudentName.js';
+import { EvaluasiPage } from './pages/EvaluasiPage.jsx';
+import { getStudentAbsen, getStudentClass, getStudentName, clearStudentName } from './hooks/useStudentName.js';
 
 // Cek apakah splash sudah ditampilkan di sesi ini
 const hasSeenSplash = () => {
@@ -188,6 +189,7 @@ export default function App() {
     ],
     video:           [{ label: 'Video Pembelajaran' }],
     game:            [{ label: 'Game Parikan' }],
+    evaluasi:        [{ label: 'Evaluasi' }],
     about:           [{ label: 'Tentang Pengembang' }],
     guide:           [{ label: 'Petunjuk Penggunaan' }],
     path:            [{ label: 'Alur Belajar' }],
@@ -199,6 +201,7 @@ export default function App() {
     page === 'home'          ? 'Javanesia' :
     page === 'video'         ? 'Video Pembelajaran' :
     page === 'game'          ? 'Game Parikan' :
+    page === 'evaluasi'      ? 'Evaluasi' :
     page === 'about'         ? 'Tentang Pengembang' :
     page === 'guide'         ? 'Petunjuk Penggunaan' :
     page === 'path'          ? 'Alur Belajar' :
@@ -271,7 +274,9 @@ export default function App() {
 
               {page === 'video' && <VideoPage videos={videoList} />}
 
-              {page === 'game' && <GamePage studentStorageId={studentStorageId} />}
+              {page === 'game' && <GamePage />}
+
+              {page === 'evaluasi' && <EvaluasiPage />}
 
               {page === 'about' && <AboutPage />}
 
@@ -292,7 +297,7 @@ export default function App() {
       )}
 
       {/* Musik Latar diputar setelah melewati splash */}
-      <BackgroundMusic isPlayingApp={!showSplash} />
+      <BackgroundMusic isPlayingApp={!showSplash} hasTopNav={!showOpening && !showLogin && page !== 'home'} />
 
     </main>
   );
