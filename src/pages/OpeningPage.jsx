@@ -6,7 +6,9 @@ export function OpeningPage({ onEnter }) {
 
   const handleEnter = () => {
     playClick();
-    onEnter();
+    setTimeout(() => {
+      onEnter();
+    }, 10);
   };
 
   return (
@@ -103,7 +105,7 @@ export function OpeningPage({ onEnter }) {
         <button
           type="button"
           onClick={handleEnter}
-          className="group animate-[fadeInUp_1.15s_ease-out_both] relative w-full overflow-hidden rounded-2xl border-4 border-white/90 bg-[#ffba73] px-8 py-5 font-black text-white shadow-[0_8px_0_rgba(72,64,56,0.25),0_16px_32px_rgba(46,29,16,0.2)] transition-all duration-200 hover:-translate-y-1.5 hover:bg-[#ffac5e] hover:shadow-[0_12px_0_rgba(72,64,56,0.2),0_20px_36px_rgba(46,29,16,0.25)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-0"
+          className="group animate-[fadeInUp_1.15s_ease-out_both] relative w-full overflow-hidden rounded-2xl border-4 border-white/90 bg-[#ffba73] px-8 py-5 font-black text-white shadow-[0_8px_0_rgba(72,64,56,0.25),0_16px_32px_rgba(46,29,16,0.2)] transition-all duration-200 hover:-translate-y-1.5 hover:bg-[#ffac5e] hover:shadow-[0_12px_0_rgba(72,64,56,0.2),0_20px_36px_rgba(46,29,16,0.25)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-[4px] active:shadow-[0_2px_0_rgba(72,64,56,0.25),0_4px_12px_rgba(46,29,16,0.15)]"
         >
           {/* Shine */}
           <span className="pointer-events-none absolute inset-1 rounded-xl border border-white/40" />

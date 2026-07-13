@@ -8,13 +8,31 @@
  */
 import { getSoundEffectVolume } from './useSoundEffectVolume.js';
 
-export function useClickSound({ frequency = 520, duration = 0.08, volume = 0.18 } = {}) {
+let sharedCtx = null;
+
+function getSharedCtx() {
+  if (typeof window === 'undefined') return null;
+  try {
+    if (!sharedCtx) {
+      sharedCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (sharedCtx.state === 'suspended') {
+      sharedCtx.resume();
+    }
+    return sharedCtx;
+  } catch {
+    return null;
+  }
+}
+
+export function useClickSound({ frequency = 520, duration = 0.08, volume = 0.45 } = {}) {
   const play = () => {
     try {
       const effectiveVolume = volume * getSoundEffectVolume();
       if (effectiveVolume <= 0) return;
 
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const ctx = getSharedCtx();
+      if (!ctx) return;
 
       const oscillator = ctx.createOscillator();
       const gainNode = ctx.createGain();
@@ -33,9 +51,6 @@ export function useClickSound({ frequency = 520, duration = 0.08, volume = 0.18 
 
       oscillator.start(ctx.currentTime);
       oscillator.stop(ctx.currentTime + duration);
-
-      // Clean up AudioContext after sound finishes
-      oscillator.onended = () => ctx.close();
     } catch {
       // Silently ignore if Web Audio API is not supported
     }

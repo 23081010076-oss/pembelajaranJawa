@@ -5,7 +5,7 @@ import { useClickSound } from '../hooks/useClickSound.js';
 import { useFeedbackSound } from '../hooks/useFeedbackSound.js';
 import { useResultSound } from '../hooks/useResultSound.js';
 import { useAnswerCrowdSound } from '../hooks/useAnswerCrowdSound.js';
-import { useLocalStorage } from '../hooks/useLocalStorage.js';
+import { useStudentLocalStorage } from '../hooks/useLocalStorage.js';
 
 // ── Suku kata counter ────────────────────────────────────────────────────────
 // Hitung suku kata sederhana: pisah per vokal cluster
@@ -415,7 +415,7 @@ function LevelSelect({ scores, savedResults, onSelect, onReset, onViewResult }) 
         <button
           type="button"
           onClick={() => { playClick(); setShowGuide((value) => !value); }}
-          className="mt-4 inline-flex items-center gap-2 rounded-full border-2 border-white/80 bg-white/90 px-4 py-2 text-xs font-black uppercase tracking-wide text-orange-600 shadow-md transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
+          className="mt-4 inline-flex items-center gap-2 rounded-full border-2 border-white/80 bg-white/90 px-4 py-2 text-xs font-black uppercase tracking-wide text-orange-600 shadow-md transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-0 active:scale-95"
         >
           <Info size={14} aria-hidden="true" />
           {showGuide ? 'Tutup Petunjuk' : 'Petunjuk Game'}
@@ -446,7 +446,7 @@ function LevelSelect({ scores, savedResults, onSelect, onReset, onViewResult }) 
             <button
               type="button"
               onClick={() => { playClick(); onReset(); }}
-              className="inline-flex items-center gap-1.5 rounded-full border-2 border-white/80 bg-white/80 px-4 py-2 text-xs font-black uppercase tracking-wide text-gray-500 shadow-md backdrop-blur-sm transition hover:bg-red-50 hover:text-red-500 hover:border-red-200"
+              className="inline-flex items-center gap-1.5 rounded-full border-2 border-white/80 bg-white/80 px-4 py-2 text-xs font-black uppercase tracking-wide text-gray-500 shadow-md backdrop-blur-sm transition hover:bg-red-50 hover:text-red-500 hover:border-red-200 active:translate-y-0 active:scale-95"
             >
               <RotateCcw size={12} aria-hidden="true" />
               Reseti Skor
@@ -477,7 +477,7 @@ function LevelSelect({ scores, savedResults, onSelect, onReset, onViewResult }) 
               onClick={() => { playClick(); onSelect(level); }}
               className={`group relative flex flex-col items-center gap-4 overflow-hidden rounded-3xl border-4 p-6 text-center font-black text-white shadow-2xl transition-all duration-300
                 ${isAvailable
-                  ? 'cursor-pointer hover:-translate-y-2 hover:scale-[1.03] active:translate-y-0 active:scale-100'
+                  ? 'cursor-pointer hover:-translate-y-2 hover:scale-[1.03] active:translate-y-[2px] active:scale-[0.98]'
                   : 'cursor-not-allowed saturate-[0.55]'
                 }`}
               style={{
@@ -535,7 +535,7 @@ function LevelSelect({ scores, savedResults, onSelect, onReset, onViewResult }) 
                     playClick();
                     onViewResult(level, savedResults[level.id]);
                   }}
-                  className="inline-flex items-center gap-1.5 rounded-full border-2 border-white/60 bg-white/20 px-3 py-1 text-xs font-black uppercase tracking-wide text-white/90 shadow-sm backdrop-blur-sm transition hover:bg-white/30 hover:border-white/80"
+                  className="inline-flex items-center gap-1.5 rounded-full border-2 border-white/60 bg-white/20 px-3 py-1 text-xs font-black uppercase tracking-wide text-white/90 shadow-sm backdrop-blur-sm transition hover:bg-white/30 hover:border-white/80 active:translate-y-0 active:scale-95"
                   aria-label={`Lihat hasil terakhir ${level.label}`}
                 >
                   <Trophy size={11} aria-hidden="true" />
@@ -571,7 +571,7 @@ function QuizTopBar({ level, current, total, score, onBack }) {
         <button
           type="button"
           onClick={() => { playClick(); onBack(); }}
-          className="rounded-xl border-2 border-white bg-white/95 px-3 py-2 text-xs font-black uppercase text-[#2e1d10] shadow-md transition hover:bg-white hover:-translate-y-0.5"
+          className="rounded-xl border-2 border-white bg-white/95 px-3 py-2 text-xs font-black uppercase text-[#2e1d10] shadow-md transition hover:bg-white hover:-translate-y-0.5 active:translate-y-0 active:scale-95"
         >
           ← Bali
         </button>
@@ -762,7 +762,7 @@ function FillQuestion({ q, level, questionNum, onCorrect, onWrong, onReview, onN
             <button
               type="button"
               onClick={handleSubmit}
-              className="rounded-2xl border-3 px-5 py-3 text-sm font-black uppercase text-white shadow-md transition hover:-translate-y-0.5 active:translate-y-0"
+              className="rounded-2xl border-3 px-5 py-3 text-sm font-black uppercase text-white shadow-md transition hover:-translate-y-0.5 active:translate-y-px active:scale-95"
               style={{ background: level.color, borderColor: `${level.color}aa`, borderWidth: '3px' }}
             >
               Kirim
@@ -804,7 +804,7 @@ function FillQuestion({ q, level, questionNum, onCorrect, onWrong, onReview, onN
         <button
           type="button"
           onClick={handleNext}
-          className="flex w-full items-center justify-center gap-2 rounded-2xl border-4 border-white/80 py-4 text-lg font-black uppercase text-white shadow-xl transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl active:translate-y-0"
+          className="flex w-full items-center justify-center gap-2 rounded-2xl border-4 border-white/80 py-4 text-lg font-black uppercase text-white shadow-xl transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl active:translate-y-px active:scale-98 active:shadow-md"
           style={{ background: `linear-gradient(135deg, ${level.color}, ${level.color}bb)` }}
         >
           {isLast
@@ -975,7 +975,7 @@ function ComposeQuestion({ q, level, questionNum, onScore, onReview, onNext, isL
             type="button"
             onClick={handleSubmit}
             disabled={!text.trim()}
-            className="rounded-2xl py-3 text-sm font-black uppercase text-white shadow-md transition hover:-translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="rounded-2xl py-3 text-sm font-black uppercase text-white shadow-md transition hover:-translate-y-0.5 active:translate-y-px active:scale-98 active:shadow-md disabled:opacity-40 disabled:cursor-not-allowed"
             style={{ background: level.color }}
           >
             Kirim Parikan
@@ -1076,7 +1076,7 @@ function ComposeQuestion({ q, level, questionNum, onScore, onReview, onNext, isL
               <button
                 type="button"
                 onClick={handleRevise}
-                className="flex flex-1 items-center justify-center gap-2 rounded-2xl border-2 border-white/80 bg-white/80 py-3 text-sm font-black uppercase text-[#7a4f2e] shadow-md transition hover:-translate-y-0.5"
+                className="flex flex-1 items-center justify-center gap-2 rounded-2xl border-2 border-white/80 bg-white/80 py-3 text-sm font-black uppercase text-[#7a4f2e] shadow-md transition hover:-translate-y-0.5 active:translate-y-px active:scale-98"
               >
                 <RotateCcw size={15} aria-hidden="true" />
                 Revisi
@@ -1085,7 +1085,7 @@ function ComposeQuestion({ q, level, questionNum, onScore, onReview, onNext, isL
             <button
               type="button"
               onClick={handleNext}
-              className="flex flex-1 items-center justify-center gap-2 rounded-2xl border-4 border-white/80 py-3 text-sm font-black uppercase text-white shadow-xl transition hover:-translate-y-1"
+              className="flex flex-1 items-center justify-center gap-2 rounded-2xl border-4 border-white/80 py-3 text-sm font-black uppercase text-white shadow-xl transition hover:-translate-y-1 active:translate-y-px active:scale-98 active:shadow-md"
               style={{ background: `linear-gradient(135deg, ${level.color}, ${level.color}bb)` }}
             >
               {isLast ? <><Trophy size={16} /> Deleng Kasil</> : <>Pitakon Sabanjure <ChevronRight size={16} /></>}
@@ -1135,7 +1135,7 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
         <button
           type="button"
           onClick={() => { playClick(); onBack(); }}
-          className="rounded-xl border-2 border-white bg-white px-3 py-2 text-xs font-black uppercase text-[#2e1d10] shadow-md transition hover:bg-orange-50 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
+          className="rounded-xl border-2 border-white bg-white px-3 py-2 text-xs font-black uppercase text-[#2e1d10] shadow-md transition hover:bg-orange-50 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-px active:scale-98"
         >
           ← Bali
         </button>
@@ -1220,10 +1220,10 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
                 onClick={() => toggle(theme)}
                 className={`group relative flex items-start gap-3 rounded-2xl border-2 p-4 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-4
                   ${isSelected
-                    ? 'scale-[1.02] shadow-xl'
+                    ? 'scale-[1.02] shadow-xl active:scale-[0.98] active:translate-y-0'
                     : isDisabled
                     ? 'cursor-not-allowed opacity-50 grayscale-[30%]'
-                    : 'cursor-pointer hover:-translate-y-0.5 hover:shadow-lg'
+                    : 'cursor-pointer hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98] active:translate-y-0'
                   }`}
                 style={{
                   borderColor: isSelected ? level.color : '#e5d9cc',
@@ -1301,7 +1301,7 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
         type="button"
         disabled={selected.length < needed}
         onClick={handleStart}
-        className="flex w-full items-center justify-center gap-2 rounded-2xl py-4 text-lg font-black uppercase text-white shadow-xl transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl active:translate-y-0 disabled:cursor-not-allowed disabled:translate-y-0 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-4"
+        className="flex w-full items-center justify-center gap-2 rounded-2xl py-4 text-lg font-black uppercase text-white shadow-xl transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl active:translate-y-px active:scale-98 active:shadow-md disabled:cursor-not-allowed disabled:translate-y-0 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-4"
         style={{
           background: selected.length === needed
             ? `linear-gradient(135deg, ${level.color}, color-mix(in srgb, ${level.color} 75%, #1e3a5f))`
@@ -1677,7 +1677,7 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
           <button
             type="button"
             onClick={() => { playClick(); onRetry(); }}
-            className="flex flex-1 items-center justify-center gap-2 rounded-2xl border-2 border-gray-200 bg-white py-4 text-base font-black uppercase text-[#2e1d10] shadow-sm transition-all hover:bg-gray-50 hover:-translate-y-1 active:translate-y-0"
+            className="flex flex-1 items-center justify-center gap-2 rounded-2xl border-2 border-gray-200 bg-white py-4 text-base font-black uppercase text-[#2e1d10] shadow-sm transition-all hover:bg-gray-50 hover:-translate-y-1 active:translate-y-px active:scale-98 active:shadow-md"
           >
             <RotateCcw size={18} aria-hidden="true" />
             Coba Maneh
@@ -1685,7 +1685,7 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
           <button
             type="button"
             onClick={() => { playClick(); onBack(); }}
-            className="flex flex-1 items-center justify-center gap-2 rounded-2xl py-4 text-base font-black uppercase text-white transition-all hover:-translate-y-1 active:translate-y-0"
+            className="flex flex-1 items-center justify-center gap-2 rounded-2xl py-4 text-base font-black uppercase text-white transition-all hover:-translate-y-1 active:translate-y-px active:scale-98 active:shadow-md"
             style={{
               background: `linear-gradient(135deg, ${level.color}, ${level.color}bb)`,
               border: '2px solid rgba(255,255,255,0.3)',
@@ -1701,15 +1701,23 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
 }
 
 // ── Main GamePage ────────────────────────────────────────────────────────────
-export function GamePage() {
+export function GamePage({ studentStorageId }) {
   const [screen, setScreen] = useState('select');
   const [activeLevel, setActiveLevel] = useState(null);
   const [lastScore, setLastScore] = useState(0);
   const [lastReview, setLastReview] = useState([]);
   const [level3Questions, setLevel3Questions] = useState(null); // soal dinamis tingkat 3
-  const [scores, setScores] = useLocalStorage('javanesia-game-scores', {});
-  const [savedResults, setSavedResults] = useLocalStorage('javanesia-game-results', {});
+  const [scores, setScores] = useStudentLocalStorage('javanesia-game-scores', {});
+  const [savedResults, setSavedResults] = useStudentLocalStorage('javanesia-game-results', {});
   const { prepareResultSounds, playApplause, playEncourage, playFailed } = useResultSound();
+
+  useEffect(() => {
+    setScreen('select');
+    setActiveLevel(null);
+    setLastScore(0);
+    setLastReview([]);
+    setLevel3Questions(null);
+  }, [studentStorageId]);
 
   const handleSelectLevel = (level) => {
     prepareResultSounds();
@@ -1787,6 +1795,12 @@ export function GamePage() {
   };
 
   const handleReset = () => {
+    const confirmed = window.confirm(
+      'Reset skor game kanggo siswa iki?\n\nData skor lan hasil game ing identitas sing lagi aktif bakal dibusak.'
+    );
+
+    if (!confirmed) return;
+
     setScores({});
     setSavedResults({});
     setScreen('select');

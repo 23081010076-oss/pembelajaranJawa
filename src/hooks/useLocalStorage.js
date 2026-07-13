@@ -1,32 +1,53 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getStudentStorageKey } from './useStudentName.js';
 
-/**
- * useLocalStorage — drop-in replacement untuk useState yang otomatis
- * sync ke localStorage.
- *
- * @param {string} key    - localStorage key
- * @param {*} initialValue - nilai default kalau key belum ada
- */
-export function useLocalStorage(key, initialValue) {
-  const [storedValue, setStoredValue] = useState(() => {
-    try {
-      const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
-    } catch {
-      return initialValue;
+function readLocalStorageValue(key, initialValue, legacyKey) {
+  try {
+    const item = window.localStorage.getItem(key);
+    if (item) return JSON.parse(item);
+
+    if (legacyKey && legacyKey !== key) {
+      const migrationKey = `javanesia-storage-migrated:${legacyKey}`;
+      const migrationDone = window.localStorage.getItem(migrationKey);
+      const legacyItem = migrationDone ? null : window.localStorage.getItem(legacyKey);
+
+      if (legacyItem) {
+        window.localStorage.setItem(key, legacyItem);
+        window.localStorage.setItem(migrationKey, key);
+        return JSON.parse(legacyItem);
+      }
     }
-  });
+
+    return initialValue;
+  } catch {
+    return initialValue;
+  }
+}
+
+export function useLocalStorage(key, initialValue, options = {}) {
+  const { legacyKey } = options;
+  const [storedValue, setStoredValue] = useState(() => readLocalStorageValue(key, initialValue, legacyKey));
+
+  useEffect(() => {
+    setStoredValue(readLocalStorageValue(key, initialValue, legacyKey));
+  }, [key, legacyKey]);
 
   const setValue = (value) => {
     try {
-      // Support functional update: setValue(prev => ({ ...prev, x: 1 }))
-      const valueToStore = value instanceof Function ? value(storedValue) : value;
-      setStoredValue(valueToStore);
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      setStoredValue((currentValue) => {
+        const valueToStore = value instanceof Function ? value(currentValue) : value;
+        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        return valueToStore;
+      });
     } catch {
-      // Silently ignore (e.g. private browsing storage quota exceeded)
+      // Abaikan jika storage browser tidak tersedia atau quota penuh.
     }
   };
 
   return [storedValue, setValue];
+}
+
+export function useStudentLocalStorage(baseKey, initialValue) {
+  const scopedKey = getStudentStorageKey(baseKey);
+  return useLocalStorage(scopedKey, initialValue, { legacyKey: baseKey });
 }

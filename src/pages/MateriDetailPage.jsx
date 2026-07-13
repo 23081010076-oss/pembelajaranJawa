@@ -3,7 +3,7 @@ import { CheckCircle2, ChevronLeft, ChevronRight, ListChecks, RotateCcw, Volume2
 import { materiActivities } from '../data/materiActivities.js';
 import { useClickSound } from '../hooks/useClickSound.js';
 import { playAudioFile } from '../hooks/useAudioFile.js';
-import { useLocalStorage } from '../hooks/useLocalStorage.js';
+import { useStudentLocalStorage } from '../hooks/useLocalStorage.js';
 import {
   LEARNING_PROGRESS_KEY,
   initialLearningProgress,
@@ -213,7 +213,7 @@ function MiniActivity({ activity }) {
               key={option}
               type="button"
               onClick={() => { playClick(); setAnswer(optionIndex); setChecked(false); }}
-              className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
+              className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 active:translate-y-0 active:scale-98 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
                 safeAnswer === optionIndex
                   ? 'border-orange-400 bg-orange-100 text-orange-800'
                   : 'border-white bg-white text-[#4f2912] hover:border-orange-200'
@@ -234,7 +234,7 @@ function MiniActivity({ activity }) {
                 key={option}
                 type="button"
                 onClick={() => toggleMulti(optionIndex)}
-                className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
+                className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 active:translate-y-0 active:scale-98 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
                   selected
                     ? 'border-orange-400 bg-orange-100 text-orange-800'
                     : 'border-white bg-white text-[#4f2912] hover:border-orange-200'
@@ -263,7 +263,7 @@ function MiniActivity({ activity }) {
                       setChecked(false);
                       setAnswer((current) => ({ ...(current ?? {}), [lineIndex]: category }));
                     }}
-                    className={`rounded-full border-2 px-4 py-2 text-xs font-black uppercase tracking-wide transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
+                    className={`rounded-full border-2 px-4 py-2 text-xs font-black uppercase tracking-wide transition hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
                       safeAnswer?.[lineIndex] === category
                         ? 'border-orange-400 bg-orange-100 text-orange-800'
                         : 'border-orange-100 bg-orange-50 text-orange-700 hover:border-orange-200'
@@ -313,7 +313,7 @@ function MiniActivity({ activity }) {
                   className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
                     selected
                       ? 'cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400'
-                      : 'border-white bg-white text-[#4f2912] hover:-translate-y-0.5 hover:border-orange-200'
+                      : 'border-white bg-white text-[#4f2912] hover:-translate-y-0.5 hover:border-orange-200 active:translate-y-0 active:scale-95'
                   }`}
                 >
                   {step}
@@ -344,7 +344,7 @@ function MiniActivity({ activity }) {
           disabled={!canCheck}
           className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-black uppercase tracking-wide shadow-sm transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
             canCheck
-              ? 'bg-orange-500 text-white hover:-translate-y-0.5 hover:bg-orange-600'
+              ? 'bg-orange-500 text-white hover:-translate-y-0.5 hover:bg-orange-600 active:translate-y-0 active:scale-95'
               : 'cursor-not-allowed bg-stone-200 text-stone-500'
           }`}
         >
@@ -354,7 +354,7 @@ function MiniActivity({ activity }) {
         <button
           type="button"
           onClick={handleReset}
-          className="inline-flex items-center gap-2 rounded-full border-2 border-orange-200 bg-white px-4 py-2 text-sm font-black uppercase tracking-wide text-orange-600 transition hover:-translate-y-0.5 hover:bg-orange-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
+          className="inline-flex items-center gap-2 rounded-full border-2 border-orange-200 bg-white px-4 py-2 text-sm font-black uppercase tracking-wide text-orange-600 transition hover:-translate-y-0.5 hover:bg-orange-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-0 active:scale-95"
         >
           <RotateCcw size={16} aria-hidden="true" />
           Coba Maneh
@@ -452,7 +452,7 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
   const [touchEnd, setTouchEnd] = useState(null);
   const narrationRef = useRef(null);
   const playClick = useClickSound();
-  const [learningProgress, setLearningProgress] = useLocalStorage(LEARNING_PROGRESS_KEY, initialLearningProgress);
+  const [learningProgress, setLearningProgress] = useStudentLocalStorage(LEARNING_PROGRESS_KEY, initialLearningProgress);
 
   const lines = item.example ? item.example.split('\n') : [];
   const stimulus = item.stimulus ?? buildFallbackStimulus(index, item.title);
@@ -599,7 +599,7 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
         <button
           type="button"
           onClick={handleBackToList}
-          className="inline-flex items-center gap-1.5 rounded-xl border-2 border-white/80 bg-white/80 px-3 py-2 text-sm font-black text-[#7a4f2e] shadow-md backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
+          className="inline-flex items-center gap-1.5 rounded-xl border-2 border-white/80 bg-white/80 px-3 py-2 text-sm font-black text-[#7a4f2e] shadow-md backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-0 active:scale-95"
         >
           <ChevronLeft size={16} aria-hidden="true" />
           Daftar Materi
@@ -661,7 +661,7 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
               onClick={toggleSpeech}
               aria-label={isPlaying ? 'Hentikan suara' : isPreparingAudio ? 'Menyiapkan suara' : 'Putar suara'}
               title={isPlaying ? 'Hentikan Suara' : isPreparingAudio ? 'Menyiapkan Suara' : 'Putar Suara'}
-              className={`mt-1 grid size-12 shrink-0 place-items-center rounded-full shadow-lg transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
+              className={`mt-1 grid size-12 shrink-0 place-items-center rounded-full shadow-lg transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
                 isPlaying
                   ? 'bg-red-500 text-white hover:bg-red-600'
                   : isPreparingAudio
@@ -731,7 +731,7 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
             <button
               type="button"
               onClick={toggleMateriComplete}
-              className={`mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-black uppercase tracking-wide shadow-sm transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-200 sm:mt-0 sm:w-auto ${
+              className={`mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-black uppercase tracking-wide shadow-sm transition hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-200 sm:mt-0 sm:w-auto ${
                 isMateriCompleted
                   ? 'bg-green-600 text-white hover:bg-green-700'
                   : 'bg-white text-green-700 ring-2 ring-green-300 hover:bg-green-100'
@@ -755,7 +755,7 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
           disabled={!hasPrev}
           className={`inline-flex flex-1 items-center justify-center gap-2 rounded-2xl border-4 py-4 text-base font-black uppercase shadow-lg transition-all duration-200 ${
             hasPrev
-              ? 'border-white/80 bg-white text-[#7a4f2e] hover:-translate-y-1 hover:bg-orange-50 hover:shadow-xl active:translate-y-0'
+              ? 'border-white/80 bg-white text-[#7a4f2e] hover:-translate-y-1 hover:bg-orange-50 hover:shadow-xl active:translate-y-px active:scale-98 active:shadow-md'
               : 'cursor-not-allowed border-white/40 bg-white/40 text-gray-400 opacity-50'
           }`}
         >
@@ -774,7 +774,7 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
           disabled={!hasNext}
           className={`inline-flex flex-1 items-center justify-center gap-2 rounded-2xl border-4 py-4 text-base font-black uppercase shadow-lg transition-all duration-200 ${
             hasNext
-              ? 'border-white/80 bg-gradient-to-r from-[#ff9b2f] to-[#ffba73] text-white hover:-translate-y-1 hover:shadow-xl active:translate-y-0'
+              ? 'border-white/80 bg-gradient-to-r from-[#ff9b2f] to-[#ffba73] text-white hover:-translate-y-1 hover:shadow-xl active:translate-y-px active:scale-98 active:shadow-md'
               : 'cursor-not-allowed border-white/40 bg-white/40 text-gray-400 opacity-50'
           }`}
         >

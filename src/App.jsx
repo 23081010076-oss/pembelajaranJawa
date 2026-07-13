@@ -20,7 +20,7 @@ import { AboutPage } from './pages/AboutPage.jsx';
 import { GuidePage } from './pages/GuidePage.jsx';
 import { LearningPathPage } from './pages/LearningPathPage.jsx';
 import { EvaluasiPage } from './pages/EvaluasiPage.jsx';
-import { getStudentAbsen, getStudentClass, getStudentName, clearStudentName } from './hooks/useStudentName.js';
+import { getStudentAbsen, getStudentClass, getStudentName, clearStudentName, getStudentStorageId } from './hooks/useStudentName.js';
 
 // Cek apakah splash sudah ditampilkan di sesi ini
 const hasSeenSplash = () => {
@@ -49,6 +49,11 @@ export default function App() {
   const [studentClass, setStudentClass] = useState(() => getStudentClass());
   const [studentAbsen, setStudentAbsen] = useState(() => getStudentAbsen());
   const [showLogin, setShowLogin] = useState(false);
+  const studentStorageId = getStudentStorageId({
+    name: studentName,
+    studentClass,
+    absen: studentAbsen,
+  });
 
   const handleSplashDone = () => {
     markSplashSeen();
@@ -232,7 +237,7 @@ export default function App() {
             isHome={page === 'home'}
             label={sceneLabel}
           >
-            <div key={page} className="page-enter">
+            <div key={`${studentStorageId}:${page}`} className="page-enter">
               {page === 'home' && (
                 <HomePage
                   menuItems={mainMenu}
@@ -269,7 +274,7 @@ export default function App() {
 
               {page === 'video' && <VideoPage videos={videoList} />}
 
-              {page === 'game' && <GamePage />}
+              {page === 'game' && <GamePage studentStorageId={studentStorageId} />}
 
               {page === 'evaluasi' && <EvaluasiPage />}
 
