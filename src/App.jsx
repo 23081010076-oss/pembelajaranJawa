@@ -20,7 +20,7 @@ import { AboutPage } from './pages/AboutPage.jsx';
 import { GuidePage } from './pages/GuidePage.jsx';
 import { LearningPathPage } from './pages/LearningPathPage.jsx';
 import { EvaluasiPage } from './pages/EvaluasiPage.jsx';
-import { getStudentAbsen, getStudentClass, getStudentName, clearStudentName, getStudentStorageId } from './hooks/useStudentName.js';
+import { getStudentAbsen, getStudentClass, getStudentName, getStudentStorageId, clearStudentName } from './hooks/useStudentName.js';
 
 // Cek apakah splash sudah ditampilkan di sesi ini
 const hasSeenSplash = () => {

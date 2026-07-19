@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Star, Trophy, RotateCcw, ChevronRight, CheckCircle2, XCircle, Sparkles, Zap, Target, PenLine, AlertCircle, Info } from 'lucide-react';
+import { Star, Trophy, RotateCcw, ChevronRight, CheckCircle2, XCircle, Sparkles, Zap, Target, PenLine, AlertCircle, Info, ExternalLink, Map } from 'lucide-react';
 import { gameLevels } from '../data/gameParikan.js';
+import { zepGameHub, zepGameLevels } from '../data/zepGameLinks.js';
 import { useClickSound } from '../hooks/useClickSound.js';
 import { useFeedbackSound } from '../hooks/useFeedbackSound.js';
 import { useResultSound } from '../hooks/useResultSound.js';
@@ -167,7 +168,7 @@ function buildComposeFeedback(text, keyword, scoring) {
 }
 
 function getFillQuestionPrompt(q) {
-  return q.lines?.join('\n') ?? q.blank ?? 'Pitakon parikan';
+  return q.lines?.join('\n') ?? q.blank ?? 'Tantangan parikan';
 }
 
 function getReviewRecommendation(entry) {
@@ -195,7 +196,7 @@ function buildFillReview(q, userAnswer, isCorrect, questionNum) {
     id: q.id,
     type: 'fill',
     questionNum,
-    title: `Pitakon ${questionNum}`,
+    title: `Misi ${questionNum}`,
     prompt: getFillQuestionPrompt(q),
     userAnswer: userAnswer.trim(),
     correctAnswer: q.answer,
@@ -385,6 +386,68 @@ function ProgressBar({ current, total, color }) {
 }
 
 // ── Level selection screen ───────────────────────────────────────────────────
+function ZepAdventurePanel() {
+  const activeLevels = zepGameLevels.filter((level) => level.url);
+  const hasSpace = Boolean(zepGameHub.spaceUrl);
+  const hasLinks = hasSpace || activeLevels.length > 0;
+  if (!hasLinks) return null;
+
+  const panelTitle = hasSpace ? zepGameHub.title : 'Tantangan Parikan';
+  const panelDescription = hasSpace
+    ? zepGameHub.description
+    : 'Rampungake pos tantangan ing arena, banjur bali menyang Javanesia kanggo ndeleng progres lan latihan nulis parikan.';
+
+  return (
+    <section className="w-full rounded-[28px] border-4 border-white/80 bg-white/95 p-5 text-left shadow-[0_18px_42px_rgba(78,45,21,0.14)]">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-start gap-3">
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-orange-100 text-orange-600">
+            <Map size={24} aria-hidden="true" />
+          </div>
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-orange-600">
+              {hasSpace ? 'Mode Petualangan' : 'Mode Tantangan'}
+            </p>
+            <h2 className="mt-1 text-xl font-black leading-tight text-[#2e1d10]">{panelTitle}</h2>
+            <p className="mt-1 max-w-2xl text-sm font-bold leading-relaxed text-[#7a5030]">
+              {panelDescription}
+            </p>
+          </div>
+        </div>
+
+        {zepGameHub.spaceUrl && (
+          <a
+            href={zepGameHub.spaceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-2xl bg-orange-500 px-5 py-3 text-sm font-black uppercase tracking-wide text-white shadow-md transition hover:-translate-y-0.5 hover:bg-orange-600 active:translate-y-0"
+          >
+            Mlebu ZEP Space
+            <ExternalLink size={16} aria-hidden="true" />
+          </a>
+        )}
+      </div>
+
+      {activeLevels.length > 0 && (
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          {activeLevels.map((level) => (
+            <a
+              key={level.levelId}
+              href={level.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-2xl border-2 border-orange-100 bg-[#fffaf2] px-4 py-3 shadow-sm transition hover:-translate-y-0.5 hover:border-orange-300 hover:bg-white"
+            >
+              <p className="text-[0.68rem] font-black uppercase tracking-widest text-orange-600">{level.type}</p>
+              <p className="mt-1 text-sm font-black leading-snug text-[#2e1d10]">{level.title}</p>
+            </a>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
 function LevelSelect({ scores, savedResults, onSelect, onReset, onViewResult }) {
   const [showGuide, setShowGuide] = useState(false);
   const playClick = useClickSound();
@@ -406,7 +469,7 @@ function LevelSelect({ scores, savedResults, onSelect, onReset, onViewResult }) 
           className="mt-4 text-[clamp(2.8rem,6vw,4.5rem)] font-black uppercase leading-none text-white drop-shadow-2xl"
           style={{ WebkitTextStroke: '6px #ff9632', paintOrder: 'stroke fill' }}
         >
-          Pilih Tingkat
+          Pilih Misi
         </h1>
         <p className="mt-2 text-base font-bold text-[#2e1d10] drop-shadow-sm">
           Uji kemampuanmu ngerti lan ngrakit parikan!
@@ -424,9 +487,9 @@ function LevelSelect({ scores, savedResults, onSelect, onReset, onViewResult }) 
         {showGuide && (
           <div className="mx-auto mt-4 grid max-w-2xl gap-2 rounded-2xl border-2 border-orange-200 bg-white/92 p-4 text-left shadow-[0_10px_28px_rgba(78,45,21,0.14)] backdrop-blur-sm sm:grid-cols-2">
             {[
-              'Miwiti saka Tingkat 1 kanggo nglengkapi parikan.',
-              'Skor minimal 70% bakal mbukak tingkat sabanjure.',
-              'Tingkat 2 lan 3 digunakake kanggo latihan nulis parikan dhewe.',
+              'Miwiti saka Misi 1 kanggo nglengkapi parikan.',
+              'Skor minimal 70% bakal mbukak misi sabanjure.',
+              'Misi 2 lan 3 digunakake kanggo latihan nulis parikan dhewe.',
               'Sawise dikirim, waca Hasil Penilaian lan Saran Guru kanggo revisi.',
             ].map((guide) => (
               <p key={guide} className="flex items-start gap-2 text-sm font-bold leading-relaxed text-[#5a3a22]">
@@ -454,6 +517,8 @@ function LevelSelect({ scores, savedResults, onSelect, onReset, onViewResult }) 
           </div>
         )}
       </header>
+
+      <ZepAdventurePanel />
 
       <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-3">
         {gameLevels.map((level, idx) => {
@@ -527,7 +592,7 @@ function LevelSelect({ scores, savedResults, onSelect, onReset, onViewResult }) 
               )}
 
               {/* Tombol lihat hasil terakhir */}
-              {savedResults?.[level.id] && (
+              {false && savedResults?.[level.id] && (
                 <button
                   type="button"
                   onClick={(e) => {
@@ -544,7 +609,7 @@ function LevelSelect({ scores, savedResults, onSelect, onReset, onViewResult }) 
               )}
 
               {!hasQuestions && (
-                <span className="text-xs font-bold text-white/60">Pitakon nyusul...</span>
+                <span className="text-xs font-bold text-white/60">Misi nyusul...</span>
               )}
             </button>
           );
@@ -565,6 +630,8 @@ function LevelSelect({ scores, savedResults, onSelect, onReset, onViewResult }) 
 // ── Top bar (shared) ─────────────────────────────────────────────────────────
 function QuizTopBar({ level, current, total, score, onBack }) {
   const playClick = useClickSound();
+  const zepLevel = zepGameLevels.find((item) => item.levelId === level.id && item.url);
+
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between gap-4">
@@ -588,11 +655,22 @@ function QuizTopBar({ level, current, total, score, onBack }) {
       </div>
       <div className="flex flex-col gap-1.5">
         <div className="flex justify-between text-xs font-bold text-[#2e1d10]">
-          <span>Pitakon {current + 1} saka {total}</span>
+          <span>Misi {current + 1} saka {total}</span>
           <span>{Math.round((current / total) * 100)}% rampung</span>
         </div>
         <ProgressBar current={current} total={total} color={level.color} />
       </div>
+      {zepLevel && (
+        <a
+          href={zepLevel.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-orange-200 bg-white/95 px-4 py-2.5 text-xs font-black uppercase tracking-wide text-orange-600 shadow-md transition hover:-translate-y-0.5 hover:bg-orange-50 active:translate-y-0 sm:self-center sm:w-auto"
+        >
+          Bukak misi iki ing {zepLevel.type}
+          <ExternalLink size={14} aria-hidden="true" />
+        </a>
+      )}
     </div>
   );
 }
@@ -809,7 +887,7 @@ function FillQuestion({ q, level, questionNum, onCorrect, onWrong, onReview, onN
         >
           {isLast
             ? <><Trophy size={20} aria-hidden="true" /> Deleng Kasil</>
-            : <>Pitakon Sabanjure <ChevronRight size={20} aria-hidden="true" /></>
+            : <>Misi Sabanjure <ChevronRight size={20} aria-hidden="true" /></>
           }
         </button>
       )}
@@ -1088,7 +1166,7 @@ function ComposeQuestion({ q, level, questionNum, onScore, onReview, onNext, isL
               className="flex flex-1 items-center justify-center gap-2 rounded-2xl border-4 border-white/80 py-3 text-sm font-black uppercase text-white shadow-xl transition hover:-translate-y-1 active:translate-y-px active:scale-98 active:shadow-md"
               style={{ background: `linear-gradient(135deg, ${level.color}, ${level.color}bb)` }}
             >
-              {isLast ? <><Trophy size={16} /> Deleng Kasil</> : <>Pitakon Sabanjure <ChevronRight size={16} /></>}
+              {isLast ? <><Trophy size={16} /> Deleng Kasil</> : <>Misi Sabanjure <ChevronRight size={16} /></>}
             </button>
           </div>
         </div>
@@ -1161,10 +1239,10 @@ function ThemeSelectScreen({ level, onStart, onBack }) {
 
         <div className="relative mb-3 inline-flex items-center gap-2 rounded-full bg-white/25 px-3 py-1.5 text-xs font-black uppercase tracking-widest shadow-sm">
           <Sparkles size={12} aria-hidden="true" />
-          Pituduh Pitakon
+          Pituduh Misi
         </div>
         <h2 className="relative text-xl font-black leading-snug drop-shadow-sm">
-          Pitakon Latihan Nulis Parikan
+          Misi Nulis Parikan
         </h2>
         <div className="relative mt-3 flex flex-col gap-1.5 text-sm font-semibold text-white/95">
           <p>Gawea parikan dhewe kanthi basa Jawa. Parikanmu kudu:</p>
@@ -1329,9 +1407,32 @@ function QuizScreen({ level, questions: questionsOverride, onFinish, onBack }) {
   const pointsPerQuestion = useRef({});
   const reviewRef = useRef([]);
 
-  const questions = questionsOverride ?? level.questions;
+  const questions = questionsOverride ?? level.questions ?? [];
   const q = questions[current];
   const isLast = current === questions.length - 1;
+
+  if (!q) {
+    return (
+      <div className="mx-auto flex w-full max-w-[720px] flex-col items-center gap-4 rounded-[28px] border-4 border-orange-200 bg-white/95 px-6 py-8 text-center shadow-[0_18px_45px_rgba(78,45,21,0.16)]">
+        <div className="flex size-16 items-center justify-center rounded-full bg-orange-100 text-orange-600">
+          <AlertCircle size={32} aria-hidden="true" />
+        </div>
+        <div>
+          <h2 className="text-2xl font-black text-[#2e1d10]">Misi durung siap</h2>
+          <p className="mt-2 text-sm font-bold leading-relaxed text-[#7a5030]">
+            Data misi kanggo tingkat iki durung kebaca. Bali menyang pilihan misi banjur coba maneh.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={onBack}
+          className="rounded-2xl bg-orange-500 px-6 py-3 text-sm font-black uppercase tracking-wide text-white shadow-md transition hover:-translate-y-0.5 active:translate-y-0"
+        >
+          Bali Pilih Misi
+        </button>
+      </div>
+    );
+  }
 
   const handleCorrectWithRef = () => {
     scoreRef.current += 1;
@@ -1406,6 +1507,7 @@ function QuizScreen({ level, questions: questionsOverride, onFinish, onBack }) {
 // ── Result screen ────────────────────────────────────────────────────────────
 function ResultScreen({ level, score, review = [], onRetry, onBack }) {
   const playClick = useClickSound();
+  const zepLevel = zepGameLevels.find((item) => item.levelId === level.id && item.url);
   const maxScore = getLevelMaxScore(level);
   const displayScore = clampScore(score, maxScore);
   const pct = maxScore > 0 ? Math.round((displayScore / maxScore) * 100) : 0;
@@ -1582,7 +1684,7 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
 
                     <div className="grid gap-3 text-sm font-semibold leading-relaxed">
                       <div>
-                        <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-[#b7791f]">Pitakon</p>
+                        <p className="mb-1 text-[0.68rem] font-black uppercase tracking-widest text-[#b7791f]">Tantangan</p>
                         <p className="whitespace-pre-line rounded-xl border border-[#f1e6d6] bg-[#fffaf2] px-3 py-2">{item.prompt}</p>
                       </div>
                       {item.type === 'compose' && item.criteria?.length > 0 && (
@@ -1693,15 +1795,149 @@ function ResultScreen({ level, score, review = [], onRetry, onBack }) {
             }}
           >
             <Trophy size={18} aria-hidden="true" />
-            Pilih Tingkat
+            Pilih Misi
           </button>
         </div>
+
+        {zepLevel && (
+          <a
+            href={zepLevel.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-orange-200 bg-white/95 px-5 py-3 text-sm font-black uppercase tracking-wide text-orange-600 shadow-md transition hover:-translate-y-0.5 hover:bg-orange-50 active:translate-y-0 sm:w-auto"
+            style={s(0.5)}
+          >
+            Lanjut tantangan ing {zepLevel.type}
+            <ExternalLink size={16} aria-hidden="true" />
+          </a>
+        )}
       </div>
   );
 }
 
 // ── Main GamePage ────────────────────────────────────────────────────────────
+function ZepGameOnlyScreen() {
+  const playClick = useClickSound();
+  const missions = zepGameLevels.filter((mission) => mission.url);
+  const hasSpace = Boolean(zepGameHub.spaceUrl);
+
+  if (missions.length === 0 && !hasSpace) return null;
+
+  return (
+    <div className="mx-auto flex w-full max-w-[980px] flex-col gap-6 px-4 py-2">
+      <header className="text-center">
+        <div className="inline-flex items-center gap-2 rounded-full border-2 border-orange-300 bg-white/95 px-5 py-2 text-xs font-black uppercase tracking-[0.16em] text-orange-600 shadow-md">
+          <Map size={15} aria-hidden="true" />
+          Arena Game Parikan
+        </div>
+        <h1
+          className="mt-4 text-[clamp(2.4rem,6vw,4rem)] font-black uppercase leading-none text-white drop-shadow-2xl"
+          style={{ WebkitTextStroke: '6px #ff9632', paintOrder: 'stroke fill' }}
+        >
+          Petualangan
+        </h1>
+        <p className="mx-auto mt-3 max-w-2xl text-sm font-black leading-relaxed text-[#4b2f1a] sm:text-base">
+          Pilih pos permainan, mlebu arena permainan, banjur rampungake tantangan parikan kanthi urutan misi.
+        </p>
+      </header>
+
+      {hasSpace && (
+        <a
+          href={zepGameHub.spaceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={playClick}
+          className="group relative overflow-hidden rounded-[28px] border-4 border-white/80 bg-orange-500 px-6 py-5 text-white shadow-[0_18px_45px_rgba(234,88,12,0.26)] transition hover:-translate-y-1 active:translate-y-0"
+        >
+          <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/25 via-transparent to-black/10" />
+          <span className="relative flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <span>
+              <span className="block text-xs font-black uppercase tracking-[0.18em] text-white/80">Ruang Petualangan</span>
+              <span className="mt-1 block text-2xl font-black leading-tight">{zepGameHub.title}</span>
+              <span className="mt-1 block text-sm font-bold leading-relaxed text-white/90">{zepGameHub.description}</span>
+            </span>
+            <span className="inline-flex shrink-0 items-center justify-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-black uppercase tracking-wide text-orange-600 shadow-md">
+              Mlebu Space
+              <ExternalLink size={16} aria-hidden="true" />
+            </span>
+          </span>
+        </a>
+      )}
+
+      <section className="grid gap-4 sm:grid-cols-3">
+        {missions.map((mission, index) => {
+          const level = gameLevels.find((item) => item.id === mission.levelId) ?? gameLevels[index];
+          const color = level?.color ?? '#f97316';
+          const label = level?.label ?? `Pos ${index + 1}`;
+          const subtitle = level?.subtitle ?? 'Misi';
+
+          return (
+            <a
+              key={mission.levelId}
+              href={mission.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={playClick}
+              className="group relative flex min-h-[250px] flex-col justify-between overflow-hidden rounded-[28px] border-4 border-white/75 p-5 text-white shadow-[0_16px_42px_rgba(78,45,21,0.20)] transition hover:-translate-y-2 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99]"
+              style={{
+                background: `linear-gradient(145deg, color-mix(in srgb, ${color} 78%, white), ${color})`,
+                boxShadow: `0 16px 42px ${level?.shadow ?? 'rgba(78,45,21,0.18)'}`,
+              }}
+            >
+              <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/28 via-transparent to-black/10" />
+              <span className="pointer-events-none absolute inset-2 rounded-[20px] border border-white/25" />
+
+              <span className="relative flex items-start justify-between gap-3">
+                <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-white/92 text-xl font-black shadow-md" style={{ color }}>
+                  {index + 1}
+                </span>
+                <span className="rounded-full bg-white/20 px-3 py-1 text-[0.65rem] font-black uppercase tracking-widest text-white/90">
+                  {label}
+                </span>
+              </span>
+
+              <span className="relative">
+                <span className="block text-xs font-black uppercase tracking-[0.18em] text-white/75">{subtitle}</span>
+                <span className="mt-2 block text-2xl font-black leading-tight drop-shadow-sm">{mission.title}</span>
+                <span className="mt-3 block text-xs font-bold leading-relaxed text-white/82">
+                  Rampungake tantangan ing arena ZEP. Ranking lan progres dipantau dening host/guru.
+                </span>
+              </span>
+
+              <span className="relative inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-black uppercase tracking-wide shadow-md transition group-hover:shadow-lg" style={{ color }}>
+                Main Misi
+                <ExternalLink size={16} aria-hidden="true" />
+              </span>
+            </a>
+          );
+        })}
+      </section>
+
+      <section className="rounded-[26px] border-4 border-white/80 bg-white/95 p-5 shadow-[0_16px_38px_rgba(78,45,21,0.12)]">
+        <div className="grid gap-4 sm:grid-cols-[auto,1fr] sm:items-center">
+          <div className="flex size-14 items-center justify-center rounded-2xl bg-orange-100 text-orange-600">
+            <Info size={26} aria-hidden="true" />
+          </div>
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-orange-600">Cara Main</p>
+            <p className="mt-1 text-sm font-bold leading-relaxed text-[#6b4428]">
+              Gunakake jeneng peserta kanthi format <strong>Nama_Kelas_Absen</strong>. Host/guru miwiti game,
+              ngatur wektu, banjur ngawasi peserta liwat menu Players lan Ranking.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 export function GamePage({ studentStorageId }) {
+  const zepMissionsAvailable = Boolean(zepGameHub.spaceUrl) || zepGameLevels.some((mission) => mission.url);
+
+  if (zepMissionsAvailable) {
+    return <ZepGameOnlyScreen />;
+  }
+
   const [screen, setScreen] = useState('select');
   const [activeLevel, setActiveLevel] = useState(null);
   const [lastScore, setLastScore] = useState(0);

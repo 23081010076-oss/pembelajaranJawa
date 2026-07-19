@@ -1,24 +1,17 @@
-// Data soal Game Parikan per tingkat
-// Tipe soal:
-//   'fill'    — isian, jawaban berupa teks
-//   'pilihan' — pilihan ganda (untuk tingkat 2 & 3 nanti)
-//
-// Untuk tipe 'fill':
-//   lines    : array baris parikan yang ditampilkan (string)
-//   blank    : baris/bagian yang harus diisi (ditampilkan sebagai ___)
-//   answer   : jawaban yang benar (string, validasi case-insensitive + trim)
-//   answers  : array jawaban alternatif yang juga diterima (opsional)
-//   explanation: penjelasan setelah jawab
+// Data soal Game Parikan per tingkat.
+// Tingkat 1: siswa menyambung parikan.
+// Tingkat 2: siswa menulis parikan saka kata kunci.
+// Tingkat 3: siswa memilih tema, lalu membuat parikan sendiri.
 
 export const gameLevels = [
   {
     id: 1,
     label: 'Tingkat 1',
     subtitle: 'Pemula',
-    emoji: '🌱',
+    emoji: '1',
     color: '#22c55e',
     shadow: 'rgba(34,197,94,0.35)',
-    description: 'Jangkepi parikan ing ngisor iki!',
+    description: 'Misi sambung parikan kanthi wangsulan sing trep.',
     questions: [
       {
         id: 'q1_1',
@@ -29,7 +22,7 @@ export const gameLevels = [
         ],
         blank: 'Mata ngantuk ___',
         answer: 'jaluk turu',
-        explanation: '"Tuku gethuk regane sewu, Mata ngantuk jaluk turu." — Swara "u" ing sewu lan turu cocog (purwakanthi).',
+        explanation: '"Tuku gethuk regane sewu, Mata ngantuk jaluk turu." Swara "u" ing sewu lan turu cocog minangka purwakanthi.',
       },
       {
         id: 'q1_2',
@@ -40,7 +33,7 @@ export const gameLevels = [
         ],
         blank: 'Tiwas dagang ___',
         answer: 'ora bathi',
-        explanation: '"Abang-abang ora legi, Tiwas dagang ora bathi." — Swara "i" ing legi lan bathi cocog (purwakanthi).',
+        explanation: '"Abang-abang ora legi, Tiwas dagang ora bathi." Swara "i" ing legi lan bathi cocog minangka purwakanthi.',
       },
       {
         id: 'q1_3',
@@ -51,7 +44,7 @@ export const gameLevels = [
         ],
         blank: 'Pengin ilmu ___',
         answer: 'kudu sekolah',
-        explanation: '"Tuku buku gambare sawah, Pengin ilmu kudu sekolah." — Swara "ah" ing sawah lan sekolah cocog (purwakanthi).',
+        explanation: '"Tuku buku gambare sawah, Pengin ilmu kudu sekolah." Swara "ah" ing sawah lan sekolah nggawe parikan luwih selaras.',
       },
       {
         id: 'q1_4',
@@ -62,7 +55,7 @@ export const gameLevels = [
         ],
         blank: 'Kalah dhisik ___',
         answer: 'aja ngersula',
-        explanation: '"Gresik Surabaya, Kalah dhisik aja ngersula." — Pitutur supaya ora ngersula nalika kalah.',
+        explanation: '"Gresik Surabaya, Kalah dhisik aja ngersula." Isine menehi pitutur supaya ora gampang ngersula nalika kalah.',
       },
       {
         id: 'q1_5',
@@ -75,73 +68,7 @@ export const gameLevels = [
         ],
         blank: '___',
         answer: 'sing di eling ora rumangsa',
-        explanation: '"Esuk eling sore eling, sing di eling ora rumangsa." — Sindiran kanggo wong kang ora ngrasa yen dieling-eling.',
-      },
-      {
-        id: 'q1_6',
-        type: 'fill',
-        lines: [
-          'Manuk emprit nucuk tebu,',
-          'Tebune ana ning sawahe bu sasa,',
-          'Sadurungipun sinau,',
-          'Monggo kita ___ marang sang Kuasa',
-        ],
-        blank: 'Monggo kita ___ marang sang Kuasa',
-        answer: 'ndonga',
-        explanation: '"Monggo kita ndonga marang sang Kuasa." — Pitutur supaya ndonga dhisik sadurunge sinau.',
-      },
-      {
-        id: 'q1_7',
-        type: 'fill',
-        lines: [
-          'Ngombe wedang isuk mau,',
-          'Wedange diombe karo mesem ngguyu,',
-          'Ayo kanca ndang ___,',
-          'Supaya bisa nggayuh cita-citamu',
-        ],
-        blank: 'Ayo kanca ndang ___',
-        answer: 'sinau',
-        explanation: '"Ayo kanca ndang sinau, supaya bisa nggayuh cita-citamu." — Ajakan sinau supaya bisa nggayuh cita-cita.',
-      },
-      {
-        id: 'q1_8',
-        type: 'fill',
-        lines: [
-          'Tuku papat entuk siji,',
-          'Entuke siji tibake ora isi,',
-          'Ing abad selikur iki,',
-          '___ kudu nomer siji',
-        ],
-        blank: '___ kudu nomer siji',
-        answer: 'pendidikan',
-        explanation: '"Ing abad selikur iki, pendidikan kudu nomer siji." — Pitutur babagan pentinge pendidikan ing jaman modern.',
-      },
-      {
-        id: 'q1_9',
-        type: 'fill',
-        lines: [
-          'Saiki hawane sumuk,',
-          'Mulane adik ora isa turu,',
-          'Ayo kanca tangi isuk,',
-          'Banjur adus lan sinau maca ___',
-        ],
-        blank: 'Banjur adus lan sinau maca ___',
-        answer: 'buku',
-        explanation: '"Banjur adus lan sinau maca buku." — Pitutur supaya tangi isuk, adus, lan sinau maca buku.',
-      },
-      {
-        id: 'q1_10',
-        type: 'fill',
-        lines: [
-          'Limang dino mangan tahu,',
-          'Ngadek ngarep pak budiman,',
-          'Nggawa senter,',
-          'Yo kanca padha sinau,',
-          'Sinau sregep supaya dadi ___',
-        ],
-        blank: 'Sinau sregep supaya dadi ___',
-        answer: 'pinter',
-        explanation: '"Sinau sregep supaya dadi pinter." — Pitutur supaya sregep sinau supaya dadi bocah pinter.',
+        explanation: '"Esuk eling sore eling, sing di eling ora rumangsa." Isine dadi sindiran kanggo wong sing ora ngrasa yen dielingake.',
       },
     ],
   },
@@ -149,10 +76,10 @@ export const gameLevels = [
     id: 2,
     label: 'Tingkat 2',
     subtitle: 'Menengah',
-    emoji: '🌿',
+    emoji: '2',
     color: '#f59e0b',
     shadow: 'rgba(245,158,11,0.35)',
-    description: 'Nulis parikan saka kata kunci!',
+    description: 'Misi nulis parikan saka kata kunci.',
     questions: [
       {
         id: 'q2_1',
@@ -166,63 +93,28 @@ export const gameLevels = [
         type: 'compose',
         keyword: 'gamelan',
         theme: 'Seni budaya Jawa',
-        example: 'Ibu mlaku-mlaku ing angin segar,\nwingi bali saka pasar.',
+        example: 'Krungu swara gamelan sore,\nbudaya Jawa kudu dijaga selawase.',
       },
       {
         id: 'q2_3',
         type: 'compose',
         keyword: 'sekolah',
-        theme: 'Belajar ing sekolah',
-        example: 'Ibu mlaku-mlaku ing angin segar,\nwingi bali saka pasar.',
+        theme: 'Sinau ing sekolah',
+        example: 'Mlaku esuk menyang sekolah,\nsinau sregep supaya ora kalah.',
       },
       {
         id: 'q2_4',
         type: 'compose',
         keyword: 'gedhang goreng',
         theme: 'Panganan tradisional Jawa',
-        example: 'Ibu mlaku-mlaku ing angin segar,\nwingi bali saka pasar.',
+        example: 'Tuku gedhang goreng ing warung pojok,\nrasane gurih nggawe ati kepenak.',
       },
       {
         id: 'q2_5',
         type: 'compose',
         keyword: 'tembok',
-        theme: 'Omah / lingkungan omah',
-        example: 'Ibu mlaku-mlaku ing angin segar,\nwingi bali saka pasar.',
-      },
-      {
-        id: 'q2_6',
-        type: 'compose',
-        keyword: 'pendidikan',
-        theme: 'Pendidikan ing sekolah',
-        example: 'Ibu mlaku-mlaku ing angin segar,\nwingi bali saka pasar.',
-      },
-      {
-        id: 'q2_7',
-        type: 'compose',
-        keyword: 'literasi',
-        theme: 'Perpustakaan',
-        example: 'Ibu mlaku-mlaku ing angin segar,\nwingi bali saka pasar.',
-      },
-      {
-        id: 'q2_8',
-        type: 'compose',
-        keyword: 'tanduran',
-        theme: 'Taman sekolah',
-        example: 'Ibu mlaku-mlaku ing angin segar,\nwingi bali saka pasar.',
-      },
-      {
-        id: 'q2_9',
-        type: 'compose',
-        keyword: 'bendera',
-        theme: 'Upacara bendera',
-        example: 'Ibu mlaku-mlaku ing angin segar,\nwingi bali saka pasar.',
-      },
-      {
-        id: 'q2_10',
-        type: 'compose',
-        keyword: 'adiwiyata',
-        theme: 'Sekolah adiwiyata',
-        example: 'Ibu mlaku-mlaku ing angin segar,\nwingi bali saka pasar.',
+        theme: 'Omah lan lingkungan',
+        example: 'Ngecet tembok bareng sedulur,\nomah resik nggawe ati luhur.',
       },
     ],
   },
@@ -230,20 +122,17 @@ export const gameLevels = [
     id: 3,
     label: 'Tingkat 3',
     subtitle: 'Mahir',
-    emoji: '🌟',
+    emoji: '3',
     color: '#0ea5e9',
     shadow: 'rgba(14,165,233,0.35)',
-    description: 'Pilih 3 tema, banjur tulisen parikanmu dhewe!',
-    // Tingkat 3 memakai mekanisme khusus: pilih 3 dari 10 tema
-    // questions diisi dinamis saat user memilih tema
-    // themePool berisi semua tema yang tersedia
+    description: 'Pilih 5 tema, banjur tulisen parikanmu dhewe.',
     type: 'theme-select',
-    selectCount: 3,
+    selectCount: 5,
     themePool: [
       {
         id: 't3_1',
         theme: 'Pasar Esuk',
-        emoji: '🛒',
+        emoji: 'A',
         description: 'Nyritakake suasana pasar, dodolan, utawa tumbas-tumbasan.',
         keyword: 'pasar',
         example: 'Tuku tempe ning pasar esuk,\nrejeki akeh yen sregep nyambut gawe.',
@@ -251,7 +140,7 @@ export const gameLevels = [
       {
         id: 't3_2',
         theme: 'Sekolah',
-        emoji: '🏫',
+        emoji: 'B',
         description: 'Babagan sinau, kanca, utawa guru.',
         keyword: 'sekolah',
         example: 'Mangkat sekolah numpak pit,\nsinau sregep supaya dadi pinter.',
@@ -259,7 +148,7 @@ export const gameLevels = [
       {
         id: 't3_3',
         theme: 'Gamelan',
-        emoji: '🎵',
+        emoji: 'C',
         description: 'Gegayutan karo seni lan budaya Jawa.',
         keyword: 'gamelan',
         example: 'Nabuh gamelan ing saben wengi,\nbudaya Jawa kudu dijaga kanthi ati.',
@@ -267,7 +156,7 @@ export const gameLevels = [
       {
         id: 't3_4',
         theme: 'Panganan Tradisional',
-        emoji: '🍌',
+        emoji: 'D',
         description: 'Babagan gedhang goreng, jadah, utawa jajanan pasar.',
         keyword: 'gedhang goreng',
         example: 'Tuku gedhang goreng ning warung pojok,\nrasane gurih gawe weteng marem.',
@@ -275,52 +164,12 @@ export const gameLevels = [
       {
         id: 't3_5',
         theme: 'Lingkungan Omah',
-        emoji: '🏡',
+        emoji: 'E',
         description: 'Babagan omah, kebon, udan, utawa kabersihan.',
         keyword: 'omah',
         example: 'Resiki omah saben esuk awan,\nlingkungan resik gawe ati seneng.',
       },
-      {
-        id: 't3_6',
-        theme: 'Mushola',
-        emoji: '🕌',
-        description: 'Gayut karo mushola lan ibadah.',
-        keyword: 'mushola',
-        example: 'Mlaku menyang mushola bareng kanca,\nngibadah bebarengan luwih tentrem rasane.',
-      },
-      {
-        id: 't3_7',
-        theme: 'Kantin Sekolah',
-        emoji: '🍜',
-        description: 'Ana gayutane karo kantin sekolah.',
-        keyword: 'kantin',
-        example: 'Istirahat mampir ning kantin sekolah,\njajan bareng kanca gawe ati seneng.',
-      },
-      {
-        id: 't3_8',
-        theme: 'Kenangan Sekolah',
-        emoji: '📸',
-        description: 'Ana gayutane karo kenangan ing sekolah.',
-        keyword: 'kenangan',
-        example: 'Foto bareng kanca ing kenangan sekolah,\nkang bakal dieling-eling nganti tuwa.',
-      },
-      {
-        id: 't3_9',
-        theme: 'Suasana Ruang Ujian',
-        emoji: '📝',
-        description: 'Babagan ruang ujian lan ulangan.',
-        keyword: 'ujian',
-        example: 'Mlebu ruang ujian ati deg-degan,\nsinau sregep supaya bisa nggarap.',
-      },
-      {
-        id: 't3_10',
-        theme: 'Organisasi Sekolah',
-        emoji: '🤝',
-        description: 'Gayut karo organisasi sekolah kaya OSIS utawa pramuka.',
-        keyword: 'organisasi',
-        example: 'Melu organisasi ing sekolah,\nbelajar tanggung jawab lan kerja sama.',
-      },
     ],
-    questions: [], // diisi dinamis
+    questions: [],
   },
 ];
