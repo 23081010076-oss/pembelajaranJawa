@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Javanesia Dimas Rara Dialogue Generator</title>
+    <style>
+      :root {
+        color: #2e1d10;
+        font-family: Inter, "Segoe UI", Arial, sans-serif;
+        background: #f7ead7;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        min-height: 100vh;
+        padding: 28px;
+      }
+
+      main {
+        display: grid;
+        max-width: 980px;
+        gap: 18px;
+        margin: 0 auto;
+      }
+
+      section {
+        border: 3px solid rgba(255, 255, 255, 0.9);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 14px 32px rgba(78, 45, 21, 0.14);
+        padding: 20px;
+      }
+
+      h1 {
+        margin: 0;
+        color: #3d2817;
+        font-size: clamp(2rem, 5vw, 3.2rem);
+        line-height: 1;
+      }
+
+      p {
+        margin: 8px 0 0;
+        color: #6b4a2d;
+        font-weight: 700;
+        line-height: 1.6;
+      }
+
+      label {
+        display: grid;
+        gap: 8px;
+        color: #d97706;
+        font-size: 0.78rem;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      textarea,
+      input,
+      select {
+        width: 100%;
+        border: 2px solid #fed7aa;
+        border-radius: 12px;
+        padding: 12px 14px;
+        color: #2e1d10;
+        font: inherit;
+        font-weight: 700;
+        outline: none;
+      }
+
+      textarea {
+        min-height: 170px;
+        resize: vertical;
+      }
+
+      button,
+      a.download {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 12px;
+        background: #ff9700;
+        color: white;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 900;
+        padding: 12px 18px;
+        text-decoration: none;
+        box-shadow: 0 5px 0 rgba(95, 60, 31, 0.2);
+      }
+
+      button.secondary { background: #7a5030; }
+
+      button:disabled {
+        cursor: wait;
+        opacity: 0.6;
+      }
+
+      .grid { display: grid; gap: 14px; }
+
+      .row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .note {
+        border: 2px solid #fed7aa;
+        border-radius: 14px;
+        background: #fff7ed;
+        padding: 12px 14px;
+        color: #7a5030;
+        font-size: 0.92rem;
+        font-weight: 800;
+        line-height: 1.55;
+      }
+
+      .status {
+        min-height: 24px;
+        color: #7a5030;
+        font-weight: 800;
+      }
+
+      audio { width: 100%; }
+
+      @media (max-width: 720px) {
+        body { padding: 16px; }
+        .row { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section>
+        <h1>Dimas Rara Dialogue Generator</h1>
+        <p>
+          Tool developer kanggo nggawe audio percakapan Dimas lan Rara. Cocok kanggo video animasi Google Flow:
+          visual digawe ing Flow, audione digawe ing kene, banjur disinkronake ing editor video.
+        </p>
+      </section>
+
+      <section class="grid">
+        <div class="note">
+          Gunakake format <strong>Dimas:</strong> lan <strong>Rara:</strong>. Ora kudu Dimas sing terus takon.
+          Rara uga bisa takon, mbantah alus, utawa ngajak mikir supaya dialog luwih natural.
+        </div>
+
+        <label>
+          Gemini API Key
+          <input id="api-key" type="password" autocomplete="off" placeholder="Tempel API key saka Google AI Studio..." />
+        </label>
+
+        <div class="row">
+          <label>
+            Nama file hasil
+            <input id="filename" value="dialog-materi-01-dimas-rara.wav" />
+          </label>
+          <label>
+            Model TTS
+            <select id="model">
+              <option value="gemini-3.1-flash-tts-preview">gemini-3.1-flash-tts-preview</option>
+              <option value="gemini-2.5-flash-preview-tts">gemini-2.5-flash-preview-tts</option>
+              <option value="gemini-2.5-pro-preview-tts">gemini-2.5-pro-preview-tts</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            Voice Dimas
+            <select id="voice-dimas">
+              <option value="Puck">Puck - upbeat</option>
+              <option value="Achird">Achird - friendly</option>
+              <option value="Iapetus">Iapetus - clear</option>
+              <option value="Kore">Kore - firm</option>
+            </select>
+          </label>
+          <label>
+            Voice Rara
+            <select id="voice-rara">
+              <option value="Leda">Leda - youthful</option>
+              <option value="Aoede">Aoede - breezy</option>
+              <option value="Sulafat">Sulafat - warm</option>
+              <option value="Vindemiatrix">Vindemiatrix - gentle</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            Materi
+            <select id="preset">
+              <option value="">Pilih template...</option>
+              <option value="materi1">Materi 1 - Tegese Parikan</option>
+              <option value="materi2">Materi 2 - Cirine Parikan</option>
+              <option value="materi3">Materi 3 - Struktur Parikan</option>
+              <option value="materi4">Materi 4 - Jenis Parikan</option>
+              <option value="materi5">Materi 5 - Paedah Parikan</option>
+              <option value="materi6">Materi 6 - Panggone Ukara</option>
+              <option value="materi7">Materi 7 - Cara Ngrakit</option>
+              <option value="materi8">Materi 8 - Rong Gatra</option>
+              <option value="materi9">Materi 9 - Patang Gatra</option>
+            </select>
+          </label>
+          <label>
+            Durasi target
+            <select id="duration">
+              <option value="short">Pendek, 30-45 detik</option>
+              <option value="medium">Sedang, 45-60 detik</option>
+              <option value="long">Lebih lengkap, 60-90 detik</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          Catatan adegan / visual video
+          <textarea id="scene-notes">Adegan kelas Jawa. Dimas katon penasaran, Rara nerangake kanthi ramah. Ana jeda cendhak nalika karakter nuduhake papan tulis utawa contoh parikan.</textarea>
+        </label>
+
+        <label>
+          Script percakapan
+          <textarea id="script">Dimas: Rara, parikan kuwi mung pantun nganggo basa Jawa ta?
+Rara: Ora mung kuwi, Dimas. Parikan nduweni purwakanthi, sampiran, lan isi.
+Dimas: Dadi swarane kudu enak dirungokake?
+Rara: Bener. Mula parikan kerep digunakake kanggo guyonan, pitutur, utawa pesen sing gampang dielingi.</textarea>
+        </label>
+
+        <label>
+          Instruksi intonasi
+          <textarea id="instructions">Create a natural two-speaker Javanese dialogue for Indonesian 8th grade students. Dimas sounds curious, friendly, and sometimes surprised. Rara sounds clear, warm, and confident, but not always only answering; she can ask reflective questions too. Use natural Indonesian-Javanese pronunciation. Avoid English accent. Pronounce dh, th, ng, ny, and final vowels clearly. Add short natural pauses between turns.</textarea>
+        </label>
+
+        <div class="actions">
+          <button id="load-preset" type="button" class="secondary">Gunakake Template</button>
+          <button id="generate" type="button">Generate Dialog WAV</button>
+          <a id="download" class="download" hidden>Download WAV</a>
+        </div>
+
+        <div id="status" class="status"></div>
+        <audio id="preview" controls hidden></audio>
+      </section>
+    </main>
+
+    <script>
+      const apiKeyInput = document.getElementById('api-key');
+      const generateButton = document.getElementById('generate');
+      const downloadLink = document.getElementById('download');
+      const preview = document.getElementById('preview');
+      const statusEl = document.getElementById('status');
+
+      const templates = {
+        materi1: {
+          filename: 'dialog-materi-01-tegese-parikan.wav',
+          scene: 'Adegan kelas. Dimas ndeleng tulisan parikan ing papan tulis. Rara maju nerangake kanthi ramah.',
+          script: `Dimas: Rara, parikan kuwi mung pantun nganggo basa Jawa ta?
+Rara: Meh padha, nanging parikan duwe ciri khas. Ana purwakanthi, sampiran, lan isi.
+Dimas: Purwakanthi kuwi swara sing padha ing pungkasan tembung?
+Rara: Ya, bener. Swara sing mathuk kuwi nggawe parikan enak dirungokake.
+Dimas: Dadi parikan ora mung lucu, nanging uga ana pesene?
+Rara: Tepat. Parikan bisa kanggo guyonan, pitutur, lan ngelingake kanthi cara sing alus.`,
+        },
+        materi2: {
+          filename: 'dialog-materi-02-cirine-parikan.wav',
+          scene: 'Dimas lan Rara nyocokake kartu swara pungkasan ing meja kelas.',
+          script: `Rara: Dimas, menurutmu apa ciri sing paling gampang ditemokake saka parikan?
+Dimas: Mbokmenawa swara pungkasane, ya? Kadhang kok padha.
+Rara: Bener. Kuwi diarani purwakanthi swara.
+Dimas: Terus tembunge biasane prasaja?
+Rara: Ya. Parikan apik kuwi ringkes, enak dirungokake, lan pesene cetha.
+Dimas: Wah, dadi ora asal nyusun ukara wae.
+Rara: Pancen. Kudu ana rasa, irama, lan makna.`,
+        },
+        materi3: {
+          filename: 'dialog-materi-03-struktur-parikan.wav',
+          scene: 'Rara nuduhake kertas warna kanggo mbedakake sampiran lan isi.',
+          script: `Dimas: Aku isih bingung, endi sampiran lan endi isi.
+Rara: Ayo dipisah dhisik. Baris awal biasane dadi sampiran.
+Dimas: Terus baris pungkasan dadi isi utawa pesene?
+Rara: Ya. Sampiran mbangun swara lan irama, isi nggawa maksud utama.
+Dimas: Yen patang gatra, berarti loro awal sampiran lan loro akhir isi?
+Rara: Bener. Struktur kaya ngono nggawe parikan luwih runtut.`,
+        },
+        materi4: {
+          filename: 'dialog-materi-04-jenis-parikan.wav',
+          scene: 'Dimas lan Rara nggawa kertu parikan rong gatra lan patang gatra.',
+          script: `Rara: Dimas, coba delengen loro conto iki. Apa bedane?
+Dimas: Sing siji mung rong baris, sing siji patang baris.
+Rara: Ya. Parikan bisa awujud rong gatra utawa patang gatra.
+Dimas: Rong gatra berarti siji sampiran lan siji isi?
+Rara: Bener. Yen patang gatra, biasane loro sampiran lan loro isi.
+Dimas: Dadi jinis parikan gumantung jumlah barise.
+Rara: Tepat. Nanging tetep kudu enak swarane lan jelas pesene.`,
+        },
+        materi5: {
+          filename: 'dialog-materi-05-paedah-parikan.wav',
+          scene: 'Rara ngajak Dimas mikir kenapa parikan isih migunani ing sekolah.',
+          script: `Dimas: Rara, parikan kuwi gunane apa saiki?
+Rara: Akeh. Parikan bisa kanggo hiburan, pitutur, lan nglatih basa Jawa.
+Dimas: Dadi bisa nggawe pesen luwih gampang dielingi?
+Rara: Ya. Yen pesen dikemas nganggo irama, siswa luwih seneng ngrungokake.
+Dimas: Kaya nasihat, nanging ora kerasa kaku.
+Rara: Bener. Kuwi salah siji paedahe parikan.`,
+        },
+        materi6: {
+          filename: 'dialog-materi-06-panggone-ukara.wav',
+          scene: 'Dimas maca parikan sing ukarane dawa, Rara nulungi ngringkes.',
+          script: `Dimas: Rara, parikanku kok rasane dawa banget, ya?
+Rara: Coba ukarane digawe luwih ringkes. Parikan luwih enak yen tembunge padhet.
+Dimas: Berarti ora kabeh tembung kudu dilebokake?
+Rara: Bener. Pilih tembung sing trep, gampang diwaca, lan swarane mathuk.
+Dimas: Yen ukarane ringkes, iramane luwih gampang?
+Rara: Ya. Kuwi sing nggawe parikan luwih lancar dirungokake.`,
+        },
+        materi7: {
+          filename: 'dialog-materi-07-cara-ngerakit.wav',
+          scene: 'Rara lan Dimas nyusun parikan saka kata kunci ing papan tulis.',
+          script: `Rara: Dimas, ayo ngrakit parikan saka kata kunci sekolah.
+Dimas: Kaping pisan kudu milih tema dhisik, ya?
+Rara: Ya. Sawise tema, pilih pesen sing arep disampaikan.
+Dimas: Banjur golek sampiran sing swarane cocog?
+Rara: Tepat. Sawise kuwi, cek isi, rima, lan tembunge.
+Dimas: Dadi nggawe parikan kudu liwat langkah-langkah.
+Rara: Bener. Yen runtut, asil parikanmu bakal luwih apik.`,
+        },
+        materi8: {
+          filename: 'dialog-materi-08-rong-gatra.wav',
+          scene: 'Dimas nyoba maca parikan rong gatra kanthi ekspresi seneng.',
+          script: `Dimas: Rara, parikan rong gatra kuwi sing paling ringkes, ya?
+Rara: Ya. Mung ana rong baris. Baris pisanan sampiran, baris kapindho isi.
+Dimas: Contone kudu langsung ana pesene ing baris kapindho?
+Rara: Bener. Mula kudu milih tembung sing cetha lan ora mubazir.
+Dimas: Ringkes, nanging tetep kudu nduweni purwakanthi.
+Rara: Tepat. Ringkes ora ateges asal cekak.`,
+        },
+        materi9: {
+          filename: 'dialog-materi-09-patang-gatra.wav',
+          scene: 'Rara nuduhake pola patang baris, Dimas mriksa sampiran lan isi.',
+          script: `Rara: Saiki ayo delengen parikan patang gatra.
+Dimas: Iki ana patang baris. Loro awal sampiran, loro akhir isi?
+Rara: Ya, bener. Sampiran mbangun swara, isi nggawa pesen.
+Dimas: Berarti pesene bisa luwih lengkap tinimbang rong gatra.
+Rara: Bisa. Nanging tetep kudu runtut lan ora kelalen purwakanthi.
+Dimas: Aku paham. Patang gatra cocok kanggo pesen sing luwih jelas.
+Rara: Apik. Saiki coba gawe tuladha dhewe.`,
+        },
+      };
+
+      apiKeyInput.value = sessionStorage.getItem('javanesia-gemini-api-key') || '';
+      apiKeyInput.addEventListener('input', () => {
+        sessionStorage.setItem('javanesia-gemini-api-key', apiKeyInput.value.trim());
+      });
+
+      function normalizeFilename(name) {
+        const fallback = 'dialog-dimas-rara.wav';
+        const cleaned = name.trim() || fallback;
+        return cleaned.toLowerCase().endsWith('.wav') ? cleaned : `${cleaned}.wav`;
+      }
+
+      function base64ToUint8Array(base64) {
+        const binary = atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+        return bytes;
+      }
+
+      function writeString(view, offset, string) {
+        for (let i = 0; i < string.length; i += 1) view.setUint8(offset + i, string.charCodeAt(i));
+      }
+
+      function pcmToWavBlob(pcmBytes, sampleRate = 24000, channels = 1, bitsPerSample = 16) {
+        const headerSize = 44;
+        const buffer = new ArrayBuffer(headerSize + pcmBytes.length);
+        const view = new DataView(buffer);
+        const blockAlign = channels * bitsPerSample / 8;
+        const byteRate = sampleRate * blockAlign;
+
+        writeString(view, 0, 'RIFF');
+        view.setUint32(4, 36 + pcmBytes.length, true);
+        writeString(view, 8, 'WAVE');
+        writeString(view, 12, 'fmt ');
+        view.setUint32(16, 16, true);
+        view.setUint16(20, 1, true);
+        view.setUint16(22, channels, true);
+        view.setUint32(24, sampleRate, true);
+        view.setUint32(28, byteRate, true);
+        view.setUint16(32, blockAlign, true);
+        view.setUint16(34, bitsPerSample, true);
+        writeString(view, 36, 'data');
+        view.setUint32(40, pcmBytes.length, true);
+        new Uint8Array(buffer, headerSize).set(pcmBytes);
+
+        return new Blob([buffer], { type: 'audio/wav' });
+      }
+
+      function summarizeGeminiResponse(data) {
+        try {
+          return JSON.stringify(data, null, 2).slice(0, 900);
+        } catch {
+          return String(data).slice(0, 900);
+        }
+      }
+
+      function extractAudioData(data) {
+        const directAudio =
+          data?.output_audio?.data ||
+          data?.outputAudio?.data ||
+          data?.audio?.data ||
+          data?.output?.audio?.data;
+
+        if (typeof directAudio === 'string' && directAudio.length > 0) {
+          return directAudio;
+        }
+
+        const stack = [data];
+        const seen = new Set();
+
+        while (stack.length > 0) {
+          const item = stack.pop();
+          if (!item || typeof item !== 'object' || seen.has(item)) continue;
+          seen.add(item);
+
+          const nestedAudio =
+            item?.output_audio?.data ||
+            item?.outputAudio?.data ||
+            item?.audio?.data ||
+            item?.inline_data?.data ||
+            item?.inlineData?.data;
+
+          if (typeof nestedAudio === 'string' && nestedAudio.length > 0) {
+            return nestedAudio;
+          }
+
+          if (typeof item.data === 'string' && item.data.length > 2000) {
+            return item.data;
+          }
+
+          Object.values(item).forEach((value) => {
+            if (value && typeof value === 'object') stack.push(value);
+          });
+        }
+
+        return null;
+      }
+
+      async function generateDialogue({ apiKey, model, prompt, dimasVoice, raraVoice }) {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model,
+            contents: [
+              {
+                parts: [{ text: prompt }],
+              },
+            ],
+            generationConfig: {
+              responseModalities: ['AUDIO'],
+              speechConfig: {
+                multiSpeakerVoiceConfig: {
+                  speakerVoiceConfigs: [
+                    {
+                      speaker: 'Dimas',
+                      voiceConfig: {
+                        prebuiltVoiceConfig: { voiceName: dimasVoice },
+                      },
+                    },
+                    {
+                      speaker: 'Rara',
+                      voiceConfig: {
+                        prebuiltVoiceConfig: { voiceName: raraVoice },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          }),
+        });
+
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(text || `HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+        const audioData = extractAudioData(data);
+        if (!audioData) {
+          throw new Error(`Gemini ora mbalekake data audio. Respons API: ${summarizeGeminiResponse(data)}`);
+        }
+        return audioData;
+      }
+
+      document.getElementById('load-preset').addEventListener('click', () => {
+        const key = document.getElementById('preset').value;
+        const template = templates[key];
+        if (!template) {
+          statusEl.textContent = 'Pilih materi template dhisik.';
+          return;
+        }
+
+        document.getElementById('filename').value = template.filename;
+        document.getElementById('scene-notes').value = template.scene;
+        document.getElementById('script').value = template.script;
+        statusEl.textContent = 'Template wis dimuat. Sampeyan bisa nyunting script sadurunge generate.';
+      });
+
+      generateButton.addEventListener('click', async () => {
+        const apiKey = apiKeyInput.value.trim();
+        const model = document.getElementById('model').value;
+        const dimasVoice = document.getElementById('voice-dimas').value;
+        const raraVoice = document.getElementById('voice-rara').value;
+        const duration = document.getElementById('duration').value;
+        const sceneNotes = document.getElementById('scene-notes').value.trim();
+        const script = document.getElementById('script').value.trim();
+        const instructions = document.getElementById('instructions').value.trim();
+        const filename = normalizeFilename(document.getElementById('filename').value);
+
+        if (!apiKey) {
+          statusEl.textContent = 'API key durung diisi.';
+          return;
+        }
+
+        if (!script.includes('Dimas:') || !script.includes('Rara:')) {
+          statusEl.textContent = 'Script kudu ngemot speaker Dimas: lan Rara:.';
+          return;
+        }
+
+        generateButton.disabled = true;
+        downloadLink.hidden = true;
+        preview.hidden = true;
+        statusEl.textContent = 'Nggawe audio dialog Dimas lan Rara...';
+
+        try {
+          const prompt = `TTS the following conversation between Dimas and Rara for an animated Javanesia learning video.
+
+Target duration: ${duration}.
+Scene notes: ${sceneNotes}
+
+Performance direction:
+${instructions}
+
+Important:
+- Read only the dialogue lines.
+- Keep Dimas and Rara as two distinct speakers.
+- Use natural Javanese/Indonesian-Javanese classroom rhythm.
+- Do not translate the dialogue.
+- Do not read stage directions aloud.
+
+Dialogue:
+${script}`;
+
+          const audioBase64 = await generateDialogue({ apiKey, model, prompt, dimasVoice, raraVoice });
+          const wavBlob = pcmToWavBlob(base64ToUint8Array(audioBase64));
+          const audioUrl = URL.createObjectURL(wavBlob);
+
+          preview.src = audioUrl;
+          preview.hidden = false;
+          downloadLink.href = audioUrl;
+          downloadLink.download = filename;
+          downloadLink.hidden = false;
+          statusEl.textContent = `Audio siap. Download banjur simpen minangka public/assets/sounds/${filename}`;
+        } catch (error) {
+          statusEl.textContent = `Gagal nggawe dialog: ${error?.message ?? error}`;
+        } finally {
+          generateButton.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>
