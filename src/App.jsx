@@ -274,7 +274,7 @@ export default function App() {
 
               {page === 'video' && <VideoPage videos={videoList} />}
 
-              {page === 'game' && <GamePage />}
+              {page === 'game' && <GamePage studentStorageId={studentStorageId} />}
 
               {page === 'evaluasi' && <EvaluasiPage />}
 
