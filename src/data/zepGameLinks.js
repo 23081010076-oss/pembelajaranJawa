@@ -12,19 +12,19 @@ export const zepGameLevels = [
     levelId: 1,
     title: 'Sambung Parikan',
     type: 'ZEP Game',
-    url: 'https://quiz.zep.us/en/play/qnYbAL',
+    url: 'https://quiz.zep.us/id/play/gGjrpb',
   },
   {
     levelId: 2,
     title: 'Rakit Parikan',
     type: 'ZEP Game',
-    url: 'https://quiz.zep.us/en/play/AOe5d9',
+    url: 'https://quiz.zep.us/id/play/odJELZ',
   },
   {
     levelId: 3,
     title: 'Pujangga Muda',
     type: 'ZEP Game',
-    url: 'https://quiz.zep.us/en/play/gGj4d3',
+    url: 'https://quiz.zep.us/id/play/odJELL',
   },
 ];
 
