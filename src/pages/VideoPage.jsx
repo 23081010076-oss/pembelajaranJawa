@@ -202,10 +202,12 @@ export function VideoPage({ videos }) {
   if (selectedVideo) {
     return (
       <div className="mx-auto flex w-full max-w-[960px] flex-col gap-5 px-4 py-2 sm:px-6">
-        <button type="button" onClick={handleBack}
-          className="inline-flex w-fit items-center gap-2 rounded-xl border-2 border-white/80 bg-white/80 px-4 py-2 text-sm font-black text-[#7a4f2e] shadow-md backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
+        <button
+          type="button"
+          onClick={handleBack}
+          className="inline-flex w-fit items-center gap-2 rounded-xl border-2 border-white/80 bg-white/80 px-4 py-2 text-sm font-black text-[#7a4f2e] shadow-md backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-0 active:scale-95"
         >
-          <ArrowLeft size={16} />
+          <ArrowLeft size={16} aria-hidden="true" />
           Bali menyang Daftar Video
         </button>
 
