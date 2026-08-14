@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Star, Trophy, RotateCcw, ChevronRight, CheckCircle2, XCircle, Sparkles, Zap, Target, PenLine, AlertCircle, Info, ExternalLink, Map } from 'lucide-react';
+import { Star, Trophy, RotateCcw, ChevronRight, CheckCircle2, XCircle, Sparkles, Zap, Target, PenLine, AlertCircle, Info, ExternalLink, Map, MapPin, ShieldCheck, Waves, Landmark } from 'lucide-react';
 import { gameLevels } from '../data/gameParikan.js';
 import { zepGameHub, zepGameLevels } from '../data/zepGameLinks.js';
 import { useClickSound } from '../hooks/useClickSound.js';
@@ -1820,25 +1820,25 @@ function ZepGameOnlyScreen() {
   const playClick = useClickSound();
   const missions = zepGameLevels.filter((mission) => mission.url);
   const hasSpace = Boolean(zepGameHub.spaceUrl);
+  const missionIcons = [Landmark, MapPin, Waves];
 
   if (missions.length === 0 && !hasSpace) return null;
 
   return (
-    <div className="mx-auto flex w-full max-w-[980px] flex-col gap-6 px-4 py-2">
-      <header className="text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border-2 border-orange-300 bg-white/95 px-5 py-2 text-xs font-black uppercase tracking-[0.16em] text-orange-600 shadow-md">
-          <Map size={15} aria-hidden="true" />
-          Arena Game Parikan
+    <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-6 px-4 py-2">
+      <header className="overflow-hidden rounded-[32px] border-4 border-white/85 bg-[#087f8c] shadow-[0_22px_55px_rgba(15,62,78,0.28)]">
+        <img
+          src="/assets/game/surabaya/banner-ekspedisi.jpg"
+          alt="Banner Ekspedisi Parikan Arek Suroboyo di Tugu Pahlawan"
+          className="aspect-video w-full object-cover"
+          loading="eager"
+          fetchPriority="high"
+        />
+        <div className="sr-only">
+          <p>Jelajah Kutha Surabaya. Petualangan telung pos.</p>
+          <h1>Ekspedisi Parikan Arek Suroboyo</h1>
+          <p>Rampungake Sambung Parikan, Rakit Parikan, lan Pujangga Muda kanggo nglumpukake telung lencana kutha.</p>
         </div>
-        <h1
-          className="mt-4 text-[clamp(2.4rem,6vw,4rem)] font-black uppercase leading-none text-white drop-shadow-2xl"
-          style={{ WebkitTextStroke: '6px #ff9632', paintOrder: 'stroke fill' }}
-        >
-          Petualangan
-        </h1>
-        <p className="mx-auto mt-3 max-w-2xl text-sm font-black leading-relaxed text-[#4b2f1a] sm:text-base">
-          Pilih pos permainan, mlebu arena permainan, banjur rampungake tantangan parikan kanthi urutan misi.
-        </p>
       </header>
 
       {hasSpace && (
@@ -1864,12 +1864,22 @@ function ZepGameOnlyScreen() {
         </a>
       )}
 
-      <section className="grid gap-4 sm:grid-cols-3">
+      <section>
+        <div className="mb-4 flex flex-col gap-1 px-1 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#087f8c]">Peta Ekspedisi</p>
+            <h2 className="mt-1 text-2xl font-black text-[#3f2a1b]">Pilih pos tantanganmu</h2>
+          </div>
+          <p className="text-xs font-bold text-[#7a5a43]">Urutan sing disaranake: Pos 1 → Pos 2 → Pos 3</p>
+        </div>
+
+        <div className="relative grid gap-4 sm:grid-cols-3">
+          <div className="pointer-events-none absolute left-[16.5%] right-[16.5%] top-9 hidden border-t-4 border-dashed border-[#efb942]/55 sm:block" aria-hidden="true" />
         {missions.map((mission, index) => {
           const level = gameLevels.find((item) => item.id === mission.levelId) ?? gameLevels[index];
           const color = level?.color ?? '#f97316';
           const label = level?.label ?? `Pos ${index + 1}`;
-          const subtitle = level?.subtitle ?? 'Misi';
+          const MissionIcon = missionIcons[index] ?? MapPin;
 
           return (
             <a
@@ -1878,51 +1888,72 @@ function ZepGameOnlyScreen() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={playClick}
-              className="group relative flex min-h-[250px] flex-col justify-between overflow-hidden rounded-[28px] border-4 border-white/75 p-5 text-white shadow-[0_16px_42px_rgba(78,45,21,0.20)] transition hover:-translate-y-2 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99]"
+              aria-label={`Mulai ${mission.title} ing ZEP`}
+              className="group relative flex min-h-[470px] flex-col overflow-hidden rounded-[28px] border-4 border-white/80 bg-white p-5 text-[#3f2a1b] shadow-[0_16px_42px_rgba(78,45,21,0.16)] transition hover:-translate-y-2 hover:shadow-[0_22px_50px_rgba(78,45,21,0.24)] active:translate-y-0"
               style={{
-                background: `linear-gradient(145deg, color-mix(in srgb, ${color} 78%, white), ${color})`,
                 boxShadow: `0 16px 42px ${level?.shadow ?? 'rgba(78,45,21,0.18)'}`,
               }}
             >
-              <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/28 via-transparent to-black/10" />
-              <span className="pointer-events-none absolute inset-2 rounded-[20px] border border-white/25" />
-
-              <span className="relative flex items-start justify-between gap-3">
-                <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-white/92 text-xl font-black shadow-md" style={{ color }}>
-                  {index + 1}
-                </span>
-                <span className="rounded-full bg-white/20 px-3 py-1 text-[0.65rem] font-black uppercase tracking-widest text-white/90">
-                  {label}
-                </span>
-              </span>
-
-              <span className="relative">
-                <span className="block text-xs font-black uppercase tracking-[0.18em] text-white/75">{subtitle}</span>
-                <span className="mt-2 block text-2xl font-black leading-tight drop-shadow-sm">{mission.title}</span>
-                <span className="mt-3 block text-xs font-bold leading-relaxed text-white/82">
-                  Rampungake tantangan ing arena ZEP. Ranking lan progres dipantau dening host/guru.
+              <span className="relative -mx-5 -mt-5 mb-5 block overflow-hidden border-b-4 border-white bg-[#dcefe9]">
+                <img
+                  src={mission.image}
+                  alt={`Ilustrasi ${mission.location}`}
+                  className="aspect-video w-full object-cover transition duration-500 group-hover:scale-[1.035]"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                />
+                <span className="absolute right-3 top-3 rounded-full border border-white/80 bg-white/90 px-3 py-1 text-[0.62rem] font-black uppercase tracking-widest shadow-sm backdrop-blur-sm" style={{ color }}>
+                  {mission.posLabel ?? label}
                 </span>
               </span>
 
-              <span className="relative inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-black uppercase tracking-wide shadow-md transition group-hover:shadow-lg" style={{ color }}>
-                Main Misi
-                <ExternalLink size={16} aria-hidden="true" />
+              <span className="relative flex flex-1 flex-col">
+                <span className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.13em]" style={{ color }}>
+                  <MissionIcon size={15} aria-hidden="true" />
+                  {mission.location}
+                </span>
+                <span className="mt-2 block text-2xl font-black leading-tight text-[#3f2a1b]">{mission.title}</span>
+                <span className="mt-3 block text-xs font-bold leading-relaxed text-[#76543c]">
+                  {mission.description}
+                </span>
+
+                <span className="mt-4 flex flex-wrap gap-2">
+                  {mission.keywords?.map((keyword) => (
+                    <span key={keyword} className="rounded-full border border-[#ead8c8] bg-[#fffaf4] px-2.5 py-1 text-[0.62rem] font-black text-[#79563d]">
+                      {keyword}
+                    </span>
+                  ))}
+                </span>
+
+                <span className="mt-auto flex items-center gap-2 pt-5 text-xs font-black" style={{ color }}>
+                  <ShieldCheck size={17} aria-hidden="true" />
+                  Hadiah: {mission.badge}
+                </span>
+              </span>
+
+              <span className="relative mt-2 flex justify-center overflow-hidden rounded-2xl transition group-hover:scale-[1.025] group-active:scale-[0.98]">
+                <img
+                  src="/assets/game/surabaya/button-mulai.png"
+                  alt=""
+                  className="h-auto w-[220px] max-w-full drop-shadow-md"
+                />
+                <span className="sr-only">Mulai misi ing ZEP</span>
               </span>
             </a>
           );
         })}
+        </div>
       </section>
 
-      <section className="rounded-[26px] border-4 border-white/80 bg-white/95 p-5 shadow-[0_16px_38px_rgba(78,45,21,0.12)]">
+      <section className="rounded-[26px] border-4 border-white/80 bg-[#fffaf1] p-5 shadow-[0_16px_38px_rgba(78,45,21,0.12)]">
         <div className="grid gap-4 sm:grid-cols-[auto,1fr] sm:items-center">
-          <div className="flex size-14 items-center justify-center rounded-2xl bg-orange-100 text-orange-600">
+          <div className="flex size-14 items-center justify-center rounded-2xl bg-[#d9f3ef] text-[#087f8c]">
             <Info size={26} aria-hidden="true" />
           </div>
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-orange-600">Cara Main</p>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#087f8c]">Pituduh Ekspedisi</p>
             <p className="mt-1 text-sm font-bold leading-relaxed text-[#6b4428]">
-              Gunakake jeneng peserta kanthi format <strong>Nama_Kelas_Absen</strong>. Host/guru miwiti game,
-              ngatur wektu, banjur ngawasi peserta liwat menu Players lan Ranking.
+              Gunakake jeneng peserta kanthi format <strong>Nama_Kelas_Absen</strong>. Saben tombol misi bakal mbukak arena ZEP ing tab anyar.
+              Rampungake kanthi urut saka Sambung Parikan, Rakit Parikan, banjur Pujangga Muda.
             </p>
           </div>
         </div>
