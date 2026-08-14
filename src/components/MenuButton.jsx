@@ -16,11 +16,17 @@ export function MenuButton({ item, active, compact = false, variant = 'default',
   if (variant === 'home') {
     return (
       <button
-        className="home-menu-button group relative grid min-h-[86px] w-full cursor-pointer place-items-center rounded-[12px] border-[5px] border-white/95 bg-[#ffba73]/95 px-6 py-4 text-center font-black text-white shadow-[0_7px_0_rgba(72,64,56,0.25),0_12px_22px_rgba(65,53,42,0.12)] transition duration-200 hover:-translate-y-1 hover:bg-[#ffac5e] hover:shadow-[0_12px_0_rgba(72,64,56,0.18),0_18px_26px_rgba(65,53,42,0.18)] focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-[4px] active:shadow-[0_2px_0_rgba(72,64,56,0.25),0_4px_10px_rgba(65,53,42,0.1)] sm:min-h-[96px]"
+        className="home-menu-button group relative grid min-h-[86px] w-full cursor-pointer place-items-center rounded-[12px] border-[5px] border-white/95 bg-[#ffba73]/95 py-4 pl-16 pr-5 text-center font-black text-white shadow-[0_7px_0_rgba(72,64,56,0.25),0_12px_22px_rgba(65,53,42,0.12)] transition duration-200 hover:-translate-y-1 hover:bg-[#ffac5e] hover:shadow-[0_12px_0_rgba(72,64,56,0.18),0_18px_26px_rgba(65,53,42,0.18)] focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-[4px] active:shadow-[0_2px_0_rgba(72,64,56,0.25),0_4px_10px_rgba(65,53,42,0.1)] sm:min-h-[96px] sm:pl-[4.5rem] sm:pr-6"
         type="button"
         onClick={handleClick}
+        aria-label={item.order ? `${item.order}. ${item.title}` : item.title}
       >
         <span className="pointer-events-none absolute inset-1 rounded-md border border-white/35" />
+        {item.order && (
+          <span className="absolute left-3 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border-[3px] border-white bg-[#fff8e8] text-lg font-black text-[#f27a16] shadow-[0_4px_0_rgba(105,70,40,0.22)] sm:left-4 sm:size-11 sm:text-xl" aria-hidden="true">
+            {item.order}
+          </span>
+        )}
         <span className="home-menu-text relative z-10 min-w-0 overflow-wrap-anywhere text-[clamp(1.6rem,3.2vw,2.1rem)] leading-none">
           {item.title}
         </span>

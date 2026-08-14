@@ -1864,6 +1864,21 @@ function ZepGameOnlyScreen() {
         </a>
       )}
 
+      <section className="mx-auto w-full max-w-[820px] rounded-[26px] border-4 border-white/80 bg-[#fffaf1] p-5 text-center shadow-[0_16px_38px_rgba(78,45,21,0.12)]">
+        <div className="flex flex-col items-center">
+          <div className="flex size-12 items-center justify-center rounded-2xl bg-[#d9f3ef] text-[#087f8c]">
+            <Info size={23} aria-hidden="true" />
+          </div>
+          <div className="mt-3">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#087f8c]">Pituduh Ekspedisi</p>
+            <p className="mx-auto mt-2 max-w-2xl text-sm font-bold leading-relaxed text-[#6b4428]">
+              Gunakake jeneng peserta kanthi format <strong>Nama_Kelas_Absen</strong>. Saben tombol misi bakal mbukak arena ZEP ing tab anyar.
+              Rampungake kanthi urut saka Sambung Parikan, Rakit Parikan, banjur Pujangga Muda.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section>
         <div className="mb-4 flex flex-col gap-1 px-1 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -1944,20 +1959,6 @@ function ZepGameOnlyScreen() {
         </div>
       </section>
 
-      <section className="rounded-[26px] border-4 border-white/80 bg-[#fffaf1] p-5 shadow-[0_16px_38px_rgba(78,45,21,0.12)]">
-        <div className="grid gap-4 sm:grid-cols-[auto,1fr] sm:items-center">
-          <div className="flex size-14 items-center justify-center rounded-2xl bg-[#d9f3ef] text-[#087f8c]">
-            <Info size={26} aria-hidden="true" />
-          </div>
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#087f8c]">Pituduh Ekspedisi</p>
-            <p className="mt-1 text-sm font-bold leading-relaxed text-[#6b4428]">
-              Gunakake jeneng peserta kanthi format <strong>Nama_Kelas_Absen</strong>. Saben tombol misi bakal mbukak arena ZEP ing tab anyar.
-              Rampungake kanthi urut saka Sambung Parikan, Rakit Parikan, banjur Pujangga Muda.
-            </p>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
