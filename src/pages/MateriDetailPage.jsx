@@ -188,20 +188,21 @@ function MiniActivity({ activity }) {
   };
 
   return (
-    <section className="mt-7 overflow-hidden rounded-[18px] border-2 border-orange-200 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(255,247,232,0.94))] p-5 shadow-sm sm:p-6">
+    <section aria-label="Evaluasi materi" className="relative mt-7 overflow-hidden rounded-[18px] border-2 border-teal-300 bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(236,254,255,0.94))] p-5 pt-7 shadow-[0_10px_28px_rgba(13,148,136,0.12)] sm:p-6 sm:pt-8">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-teal-500 via-cyan-500 to-sky-500" />
       <div className="flex items-start gap-3">
-        <div className="grid size-11 shrink-0 place-items-center rounded-[14px] bg-orange-100 text-orange-600 shadow-inner">
+        <div className="grid size-11 shrink-0 place-items-center rounded-[14px] bg-teal-100 text-teal-700 shadow-inner ring-2 ring-white">
           <ListChecks size={23} aria-hidden="true" />
         </div>
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.15em] text-orange-500">
-            Coba Saiki
+          <p className="text-xs font-black uppercase tracking-[0.15em] text-teal-700">
+            Evaluasi Materi · Coba Saiki
           </p>
           <h2 className="mt-1 text-xl font-black leading-tight text-[#3f2918]">
-            {activity.title}
+            <em lang="jv">{activity.title}</em>
           </h2>
           <p className="mt-1 text-sm font-bold leading-relaxed text-[#6b4a2d]">
-            {activity.prompt}
+            <em lang="jv">{activity.prompt}</em>
           </p>
         </div>
       </div>
@@ -213,13 +214,13 @@ function MiniActivity({ activity }) {
               key={option}
               type="button"
               onClick={() => { playClick(); setAnswer(optionIndex); setChecked(false); }}
-              className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 active:translate-y-0 active:scale-98 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
+              className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 active:translate-y-0 active:scale-98 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 ${
                 safeAnswer === optionIndex
-                  ? 'border-orange-400 bg-orange-100 text-orange-800'
-                  : 'border-white bg-white text-[#4f2912] hover:border-orange-200'
+                  ? 'border-teal-500 bg-teal-100 text-teal-900 shadow-sm'
+                  : 'border-teal-100 bg-white text-[#4f2912] hover:border-teal-300'
               }`}
             >
-              {option}
+              <em lang="jv">{option}</em>
             </button>
           ))}
         </div>
@@ -234,14 +235,14 @@ function MiniActivity({ activity }) {
                 key={option}
                 type="button"
                 onClick={() => toggleMulti(optionIndex)}
-                className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 active:translate-y-0 active:scale-98 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
+                className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 active:translate-y-0 active:scale-98 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 ${
                   selected
-                    ? 'border-orange-400 bg-orange-100 text-orange-800'
-                    : 'border-white bg-white text-[#4f2912] hover:border-orange-200'
+                    ? 'border-teal-500 bg-teal-100 text-teal-900 shadow-sm'
+                    : 'border-teal-100 bg-white text-[#4f2912] hover:border-teal-300'
                 }`}
               >
                 {selected ? '✓ ' : ''}
-                {option}
+                <em lang="jv">{option}</em>
               </button>
             );
           })}
@@ -251,8 +252,8 @@ function MiniActivity({ activity }) {
       {activity.type === 'classify' && (
         <div className="mt-4 grid gap-3">
           {activity.lines.map((line, lineIndex) => (
-            <div key={line} className="rounded-[14px] border-2 border-white bg-white p-4">
-              <p className="text-base font-black leading-snug text-[#5d351d]">{line}</p>
+            <div key={line} className="rounded-[14px] border-2 border-teal-100 bg-white p-4">
+              <p className="text-base font-black leading-snug text-[#5d351d]"><em lang="jv">{line}</em></p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {activity.categories.map((category) => (
                   <button
@@ -263,13 +264,13 @@ function MiniActivity({ activity }) {
                       setChecked(false);
                       setAnswer((current) => ({ ...(current ?? {}), [lineIndex]: category }));
                     }}
-                    className={`rounded-full border-2 px-4 py-2 text-xs font-black uppercase tracking-wide transition hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
+                    className={`rounded-full border-2 px-4 py-2 text-xs font-black uppercase tracking-wide transition hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 ${
                       safeAnswer?.[lineIndex] === category
-                        ? 'border-orange-400 bg-orange-100 text-orange-800'
-                        : 'border-orange-100 bg-orange-50 text-orange-700 hover:border-orange-200'
+                        ? 'border-teal-500 bg-teal-100 text-teal-900'
+                        : 'border-teal-100 bg-teal-50 text-teal-700 hover:border-teal-300'
                     }`}
                   >
-                    {category}
+                    <em lang="jv">{category}</em>
                   </button>
                 ))}
               </div>
@@ -280,17 +281,17 @@ function MiniActivity({ activity }) {
 
       {activity.type === 'order' && (
         <div className="mt-4 grid gap-4">
-          <div className="rounded-[14px] border-2 border-white bg-white p-4">
-            <p className="text-xs font-black uppercase tracking-[0.14em] text-orange-500">Urutanmu</p>
+          <div className="rounded-[14px] border-2 border-teal-100 bg-white p-4">
+            <p className="text-xs font-black uppercase tracking-[0.14em] text-teal-700">Urutanmu</p>
             <div className="mt-3 grid gap-2">
               {safeAnswer.length === 0 ? (
-                <p className="rounded-xl bg-orange-50 px-3 py-2 text-sm font-bold text-orange-700">
+                <p className="rounded-xl bg-teal-50 px-3 py-2 text-sm font-bold text-teal-700">
                   Klik langkah ing ngisor iki kanggo nyusun urutan.
                 </p>
               ) : (
                 safeAnswer.map((step, stepIndex) => (
-                  <div key={`${step}-${stepIndex}`} className="rounded-xl bg-orange-50 px-3 py-2 text-sm font-black text-orange-800">
-                    {stepIndex + 1}. {step}
+                  <div key={`${step}-${stepIndex}`} className="rounded-xl bg-teal-50 px-3 py-2 text-sm font-black text-teal-800">
+                    {stepIndex + 1}. <em lang="jv">{step}</em>
                   </div>
                 ))
               )}
@@ -310,13 +311,13 @@ function MiniActivity({ activity }) {
                     setChecked(false);
                     setAnswer((current) => [...(current ?? []), step]);
                   }}
-                  className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
+                  className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 ${
                     selected
                       ? 'cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400'
-                      : 'border-white bg-white text-[#4f2912] hover:-translate-y-0.5 hover:border-orange-200 active:translate-y-0 active:scale-95'
+                      : 'border-teal-100 bg-white text-[#4f2912] hover:-translate-y-0.5 hover:border-teal-300 active:translate-y-0 active:scale-95'
                   }`}
                 >
-                  {step}
+                  <em lang="jv">{step}</em>
                 </button>
               );
             })}
@@ -332,7 +333,7 @@ function MiniActivity({ activity }) {
         }`}>
           <span className="inline-flex items-center gap-2">
             {isCorrect ? <CheckCircle2 size={17} aria-hidden="true" /> : <XCircle size={17} aria-hidden="true" />}
-            {isCorrect ? activity.success : activity.retry}
+            <em lang="jv">{isCorrect ? activity.success : activity.retry}</em>
           </span>
         </div>
       )}
@@ -342,9 +343,9 @@ function MiniActivity({ activity }) {
           type="button"
           onClick={handleCheck}
           disabled={!canCheck}
-          className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-black uppercase tracking-wide shadow-sm transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
+          className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-black uppercase tracking-wide shadow-sm transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 ${
             canCheck
-              ? 'bg-orange-500 text-white hover:-translate-y-0.5 hover:bg-orange-600 active:translate-y-0 active:scale-95'
+              ? 'bg-teal-600 text-white hover:-translate-y-0.5 hover:bg-teal-700 active:translate-y-0 active:scale-95'
               : 'cursor-not-allowed bg-stone-200 text-stone-500'
           }`}
         >
@@ -354,7 +355,7 @@ function MiniActivity({ activity }) {
         <button
           type="button"
           onClick={handleReset}
-          className="inline-flex items-center gap-2 rounded-full border-2 border-orange-200 bg-white px-4 py-2 text-sm font-black uppercase tracking-wide text-orange-600 transition hover:-translate-y-0.5 hover:bg-orange-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-0 active:scale-95"
+          className="inline-flex items-center gap-2 rounded-full border-2 border-teal-200 bg-white px-4 py-2 text-sm font-black uppercase tracking-wide text-teal-700 transition hover:-translate-y-0.5 hover:bg-teal-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 active:translate-y-0 active:scale-95"
         >
           <RotateCcw size={16} aria-hidden="true" />
           Coba Maneh
