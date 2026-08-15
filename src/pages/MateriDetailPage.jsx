@@ -678,40 +678,61 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
               }
             </button>
 
-            <p className="text-[clamp(1rem,2vw,1.2rem)] font-semibold leading-relaxed text-[#4f2912]">
-              {item.body}
-            </p>
+            <div className="flex-1 text-[clamp(1rem,2vw,1.2rem)] font-semibold leading-relaxed text-[#4f2912]">
+              {typeof item.body === 'string' ? (
+                <p>{item.body}</p>
+              ) : (
+                <>
+                  {item.body.intro && <p className="mb-3">{item.body.intro}</p>}
+                  
+                  {item.body.example && (
+                    <div className="my-5 rounded-2xl bg-amber-50 border-l-[6px] border-amber-400 px-6 py-4 shadow-sm">
+                      <p className="mb-2 text-base font-black text-amber-700">{item.body.example.label}</p>
+                      <p className="text-[clamp(1.1rem,2.5vw,1.4rem)] font-bold italic leading-relaxed text-amber-900">{item.body.example.text}</p>
+                    </div>
+                  )}
+
+                  {item.body.pointsTitle && <p className="mb-2 mt-4 font-black">{item.body.pointsTitle}</p>}
+                  
+                  {item.body.points && (
+                    <ol className="ml-6 flex flex-col gap-2 list-decimal">
+                      {item.body.points.map((point, idx) => (
+                        <li key={idx}>{point}</li>
+                      ))}
+                    </ol>
+                  )}
+
+                  {item.body.examples && (
+                    <div className="mt-5 flex flex-col gap-5">
+                      {item.body.examples.map((ex, idx) => (
+                        <div key={idx} className="rounded-2xl border-2 border-blue-200 bg-blue-50 p-5">
+                          <p className="mb-3 text-base font-black text-blue-800">{ex.title}</p>
+                          <div className="mb-3 rounded-xl bg-white px-4 py-3">
+                            {ex.lines.map((line, lineIdx) => (
+                              <p key={lineIdx} className="font-bold leading-relaxed text-[#2e1d10]">
+                                {line}
+                              </p>
+                            ))}
+                          </div>
+                          {ex.explanation && (
+                            <p className="mb-2 text-sm font-semibold text-blue-900">{ex.explanation}</p>
+                          )}
+                          {ex.note && (
+                            <p className="text-sm font-semibold italic text-blue-800">{ex.note}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
           </div>
 
           {audioMessage && (
             <p className="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-bold text-amber-700">
               {audioMessage}
             </p>
-          )}
-
-          {/* Example block */}
-          {lines.length > 0 && (
-            <div className="relative mt-7 overflow-hidden rounded-2xl border-2 border-orange-200 bg-gradient-to-br from-orange-50 to-amber-50 p-5 sm:p-6">
-              {/* Left accent bar */}
-              <div className="absolute left-0 top-0 h-full w-[5px] rounded-l-2xl bg-gradient-to-b from-[#ff9700] to-[#ffba73]" />
-
-              <strong className="mb-4 block text-xs font-black uppercase tracking-[0.15em] text-[#d97706]">
-                📜 Tuladha (Contoh)
-              </strong>
-
-              <div className="grid gap-2 pl-1">
-                {lines.map((line, i) => (
-                  <p
-                    key={i}
-                    className={`text-[clamp(1.05rem,2.5vw,1.3rem)] font-black leading-snug text-[#6d3a14] ${
-                      i % 2 === 1 ? 'text-orange-700' : ''
-                    }`}
-                  >
-                    {line}
-                  </p>
-                ))}
-              </div>
-            </div>
           )}
 
           <MateriEnrichment enrichment={item.enrichment} />
