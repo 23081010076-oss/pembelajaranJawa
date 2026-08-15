@@ -102,7 +102,7 @@ export function BackgroundMusic({ isPlayingApp, hasTopNav = false }) {
     <>
       <audio
         ref={audioRef}
-        src="/assets/sounds/gamelanjawa.mp3"
+        src="/assets/sounds/jula juli kidungan suroboyoan iringan gamelan tanpa voka.mp3"
         loop
         preload="auto"
       />

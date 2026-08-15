@@ -3,7 +3,7 @@ export const materiList = [
     title: 'Tegese Parikan',
     short: 'Pangerten dhasar babagan parikan.',
     body:
-      'Parikan yaiku unen-unen Jawa kang nduweni purwakanthi, biasane dumadi saka sampiran lan isi. Parikan kerep digunakake kanggo guyonan, pitutur, utawa nyampekake pesen kanthi cara sing endah.',
+      'Parikan yaiku unen-unen tradhisional Jawa sing dumadi saka rong gatra utawa patang gatra lan nggunakake purwakanthi guru swara. Parikan dumadi saka rong bagean yaiku purwaka (sampiran) lan wos (isi).',
     example: 'Wajik klethik gula Jawa, becik sethithik luwih utama.',
     audioSrc: '/assets/sounds/Teegese Parikan.mp3',
     enrichment: {
@@ -38,10 +38,17 @@ export const materiList = [
     },
   },
   {
-    title: 'Titikane Parikan',
+    title: 'Ciri-ciri Parikan',
     short: 'Tandha-tandha utama parikan.',
-    body:
-      'Parikan nduweni irama, ana gegayutan swara ing pungkasan tembung, lan isine ringkes. Tembung-tembunge biasane prasaja supaya gampang dielingi lan diucapake.',
+    body: {
+      intro: 'Ciri-ciri Parikan:',
+      points: [
+        'Dumadi saka rong utawa patang gatra.',
+        'Ana purwaka lan wos.',
+        'Nganggo purwakanthi guru swara.',
+        'Isine bisa pitutur, guyon, utawa sindiran.',
+      ],
+    },
     example: 'Ana pasar tuku tela, aja kasar marang kanca.',
     audioSrc: '/assets/sounds/Titikan Parikan.mp3',
     enrichment: {
@@ -77,8 +84,18 @@ export const materiList = [
   {
     title: 'Struktur Parikan',
     short: 'Sampiran lan isi.',
-    body:
-      'Struktur parikan umum yaiku baris wiwitan minangka sampiran, dene baris pungkasan minangka isi utawa pesen. Sampiran ngatur swara, isi nggawa makna.',
+    body: {
+      intro: 'Struktur parikan umum yoiku baris wiwitan minangka sampiran, dene baris pungkasan minangka isi utawa pesen. Sampiran ngatur swara, isi nggawa makna.',
+      example: {
+        label: '📜 Tuladha',
+        text: 'Nandur pari pinggir kali, sregep sinau dadi pinter.',
+      },
+      points: [
+        'Struktur parikan ngemot sampiran lan isi.',
+        'Sampiran biasane wiwitan kanggo mbangun suworo.',
+        'Isi ngemot maksud, pitutur, utowo pesen utomo.',
+      ],
+    },
     example: 'Nandur pari pinggir kali, sregep sinau dadi pinter.',
     audioSrc: '/assets/sounds/Struktur Parikan.mp3',
     enrichment: {
@@ -113,10 +130,16 @@ export const materiList = [
     },
   },
   {
-    title: 'Jenis Parikan',
+    title: 'Wangun Parikan',
     short: 'Ragam wujud parikan.',
-    body:
-      'Jenis parikan bisa dibedakake miturut cacah gatra, tema, lan tujuane. Ana parikan rong gatra, patang gatra, parikan pitutur, parikan guyonan, lan parikan sindiran alus.',
+    body: {
+      intro: 'Miturut Padmosoekotjo ana telung wangun:',
+      points: [
+        '(4 wanda + 4 wanda) × 2',
+        '(4 wanda + 8 wanda) × 2',
+        '(8 wanda + 8 wanda) × 2',
+      ],
+    },
     example: 'Kembang mlathi arum wangi, ngudi ilmu saben dina.',
     audioSrc: '/assets/sounds/Jenis Parikan.mp3',
     enrichment: {
@@ -150,49 +173,12 @@ export const materiList = [
     },
   },
   {
-    title: 'Paedah Parikan',
-    short: 'Fungsi kanggo urip saben dina.',
+    title: 'Panganggone Ukara Ing Parikan',
+    short: 'Fungsi purwaka lan wos.',
     body:
-      'Parikan migunani kanggo nglestarekake basa Jawa, nglatih rasa basa, menehi pitutur, lan nggawe pasinaon luwih nyenengake amarga ana unsur irama lan dolanan tembung.',
-    example: 'Tuku kupat ning pinggir dalan, eling pepeling aja kesusu tumindak.',
-    audioSrc: '/assets/sounds/Paedah Parikan.mp3',
-    enrichment: {
-      keyPoints: [
-        'Parikan bisa dadi sarana menehi pitutur kanthi cara sing luwih menarik.',
-        'Parikan nglatih siswa milih tembung Jawa sing trep lan enak dirungokake.',
-        'Parikan bisa digunakake kanggo nguri-uri budaya Jawa ing pasinaon.',
-      ],
-      analysis: [
-        { label: 'Paedah Basa', text: 'Tuladha iki nglatih rasa basa liwat swara lan pilihan tembung.' },
-        { label: 'Paedah Pitutur', text: 'Isine ngelingake supaya ora kesusu nalika tumindak.' },
-        { label: 'Paedah Budaya', text: 'Parikan dadi cara nyampekake pepeling kanthi gaya Jawa.' },
-      ],
-      note: 'Parikan sing apik ora mung enak diwaca, nanging uga ana paedah utawa pesen kanggo pamaca.',
-    },
-    stimulus: {
-      image: '/assets/Komik/Comic_Materi5.png',
-      bubbles: [
-        {
-          speaker: 'Dimas',
-          text: 'Wah, kanca-kanca seneng ngrungokake parikan. Jebule ora mung kanggo guyonan ya?',
-          bubbleStyle: { left: '30%', top: '1%', width: '30%' },
-        },
-        {
-          speaker: 'Rara',
-          text: 'Bener. Parikan bisa kanggo pitutur, hiburan, lan ngajeni budaya Jawa.',
-          bubbleStyle: { left: '56%', top: '8%', width: '33%' },
-        },
-      ],
-      question: 'Apa paedah parikan sing paling kerasa ing urip saben dina?',
-    },
-  },
-  {
-    title: 'Panggone Ukara Ing Parikan',
-    short: 'Cara nyelehake ukara.',
-    body:
-      'Ukara ing parikan kudu cekak, cetha, lan trep karo guru swara. Pamilihan tembung kudu njaga gegayutan antarane sampiran lan isi supaya enak diwaca.',
+      'Gunane ukara purwaka/sampiran yaiku kanggo narik kawigatene wong sing arep dikandhani utawa wong sing maca parikan. Sawise wong mau ketarik atine utawa penasaran mula banjur nggatekake marang wos utawa isine parikan.',
     example: 'Tuku jamu rasane pait, sinau tekun urip dadi becik.',
-    audioSrc: '/assets/sounds/Panggone Ukara Ing Parikan.mp3',
+    audioSrc: '/assets/sounds/Paedah Parikan.mp3',
     enrichment: {
       keyPoints: [
         'Ukara parikan becike cekak lan ora mubeng-mubeng.',
@@ -221,6 +207,65 @@ export const materiList = [
         },
       ],
       question: 'Ukara kaya apa sing luwih cocok kanggo parikan: dawa banget utawa ringkes?',
+    },
+  },
+  {
+    title: 'Cara Ngrakit Parikan',
+    short: 'Langkah gawe parikan.',
+    body: {
+      intro: 'Carane ngrakit parikan yaiku sing dikarang dhisik wos utawa isine parikan, banjur lagi nggawe ukara purwaka sing narik kawigaten. Sajrone ngakit parikan akeh pilihan tembung sing bisa digunakna. Tembung pilihan sing digunakna bisa nganggo dasanama lan kosok balen.',
+      examples: [
+        {
+          title: '1. Parikan sing dumadi rong gatra',
+          lines: [
+            'Tawon madu ngisep sekar',
+            'Golek ilmu kudu sabar',
+          ],
+          explanation: 'Tawon madu ngisep sekar kalebu purwaka utawa sampiran. Golek ilmu kudu sabar kalebu wos utawa isi.',
+          note: 'Yen nggunakake dasanama, tembung sekar bisa diganti tembung kembang, amarga kembang kuwi padha tegese karo sekar. Sawalike yen nggunakake tembung kosok balen tembung sabar bisa diganti karo tembung nesu. Nanging kudu tetep sesambungan lan nduwe guru swara sing padha.',
+        },
+        {
+          title: '2. Parikan sing dumadi patang gatra',
+          lines: [
+            'Sirup kawis wadhah kaca, (ukara purwaka/sampiran)',
+            'Kaca pecah muni banter, (ukara purwaka/sampiran)',
+            'Yen sregep nulis lan maca, (wos/isi)',
+            'Iku tandha bocah pinter, (wos/isi)',
+          ],
+        },
+      ],
+    },
+    example: 'Tawon madu ngisep sekar, Golek ilmu kudu sabar.',
+    audioSrc: '/assets/sounds/Cara Ngrakit Parikan.mp3',
+    enrichment: {
+      keyPoints: [
+        'Gawe parikan luwih gampang yen pesene ditemtokake dhisik.',
+        'Tembung kunci mbantu siswa njaga isi parikan supaya ora metu saka tema.',
+        'Sampiran dipilih supaya swarane cocog karo isi.',
+      ],
+      analysis: [
+        { label: 'Langkah 1', text: 'Tentukan pesen utawa isi sing arep disampekake.' },
+        { label: 'Langkah 2', text: 'Pilih tembung kunci sing cocog karo tema.' },
+        { label: 'Langkah 3', text: 'Goleki sampiran sing swarane selaras.' },
+        { label: 'Langkah 4', text: 'Rapekna gatra, irama, lan pilihan tembung.' },
+      ],
+      note: 'Aja miwiti saka sampiran wae. Yen pesene durung jelas, parikan bisa katon ora nyambung.',
+    },
+    stimulus: {
+      image: '/assets/Komik/Comic_Materi7.png',
+      bubbles: [
+        {
+          speaker: 'Dimas',
+          text: 'Aku pengin nggawe parikan, nanging kudu miwiti saka endi?',
+          bubbleStyle: { left: '25%', top: '7%', width: '32%' },
+        },
+        {
+          speaker: 'Rara',
+          text: 'Wiwitana saka pesen. Banjur goleki tembung sing swarane cocok.',
+          bubbleStyle: { left: '56%', top: '18%', width: '32%' },
+        },
+      ],
+      question: 'Yen arep ngrakit parikan, apa sing luwih becik ditemtokake dhisik?',
     },
   },
   {
