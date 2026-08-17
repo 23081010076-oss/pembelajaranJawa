@@ -1,4 +1,4 @@
-const VERSION = '2026-05-21-v5';
+const VERSION = '2026-08-17-v6';
 const CORE_CACHE = `javanesia-core-${VERSION}`;
 const RUNTIME_CACHE = `javanesia-runtime-${VERSION}`;
 
@@ -39,6 +39,7 @@ const LEARNING_AUDIO_ASSETS = [
   '/assets/sounds/Titikan Parikan.mp3',
   '/assets/sounds/Struktur Parikan.mp3',
   '/assets/sounds/Jenis Parikan.mp3',
+  '/assets/sounds/Jula-Juli.mp3',
   '/assets/sounds/Paedah Parikan.mp3',
   '/assets/sounds/Panggone Ukara Ing Parikan.mp3',
   '/assets/sounds/Cara Ngrakit Parikan.mp3',

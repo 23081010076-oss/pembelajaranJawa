@@ -13,7 +13,7 @@ export const zepGameLevels = [
     title: 'Sambung Parikan',
     type: 'ZEP Game',
     url: 'https://quiz.zep.us/id/play/gGjrpb',
-    image: '/assets/game/surabaya/level-1.jpg',
+    image: '/assets/game/surabaya/level-1.png',
     location: 'Tugu Pahlawan',
     posLabel: 'Pos Wani',
     description: 'Sambung parikan kanthi trep kanggo nguripake semangat wani arek Suroboyo.',
