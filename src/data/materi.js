@@ -173,6 +173,42 @@ export const materiList = [
     },
   },
   {
+    title: 'Jula-Juli Suroboyo',
+    short: 'Kidungan khas ludruk lan budaya arek Surabaya.',
+    eyebrow: 'Materi Khas Surabaya',
+    featured: true,
+    tags: ['Ludruk', 'Kidungan', 'Budaya Surabaya'],
+    preview: 'Kidungan Jula-Juli ngemu parikan, guyonan, pitutur, lan purwakanthi guru swara.',
+    body: {
+      intro:
+        'Sawijining kesenian rakyat asli saka tlatah Jawa Timur yaiku ludruk. Ludruk uga ngrembaka ing tlatah Surabaya. Kesenian iki awujud drama kang dipentasake dening saperangan pawongan, umume kagabung ing sanggar kesenian.',
+      sections: [
+        {
+          title: 'Crita Ludruk',
+          text:
+            'Crita sing dipentasake umume dijupuk saka crita masarakat saben dina, basane gampang dimangerti lan diselingi guyonan uga gerak sing bisa nggawe guyune wong sing nonton.',
+        },
+        {
+          title: 'Unsur Pementasan Ludruk',
+          text:
+            'Ludruk minangka kesenian teater rakyat Surabaya sing isih kerep dipentasake lan tetep madeg. Ing pementasan ludruk ana unsur-unsur pementasane wiwit saka tari remo, kidungan (jula-juli), dagelan, lan cerita utawa lakon.',
+        },
+        {
+          title: 'Jula-Juli lan Kartolo',
+          text:
+            'Jula-juli minangka salah sijine musik tradisional saka Jawa Timur sing nganti saiki isih tetep lestari. Salah sijine seniman Jawa Timur sing terkenal ing jamane ana Kartolo. Masarakat Surabaya mesti kenal karo tokoh seniman kasebut.',
+        },
+        {
+          title: 'Ciri Kidungan Jula-Juli',
+          text:
+            'Lirik saka kidungan jula-juli nggunakake basa Jawa kanthi tujuan aweh panglipuran. Wujude kidungan lan jula-juli yaiku parikan, sing nengenake purwakanthi guru swara supaya endah. Nalika nembangake kidungan lan jula-juli nggunakake logat lan lirik sing lucu uga mbayol saengga bisa ngundang guyune para penonton. Iringane pentas kidungan jula-juli nggunakake gamelan khas ludruk.',
+        },
+      ],
+    },
+    audioSrc: '/assets/sounds/Jula-Juli.mp3',
+    stimulus: false,
+  },
+  {
     title: 'Panganggone Ukara Ing Parikan',
     short: 'Fungsi purwaka lan wos.',
     body:
@@ -266,121 +302,6 @@ export const materiList = [
         },
       ],
       question: 'Yen arep ngrakit parikan, apa sing luwih becik ditemtokake dhisik?',
-    },
-  },
-  {
-    title: 'Cara Ngrakit Parikan',
-    short: 'Langkah gawe parikan.',
-    body:
-      'Miwiti saka nemtokake pesen, banjur goleki tembung sampiran sing swarane cocog. Sawise kuwi rapekna jumlah baris lan iramane supaya parikan katon runtut.',
-    example: 'Tulis pesen, pilih tembung kunci, banjur pasang sampiran sing padha swarane.',
-    audioSrc: '/assets/sounds/Cara Ngrakit Parikan.mp3',
-    enrichment: {
-      keyPoints: [
-        'Gawe parikan luwih gampang yen pesene ditemtokake dhisik.',
-        'Tembung kunci mbantu siswa njaga isi parikan supaya ora metu saka tema.',
-        'Sampiran dipilih supaya swarane cocog karo isi.',
-      ],
-      analysis: [
-        { label: 'Langkah 1', text: 'Tentukan pesen utawa isi sing arep disampekake.' },
-        { label: 'Langkah 2', text: 'Pilih tembung kunci sing cocog karo tema.' },
-        { label: 'Langkah 3', text: 'Goleki sampiran sing swarane selaras.' },
-        { label: 'Langkah 4', text: 'Rapekna gatra, irama, lan pilihan tembung.' },
-      ],
-      note: 'Aja miwiti saka sampiran wae. Yen pesene durung jelas, parikan bisa katon ora nyambung.',
-    },
-    stimulus: {
-      image: '/assets/Komik/Comic_Materi7.png',
-      bubbles: [
-        {
-          speaker: 'Dimas',
-          text: 'Aku pengin nggawe parikan, nanging kudu miwiti saka endi?',
-          bubbleStyle: { left: '25%', top: '7%', width: '32%' },
-        },
-        {
-          speaker: 'Rara',
-          text: 'Wiwitana saka pesen. Banjur goleki tembung sing swarane cocok.',
-          bubbleStyle: { left: '56%', top: '18%', width: '32%' },
-        },
-      ],
-      question: 'Yen arep ngrakit parikan, apa sing luwih becik ditemtokake dhisik?',
-    },
-  },
-  {
-    title: 'Tuladha Parikan Rong Gatra',
-    short: 'Conto loro larik.',
-    body:
-      'Parikan rong gatra dumadi saka rong baris. Baris kapisan biasane sampiran, baris kapindho isine pesen.',
-    example: `Mlaku-mlaku menyang taman,
-    sinau sregep dadi nyaman.`,
-    audioSrc: '/assets/sounds/Tuladha Parikan Rong Gatra.mp3',
-    enrichment: {
-      keyPoints: [
-        'Parikan rong gatra dumadi saka rong baris.',
-        'Baris kapisan biasane dadi sampiran.',
-        'Baris kapindho biasane dadi isi utawa pesen.',
-      ],
-      analysis: [
-        { label: 'Baris 1', text: 'Mlaku-mlaku menyang taman' },
-        { label: 'Baris 2', text: 'sinau sregep dadi nyaman' },
-        { label: 'Pesen', text: 'Siswa diajak sregep sinau supaya uripe luwih nyaman.' },
-      ],
-      note: 'Ing parikan rong gatra, pesen utama kudu ringkes amarga mung ana siji baris isi.',
-    },
-    stimulus: {
-      image: '/assets/Komik/Comic_Materi8.png',
-      bubbles: [
-        {
-          speaker: 'Dimas',
-          text: 'Aku nyoba parikan rong gatra. Baris kapisan kanggo apa?',
-          bubbleStyle: { left: '21%', top: '7%', width: '33%' },
-        },
-        {
-          speaker: 'Rara',
-          text: 'Baris kapisan dadi sampiran, baris kapindho dadi isi.',
-          bubbleStyle: { left: '62%', top: '29%', width: '32%' },
-        },
-      ],
-      question: 'Ing parikan rong gatra, pesene biasane ana ing baris pira?',
-    },
-  },
-  {
-    title: 'Tuladha Parikan Patang Gatra',
-    short: 'Conto papat larik.',
-    body:
-      'Parikan patang gatra dumadi saka papat baris. Rong baris wiwitan minangka sampiran, rong baris pungkasan minangka isi.',
-    example: 'Esuk-esuk tuku roti,\nRoti legi isi srikaya,\nYen kepengin dadi murti,\nSinau basa lan budaya.',
-    audioSrc: '/assets/sounds/Tuladha Parikan Patang Gatra.mp3',
-    enrichment: {
-      keyPoints: [
-        'Parikan patang gatra dumadi saka papat baris.',
-        'Rong baris wiwitan dadi sampiran.',
-        'Rong baris pungkasan dadi isi utawa pesen.',
-      ],
-      analysis: [
-        { label: 'Sampiran 1', text: 'Esuk-esuk tuku roti' },
-        { label: 'Sampiran 2', text: 'Roti legi isi srikaya' },
-        { label: 'Isi 1', text: 'Yen kepengin dadi murti' },
-        { label: 'Isi 2', text: 'Sinau basa lan budaya' },
-        { label: 'Pesen', text: 'Yen kepengin dadi pribadi sing becik, siswa kudu sinau basa lan budaya.' },
-      ],
-      note: 'Patang gatra menehi ruang luwih akeh kanggo ngembangake sampiran lan isi.',
-    },
-    stimulus: {
-      image: '/assets/Komik/Comic_Materi9.png',
-      bubbles: [
-        {
-          speaker: 'Dimas',
-          text: 'Saiki tantangan pungkasan: parikan patang gatra!',
-          bubbleStyle: { left: '28%', top: '5%', width: '32%' },
-        },
-        {
-          speaker: 'Rara',
-          text: 'Elinga, rong baris wiwitan sampiran, rong baris pungkasan isi.',
-          bubbleStyle: { left: '80%', top: '-10%', width: '4%' },
-        },
-      ],
-      question: 'Yen ana papat gatra, kepiye carane mbedakake sampiran lan isi?',
     },
   },
 ];

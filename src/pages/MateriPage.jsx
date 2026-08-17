@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, ChevronRight, BookOpen, Circle } from 'lucide-react';
+import { CheckCircle2, ChevronRight, BookOpen, Circle, Sparkles } from 'lucide-react';
 import { useClickSound } from '../hooks/useClickSound.js';
 import { useStudentLocalStorage } from '../hooks/useLocalStorage.js';
 import {
@@ -48,12 +48,15 @@ export function MateriPage({ materiItems, onOpenMateri }) {
 
       {/* Grid kartu materi */}
       <nav
-        className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3"
+        className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-6"
         aria-label="Daftar materi parikan"
       >
         {materiItems.map((item, index) => {
           const isCompleted = Boolean(normalizedProgress.completedMateri[item.title]);
           const isVisited = Boolean(normalizedProgress.visitedMateri[item.title]);
+          const isFeatured = Boolean(item.featured);
+          const isPracticeCard = materiItems.length === 7 && index >= materiItems.length - 2;
+          const preview = item.preview ?? item.example;
 
           return (
             <button
@@ -65,8 +68,12 @@ export function MateriPage({ materiItems, onOpenMateri }) {
                 onOpenMateri(item);
               }, 10);
             }}
-            className={`group relative flex min-w-0 flex-col gap-2.5 overflow-hidden rounded-[1.15rem] border-[3px] bg-white/92 p-4 text-left shadow-[0_5px_0_rgba(95,60,31,0.14),0_10px_20px_rgba(78,45,21,0.10)] backdrop-blur-sm transition-all duration-200 hover:-translate-y-1.5 hover:border-orange-300 hover:shadow-[0_10px_0_rgba(95,60,31,0.12),0_18px_30px_rgba(78,45,21,0.18)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 active:translate-y-[2px] active:shadow-[0_2px_0_rgba(95,60,31,0.14),0_4px_8px_rgba(78,45,21,0.06)] sm:gap-3 sm:rounded-2xl sm:border-4 sm:p-5 animate-[fadeInUp_0.55s_ease-out] ${
-              isCompleted ? 'border-green-300' : isVisited ? 'border-orange-300' : 'border-white/90'
+            className={`group relative flex min-w-0 flex-col gap-2.5 overflow-hidden rounded-[1.15rem] border-[3px] p-4 text-left shadow-[0_5px_0_rgba(95,60,31,0.14),0_10px_20px_rgba(78,45,21,0.10)] backdrop-blur-sm transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_10px_0_rgba(95,60,31,0.12),0_18px_30px_rgba(78,45,21,0.18)] focus-visible:outline-none focus-visible:ring-4 active:translate-y-[2px] active:shadow-[0_2px_0_rgba(95,60,31,0.14),0_4px_8px_rgba(78,45,21,0.06)] sm:gap-3 sm:rounded-2xl sm:border-4 sm:p-5 animate-[fadeInUp_0.55s_ease-out] ${
+              isFeatured
+                ? 'bg-[linear-gradient(135deg,rgba(240,253,250,0.97),rgba(207,250,254,0.94))] hover:border-teal-400 focus-visible:ring-teal-300 sm:col-span-2 lg:col-span-4'
+                : `bg-white/92 hover:border-orange-300 focus-visible:ring-orange-300 ${isPracticeCard ? 'lg:col-span-3' : 'lg:col-span-2'}`
+            } ${
+              isCompleted ? 'border-green-300' : isFeatured ? 'border-teal-300' : isVisited ? 'border-orange-300' : 'border-white/90'
             }`}
             style={{ '--stagger-delay': `${index * 80}ms`, animationDelay: `${index * 0.08}s`, animationFillMode: 'both' }}
             aria-label={`Buka materi: ${item.title}`}
@@ -77,13 +84,19 @@ export function MateriPage({ materiItems, onOpenMateri }) {
             {/* Number badge */}
             <div className="relative flex min-w-0 flex-wrap items-center gap-2.5">
               <span className={`inline-flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-black text-white shadow-md sm:size-9 ${
-                isCompleted ? 'bg-green-500' : 'bg-gradient-to-br from-[#ff9b2f] to-[#ffba73]'
+                isCompleted
+                  ? 'bg-green-500'
+                  : isFeatured
+                  ? 'bg-gradient-to-br from-teal-600 to-cyan-400'
+                  : 'bg-gradient-to-br from-[#ff9b2f] to-[#ffba73]'
               }`}>
                 {index + 1}
               </span>
               <span className={`inline-flex min-w-0 items-center gap-1 rounded-full px-2.5 py-1 text-[0.65rem] font-black uppercase tracking-wide ${
                 isCompleted
                   ? 'bg-green-100 text-green-700'
+                  : isFeatured
+                  ? 'bg-teal-100 text-teal-700'
                   : isVisited
                   ? 'bg-orange-100 text-orange-700'
                   : 'bg-stone-100 text-stone-500'
@@ -93,28 +106,53 @@ export function MateriPage({ materiItems, onOpenMateri }) {
               </span>
             </div>
 
+            {item.eyebrow && (
+              <span className="relative inline-flex w-fit items-center gap-1.5 rounded-full bg-teal-600 px-3 py-1 text-[0.65rem] font-black uppercase tracking-[0.12em] text-white shadow-sm">
+                <Sparkles size={12} aria-hidden="true" />
+                {item.eyebrow}
+              </span>
+            )}
+
             {/* Title */}
-            <h2 className="relative text-[1.05rem] font-black leading-snug text-[#4f2912] sm:text-[clamp(1.05rem,2vw,1.2rem)]">
+            <h2 className={`relative text-[1.05rem] font-black leading-snug sm:text-[clamp(1.05rem,2vw,1.2rem)] ${
+              isFeatured ? 'text-[#155e63]' : 'text-[#4f2912]'
+            }`}>
               {item.title}
             </h2>
 
             {/* Short description */}
             {item.short && (
-              <p className="relative text-sm font-semibold leading-relaxed text-[#7a5030]/80">
+              <p className={`relative text-sm font-semibold leading-relaxed ${isFeatured ? 'text-[#285e61]' : 'text-[#7a5030]/80'}`}>
                 {item.short}
               </p>
             )}
 
+            {item.tags && (
+              <span className="relative flex flex-wrap gap-1.5">
+                {item.tags.map((tag) => (
+                  <span key={tag} className="rounded-full border border-teal-200 bg-white/75 px-2.5 py-1 text-[0.62rem] font-black text-teal-700">
+                    {tag}
+                  </span>
+                ))}
+              </span>
+            )}
+
             {/* Example preview */}
-            {item.example && (
-              <p className="materi-example-preview relative rounded-xl bg-orange-50 px-3 py-2 text-xs font-bold italic leading-relaxed text-orange-700 ring-1 ring-orange-200">
-                "{item.example.split('\n')[0]}"
+            {preview && (
+              <p className={`materi-example-preview relative rounded-xl px-3 py-2 text-xs font-bold italic leading-relaxed ring-1 ${
+                isFeatured
+                  ? 'bg-white/75 text-teal-800 ring-teal-200'
+                  : 'bg-orange-50 text-orange-700 ring-orange-200'
+              }`}>
+                "{preview.split('\n')[0]}"
               </p>
             )}
 
             {/* Arrow */}
-            <span className="relative mt-auto flex items-center gap-1 text-xs font-black uppercase tracking-wide text-orange-500 transition-all group-hover:gap-2">
-              Waca Materi
+            <span className={`relative mt-auto flex items-center gap-1 text-xs font-black uppercase tracking-wide transition-all group-hover:gap-2 ${
+              isFeatured ? 'text-teal-700' : 'text-orange-500'
+            }`}>
+              {isFeatured ? 'Sinau Jula-Juli' : 'Waca Materi'}
               <ChevronRight size={14} className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
             </span>
             </button>

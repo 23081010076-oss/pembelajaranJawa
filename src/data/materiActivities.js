@@ -50,6 +50,19 @@ export const materiActivities = [
     retry: 'Coba elinga maneh tembung "rong gatra": tegese rong baris.',
   },
   {
+    type: 'single',
+    title: 'Jula-Juli Suroboyo',
+    prompt: 'Ing pementasan ludruk, Jula-Juli kalebu unsur apa?',
+    options: [
+      'Kidungan sing diiringi gamelan khas ludruk.',
+      'Tari pambuka sing diarani Tari Remo.',
+      'Crita utawa lakon utama tanpa iringan musik.',
+    ],
+    correctIndex: 0,
+    success: 'Trep! Jula-Juli minangka kidungan sing dadi unsur khas pementasan ludruk.',
+    retry: 'Durung trep. Elinga yen Jula-Juli awujud kidungan lan diiringi gamelan khas ludruk.',
+  },
+  {
     type: 'multi',
     title: 'Panganggone Ukara',
     prompt: 'Pilih gunane ukara purwaka/sampiran sing bener.',

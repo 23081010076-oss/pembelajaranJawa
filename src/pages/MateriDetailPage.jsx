@@ -460,6 +460,7 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
   const miniActivity = item.activity ?? materiActivities[index];
   const normalizedProgress = normalizeLearningProgress(learningProgress);
   const isMateriCompleted = Boolean(normalizedProgress.completedMateri[item.title]);
+  const isFeatured = Boolean(item.featured);
 
   const stopNarration = () => {
     narrationRef.current?.stop();
@@ -635,13 +636,17 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
 
       <article className="overflow-hidden rounded-3xl border-4 border-white/80 bg-white shadow-[0_8px_40px_rgba(46,29,16,0.18)]">
         {/* Header */}
-        <header className="relative bg-gradient-to-r from-[#ff9b2f] to-[#ffba73] px-6 py-6 sm:px-8 sm:py-7">
+        <header className={`relative px-6 py-6 sm:px-8 sm:py-7 ${
+          isFeatured
+            ? 'bg-gradient-to-r from-[#087f8c] via-[#0f9d9a] to-[#45b8a9]'
+            : 'bg-gradient-to-r from-[#ff9b2f] to-[#ffba73]'
+        }`}>
           {/* Decorative shine */}
           <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent" />
           <span className="pointer-events-none absolute inset-1 rounded-t-2xl border border-white/30" />
 
           <p className="relative mb-1 text-xs font-black uppercase tracking-[0.15em] text-white/70">
-            Materi Parikan
+            {item.eyebrow ?? 'Materi Parikan'}
           </p>
           <h1 className="relative text-[clamp(1.8rem,4vw,2.6rem)] font-black leading-tight text-white drop-shadow-md">
             {item.title}
@@ -657,26 +662,32 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
         <div className="px-6 py-7 sm:px-8 sm:py-8">
           {/* TTS + body text */}
           <div className="flex items-start gap-4">
-            <button
-              type="button"
-              onClick={toggleSpeech}
-              aria-label={isPlaying ? 'Hentikan suara' : isPreparingAudio ? 'Menyiapkan suara' : 'Putar suara'}
-              title={isPlaying ? 'Hentikan Suara' : isPreparingAudio ? 'Menyiapkan Suara' : 'Putar Suara'}
-              className={`mt-1 grid size-12 shrink-0 place-items-center rounded-full shadow-lg transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
-                isPlaying
-                  ? 'bg-red-500 text-white hover:bg-red-600'
+            {item.audioSrc && (
+              <button
+                type="button"
+                onClick={toggleSpeech}
+                aria-label={isPlaying ? 'Hentikan suara' : isPreparingAudio ? 'Menyiapkan suara' : 'Putar suara'}
+                title={isPlaying ? 'Hentikan Suara' : isPreparingAudio ? 'Menyiapkan Suara' : 'Putar Suara'}
+                className={`mt-1 grid size-12 shrink-0 place-items-center rounded-full shadow-lg transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-4 ${
+                  isFeatured ? 'focus-visible:ring-teal-200' : 'focus-visible:ring-orange-200'
+                } ${
+                  isPlaying
+                    ? 'bg-red-500 text-white hover:bg-red-600'
+                    : isPreparingAudio
+                    ? 'cursor-wait bg-orange-400 text-white'
+                    : isFeatured
+                    ? 'bg-teal-600 text-white hover:bg-teal-700'
+                    : 'bg-[#ff9700] text-white hover:bg-[#e68800]'
+                }`}
+              >
+                {isPlaying
+                  ? <Square size={18} fill="currentColor" aria-hidden="true" />
                   : isPreparingAudio
-                  ? 'cursor-wait bg-orange-400 text-white'
-                  : 'bg-[#ff9700] text-white hover:bg-[#e68800]'
-              }`}
-            >
-              {isPlaying
-                ? <Square size={18} fill="currentColor" aria-hidden="true" />
-                : isPreparingAudio
-                ? <LoaderCircle size={22} className="animate-spin" aria-hidden="true" />
-                : <Volume2 size={22} aria-hidden="true" />
-              }
-            </button>
+                  ? <LoaderCircle size={22} className="animate-spin" aria-hidden="true" />
+                  : <Volume2 size={22} aria-hidden="true" />
+                }
+              </button>
+            )}
 
             <div className="flex-1 text-[clamp(1rem,2vw,1.2rem)] font-semibold leading-relaxed text-[#4f2912]">
               {typeof item.body === 'string' ? (
@@ -700,6 +711,39 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
                         <li key={idx}>{point}</li>
                       ))}
                     </ol>
+                  )}
+
+                  {item.body.sections && (
+                    <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                      {item.body.sections.map((section, sectionIndex) => (
+                        <section
+                          key={section.title}
+                          className="rounded-2xl border-2 border-teal-100 bg-[linear-gradient(145deg,#ffffff,#f0fdfa)] p-5 shadow-sm"
+                        >
+                          <div className="mb-3 flex items-center gap-3">
+                            <span className="grid size-8 shrink-0 place-items-center rounded-full bg-teal-600 text-sm font-black text-white shadow-sm">
+                              {sectionIndex + 1}
+                            </span>
+                            <h2 className="text-base font-black leading-tight text-[#155e63] sm:text-lg">
+                              {section.title}
+                            </h2>
+                          </div>
+                          <p className="text-sm font-semibold leading-relaxed text-[#4f3a2d]">
+                            {section.text}
+                          </p>
+                          {section.bullets && (
+                            <ul className="mt-3 grid gap-2">
+                              {section.bullets.map((bullet) => (
+                                <li key={bullet} className="flex items-start gap-2 text-sm font-bold leading-relaxed text-[#3f4f4d]">
+                                  <CheckCircle2 className="mt-0.5 shrink-0 text-teal-600" size={16} aria-hidden="true" />
+                                  <span>{bullet}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </section>
+                      ))}
+                    </div>
                   )}
 
                   {item.body.examples && (
