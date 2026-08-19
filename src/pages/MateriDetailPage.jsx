@@ -23,7 +23,15 @@ function getFloatingBubbleStyle(bubble, bubbleIndex) {
 
 function buildFallbackStimulus(index, title) {
   return {
-    image: `/assets/Komik/Comic_Materi${index + 1}.png`,
+    video: [
+      '/assets/Komik/Tegese_Parikan.mp4',
+      '/assets/Komik/Ciri ciri - Parikan.mp4',
+      '/assets/Komik/Struktur_Parikan.mp4',
+      '/assets/Komik/Wangun_Parikan.mp4',
+      '',
+      '/assets/Komik/Panggone_ Ukara_Ing_Parikan.mp4',
+      '/assets/Komik/Cara_Ngrakit_Parikan.mp4',
+    ][index] || null,
     bubbles: [
       {
         speaker: 'Dimas',
@@ -38,15 +46,31 @@ function buildFallbackStimulus(index, title) {
   };
 }
 
-function StimulusComic({ stimulus, title }) {
-  if (!stimulus?.image) return null;
+function StimulusComic({ stimulus, title, onPlayMedia }) {
+  if (!stimulus?.video && !stimulus?.image) return null;
+  const isVideo = Boolean(stimulus?.video);
 
   return (
     <section
       className="overflow-hidden rounded-[1.75rem] border-4 border-white/80 bg-white shadow-[0_8px_34px_rgba(46,29,16,0.18)]"
-      aria-label={`Komik pembuka materi ${title}`}
+      aria-label={`${isVideo ? 'Video' : 'Komik'} pembuka materi ${title}`}
     >
-      <div className="relative bg-[#e7f6ff]">
+      {isVideo ? (
+        <div className="relative bg-black">
+          <video
+            src={stimulus.video}
+            controls
+            playsInline
+            onPlay={onPlayMedia}
+            preload="metadata"
+            className="aspect-video h-auto w-full object-contain shadow-inner"
+          >
+            Browser sampeyan ora nyengkuyung pemutar video.
+          </video>
+        </div>
+      ) : (
+        <>
+          <div className="relative bg-[#e7f6ff]">
         <img
           src={stimulus.image}
           alt={`Komik pembuka materi ${title}`}
@@ -84,6 +108,8 @@ function StimulusComic({ stimulus, title }) {
           </div>
         ))}
       </div>
+    </>
+  )}
 
       {stimulus.question && (
         <div className="border-t-2 border-orange-100 bg-orange-50 px-5 py-4 sm:px-6">
@@ -632,7 +658,7 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
       </div>
 
       {/* ── Main content card ── */}
-      <StimulusComic stimulus={stimulus} title={item.title} />
+      <StimulusComic stimulus={stimulus} title={item.title} onPlayMedia={stopNarration} />
 
       <article className="overflow-hidden rounded-3xl border-4 border-white/80 bg-white shadow-[0_8px_40px_rgba(46,29,16,0.18)]">
         {/* Header */}

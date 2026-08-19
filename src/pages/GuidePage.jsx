@@ -9,8 +9,8 @@ const guideSteps = [
   },
   {
     icon: BookOpen,
-    title: 'Bukak Materi lan Komik',
-    body: 'Pilih Materi Parikan, waca komik pembuka, banjur lanjutake maca penjelasan lan tuladha ing saben materi.',
+    title: 'Bukak Materi lan Video Animasi',
+    body: 'Pilih Materi Parikan, tonton video animasi pembuka, banjur lanjutake maca penjelasan lan tuladha ing saben materi.',
   },
   {
     icon: Headphones,

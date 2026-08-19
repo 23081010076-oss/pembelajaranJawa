@@ -21,7 +21,7 @@ export const materiList = [
       note: 'Nalika maca parikan, gatekna swara pungkasan lan pesen sing arep diwenehake.',
     },
     stimulus: {
-      image: '/assets/Komik/Comic_Materi1.png',
+      video: '/assets/Komik/Tegese_Parikan.mp4',
       bubbles: [
         {
           speaker: 'Dimas',
@@ -65,7 +65,7 @@ export const materiList = [
       note: 'Aja mung nggoleki ukara sing lucu. Parikan kudu tetep duwe swara lan maksud sing cetha.',
     },
     stimulus: {
-      image: '/assets/Komik/Comic_Materi2.png',
+      video: '/assets/Komik/Ciri ciri - Parikan.mp4',
       bubbles: [
         {
           speaker: 'Dimas',
@@ -113,7 +113,7 @@ export const materiList = [
       note: 'Yen nemokake parikan, coba takon: baris endi sing mung pambuka swara, lan baris endi sing nggawa pesen?',
     },
     stimulus: {
-      image: '/assets/Komik/Comic_Materi3.png',
+      video: '/assets/Komik/Struktur_Parikan.mp4',
       bubbles: [
         {
           speaker: 'Dimas',
@@ -156,7 +156,7 @@ export const materiList = [
       note: 'Nalika nemtokake jenis parikan, delengen jumlah baris lan maksud ukarane.',
     },
     stimulus: {
-      image: '/assets/Komik/Comic_Materi4.png',
+      video: '/assets/Komik/Wangun_Parikan.mp4',
       bubbles: [
         {
           speaker: 'Dimas',
@@ -229,7 +229,7 @@ export const materiList = [
       note: 'Yen ukarane kakehan tembung, parikan dadi angel diwaca lan swarane ora kepenak.',
     },
     stimulus: {
-      image: '/assets/Komik/Comic_Materi6.png',
+      video: '/assets/Komik/Panggone_ Ukara_Ing_Parikan.mp4',
       bubbles: [
         {
           speaker: 'Dimas',
@@ -288,7 +288,7 @@ export const materiList = [
       note: 'Aja miwiti saka sampiran wae. Yen pesene durung jelas, parikan bisa katon ora nyambung.',
     },
     stimulus: {
-      image: '/assets/Komik/Comic_Materi7.png',
+      video: '/assets/Komik/Cara_Ngrakit_Parikan.mp4',
       bubbles: [
         {
           speaker: 'Dimas',
