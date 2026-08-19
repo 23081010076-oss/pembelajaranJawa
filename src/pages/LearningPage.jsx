@@ -2,6 +2,25 @@ import React from 'react';
 import { Award, BookOpen, CheckCircle2, Sparkles, Target } from 'lucide-react';
 import { MenuIcon } from '../components/Icon.jsx';
 
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function ForeignText({ text, terms = [], italicAll = false }) {
+  if (!text) return null;
+  if (italicAll) return <em>{text}</em>;
+  if (terms.length === 0) return text;
+
+  const termSet = new Set(terms.map((term) => term.toLocaleLowerCase()));
+  const pattern = new RegExp(`(${terms.map(escapeRegExp).join('|')})`, 'giu');
+
+  return text.split(pattern).map((part, index) => (
+    termSet.has(part.toLocaleLowerCase())
+      ? <em key={`${part}-${index}`}>{part}</em>
+      : <React.Fragment key={`${part}-${index}`}>{part}</React.Fragment>
+  ));
+}
+
 export function LearningPage({ item }) {
   const hasPoints = Array.isArray(item.points) && item.points.length > 0;
   const isCapaian = item.title === 'Capaian Pembelajaran';
@@ -49,9 +68,11 @@ export function LearningPage({ item }) {
             <h1 className="mt-4 text-[clamp(2.2rem,5vw,4.4rem)] font-black uppercase leading-[0.92] text-[#2b1d12]">
               {item.title}
             </h1>
-            <p className="mx-auto mt-4 max-w-3xl text-base font-semibold leading-relaxed text-[#6b4a2d] sm:text-lg lg:mx-0">
-              {item.body}
-            </p>
+            {!isCapaian && item.body && (
+              <p className="mx-auto mt-4 max-w-3xl text-base font-semibold leading-relaxed text-[#6b4a2d] sm:text-lg lg:mx-0">
+                <ForeignText text={item.body} terms={item.foreignTerms} italicAll={item.bodyIsForeign} />
+              </p>
+            )}
           </div>
 
           {isCapaian && (
@@ -125,7 +146,7 @@ export function LearningPage({ item }) {
                 <CheckCircle2 className="text-[#0f766e] sm:mx-auto sm:mt-3" size={24} aria-hidden="true" strokeWidth={3} />
               </div>
               <p className="text-[clamp(1rem,2.1vw,1.28rem)] font-extrabold leading-relaxed text-[#352315]">
-                {point}
+                <ForeignText text={point} terms={item.foreignTerms} />
               </p>
             </article>
           ))}
@@ -134,7 +155,7 @@ export function LearningPage({ item }) {
         <section className="grid gap-4 sm:gap-5" aria-label={item.eyebrow ?? item.title}>
           <article className="group rounded-[24px] border-4 border-white/85 bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(255,246,226,0.9))] p-6 shadow-[0_12px_28px_rgba(77,48,24,0.12)] backdrop-blur-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(77,48,24,0.16)] sm:p-8">
             <p className="text-justify text-[clamp(1.1rem,2.2vw,1.4rem)] font-extrabold leading-relaxed text-[#352315] hyphens-auto">
-              {item.body}
+              <ForeignText text={item.body} terms={item.foreignTerms} italicAll={item.bodyIsForeign} />
             </p>
           </article>
         </section>

@@ -1,10 +1,10 @@
-# Bank Misi ZEP - Javanesia Parikan
+# Bank Misi ZEP - Ekspedisi Parikan Arek Suroboyo
 
 Gunakake dokumen iki kanggo nyusun misi ing ZEP Space utawa ZEP Quiz. Jumlah misi saben tingkat: 5.
 
 ## Alur Rekomendasi
 
-1. ZEP Space dadi peta petualangan: Pos 1, Pos 2, Pos 3.
+1. Web Javanesia dadi peta ekspedisi Surabaya: Tugu Pahlawan, Kota Lama, lan Suramadu.
 2. ZEP Quiz dadi aktivitas tantangan ing saben pos.
 3. Web Javanesia tetep dadi pusat materi, progres, lan latihan internal.
 
@@ -12,17 +12,17 @@ Gunakake dokumen iki kanggo nyusun misi ing ZEP Space utawa ZEP Quiz. Jumlah mis
 
 Format: isian pendek.
 
-1. Tuku gethuk regane sewu, / Mata ngantuk ___
-   Jawaban: jaluk turu
+1. Semanggi Suroboyo rasane nyata, / Yen kepengin pinter ___
+   Jawaban: kudu sregep maca
 
-2. Abang-abang ora legi, / Tiwas dagang ___
-   Jawaban: ora bathi
+2. Tuku oleh-oleh nang Pasar Turi, / Marang kanca ___
+   Jawaban: kudu ngajeni
 
-3. Tuku buku gambare sawah, / Pengin ilmu ___
-   Jawaban: kudu sekolah
+3. Mlaku-mlaku nang Taman Bungkul, / Aja kesed supaya ___
+   Jawaban: dadi unggul
 
-4. Gresik Surabaya, / Kalah dhisik ___
-   Jawaban: aja ngersula
+4. Foto bareng nang Tugu Pahlawan, / Kalah dhisik ___
+   Jawaban: dudu alesan
 
 5. Esuk nyuling sore nyuling, / Sulinge arek Surabaya, / Esuk eling sore eling, / ___
    Jawaban: sing di eling ora rumangsa
@@ -31,39 +31,39 @@ Format: isian pendek.
 
 Format: siswa menulis parikan 2 atau 4 larik.
 
-1. Tema: Belanja ing pasar tradisional
-   Kata kunci: pasar
+1. Tema: Semangat perjuangan Surabaya
+   Kata kunci: Tugu Pahlawan
 
-2. Tema: Seni budaya Jawa
-   Kata kunci: gamelan
+2. Tema: Mlaku-mlaku ing tengah kutha
+   Kata kunci: Tunjungan
 
-3. Tema: Sinau ing sekolah
-   Kata kunci: sekolah
+3. Tema: Panganan khas Surabaya
+   Kata kunci: semanggi
 
-4. Tema: Panganan tradisional Jawa
-   Kata kunci: gedhang goreng
+4. Tema: Kuliner lan kekancan
+   Kata kunci: rujak cingur
 
-5. Tema: Omah lan lingkungan
-   Kata kunci: tembok
+5. Tema: Pesisir lan kabersihan kutha
+   Kata kunci: Kenjeran
 
 ## Tingkat 3 - Pujangga Muda
 
 Format: pilih tema, lalu tulis parikan dengan unsur sampiran, isi, lan purwakanthi.
 
-1. Tema: Pasar Esuk
-   Kata kunci: pasar
+1. Tema: Semangat Pahlawan
+   Kata kunci: wani
 
-2. Tema: Sekolah
-   Kata kunci: sekolah
+2. Tema: Tunjungan
+   Kata kunci: Tunjungan
 
-3. Tema: Gamelan
-   Kata kunci: gamelan
+3. Tema: Kuliner Suroboyo
+   Kata kunci: rujak cingur
 
-4. Tema: Panganan Tradisional
-   Kata kunci: gedhang goreng
+4. Tema: Pesisir Kenjeran
+   Kata kunci: Kenjeran
 
-5. Tema: Lingkungan Omah
-   Kata kunci: omah
+5. Tema: Sura lan Baya
+   Kata kunci: guyub
 
 ## Rubrik Singkat
 
@@ -72,3 +72,4 @@ Format: pilih tema, lalu tulis parikan dengan unsur sampiran, isi, lan purwakant
 - Purwakanthi: swara pungkasan larik selaras.
 - Tema: isi parikan cocog karo kata kunci.
 - Basa: tembung Jawa trep lan gampang dingerteni siswa SMP.
+- Identitas Surabaya: parikan nggunakake papan, kuliner, nilai, utawa simbol kutha kanthi trep.

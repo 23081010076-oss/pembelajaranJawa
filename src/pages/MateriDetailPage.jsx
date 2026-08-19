@@ -23,7 +23,15 @@ function getFloatingBubbleStyle(bubble, bubbleIndex) {
 
 function buildFallbackStimulus(index, title) {
   return {
-    image: `/assets/Komik/Comic_Materi${index + 1}.png`,
+    video: [
+      '/assets/Komik/Tegese_Parikan.mp4',
+      '/assets/Komik/Ciri ciri - Parikan.mp4',
+      '/assets/Komik/Struktur_Parikan.mp4',
+      '/assets/Komik/Wangun_Parikan.mp4',
+      '',
+      '/assets/Komik/Panggone_ Ukara_Ing_Parikan.mp4',
+      '/assets/Komik/Cara_Ngrakit_Parikan.mp4',
+    ][index] || null,
     bubbles: [
       {
         speaker: 'Dimas',
@@ -38,15 +46,31 @@ function buildFallbackStimulus(index, title) {
   };
 }
 
-function StimulusComic({ stimulus, title }) {
-  if (!stimulus?.image) return null;
+function StimulusComic({ stimulus, title, onPlayMedia }) {
+  if (!stimulus?.video && !stimulus?.image) return null;
+  const isVideo = Boolean(stimulus?.video);
 
   return (
     <section
       className="overflow-hidden rounded-[1.75rem] border-4 border-white/80 bg-white shadow-[0_8px_34px_rgba(46,29,16,0.18)]"
-      aria-label={`Komik pembuka materi ${title}`}
+      aria-label={`${isVideo ? 'Video' : 'Komik'} pembuka materi ${title}`}
     >
-      <div className="relative bg-[#e7f6ff]">
+      {isVideo ? (
+        <div className="relative bg-black">
+          <video
+            src={stimulus.video}
+            controls
+            playsInline
+            onPlay={onPlayMedia}
+            preload="metadata"
+            className="aspect-video h-auto w-full object-contain shadow-inner"
+          >
+            Browser sampeyan ora nyengkuyung pemutar video.
+          </video>
+        </div>
+      ) : (
+        <>
+          <div className="relative bg-[#e7f6ff]">
         <img
           src={stimulus.image}
           alt={`Komik pembuka materi ${title}`}
@@ -84,6 +108,8 @@ function StimulusComic({ stimulus, title }) {
           </div>
         ))}
       </div>
+    </>
+  )}
 
       {stimulus.question && (
         <div className="border-t-2 border-orange-100 bg-orange-50 px-5 py-4 sm:px-6">
@@ -188,20 +214,21 @@ function MiniActivity({ activity }) {
   };
 
   return (
-    <section className="mt-7 overflow-hidden rounded-[18px] border-2 border-orange-200 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(255,247,232,0.94))] p-5 shadow-sm sm:p-6">
+    <section aria-label="Evaluasi materi" className="relative mt-7 overflow-hidden rounded-[18px] border-2 border-teal-300 bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(236,254,255,0.94))] p-5 pt-7 shadow-[0_10px_28px_rgba(13,148,136,0.12)] sm:p-6 sm:pt-8">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-teal-500 via-cyan-500 to-sky-500" />
       <div className="flex items-start gap-3">
-        <div className="grid size-11 shrink-0 place-items-center rounded-[14px] bg-orange-100 text-orange-600 shadow-inner">
+        <div className="grid size-11 shrink-0 place-items-center rounded-[14px] bg-teal-100 text-teal-700 shadow-inner ring-2 ring-white">
           <ListChecks size={23} aria-hidden="true" />
         </div>
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.15em] text-orange-500">
-            Coba Saiki
+          <p className="text-xs font-black uppercase tracking-[0.15em] text-teal-700">
+            Evaluasi Materi · Coba Saiki
           </p>
           <h2 className="mt-1 text-xl font-black leading-tight text-[#3f2918]">
-            {activity.title}
+            <em lang="jv">{activity.title}</em>
           </h2>
           <p className="mt-1 text-sm font-bold leading-relaxed text-[#6b4a2d]">
-            {activity.prompt}
+            <em lang="jv">{activity.prompt}</em>
           </p>
         </div>
       </div>
@@ -213,13 +240,13 @@ function MiniActivity({ activity }) {
               key={option}
               type="button"
               onClick={() => { playClick(); setAnswer(optionIndex); setChecked(false); }}
-              className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 active:translate-y-0 active:scale-98 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
+              className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 active:translate-y-0 active:scale-98 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 ${
                 safeAnswer === optionIndex
-                  ? 'border-orange-400 bg-orange-100 text-orange-800'
-                  : 'border-white bg-white text-[#4f2912] hover:border-orange-200'
+                  ? 'border-teal-500 bg-teal-100 text-teal-900 shadow-sm'
+                  : 'border-teal-100 bg-white text-[#4f2912] hover:border-teal-300'
               }`}
             >
-              {option}
+              <em lang="jv">{option}</em>
             </button>
           ))}
         </div>
@@ -234,14 +261,14 @@ function MiniActivity({ activity }) {
                 key={option}
                 type="button"
                 onClick={() => toggleMulti(optionIndex)}
-                className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 active:translate-y-0 active:scale-98 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
+                className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition hover:-translate-y-0.5 active:translate-y-0 active:scale-98 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 ${
                   selected
-                    ? 'border-orange-400 bg-orange-100 text-orange-800'
-                    : 'border-white bg-white text-[#4f2912] hover:border-orange-200'
+                    ? 'border-teal-500 bg-teal-100 text-teal-900 shadow-sm'
+                    : 'border-teal-100 bg-white text-[#4f2912] hover:border-teal-300'
                 }`}
               >
                 {selected ? '✓ ' : ''}
-                {option}
+                <em lang="jv">{option}</em>
               </button>
             );
           })}
@@ -251,8 +278,8 @@ function MiniActivity({ activity }) {
       {activity.type === 'classify' && (
         <div className="mt-4 grid gap-3">
           {activity.lines.map((line, lineIndex) => (
-            <div key={line} className="rounded-[14px] border-2 border-white bg-white p-4">
-              <p className="text-base font-black leading-snug text-[#5d351d]">{line}</p>
+            <div key={line} className="rounded-[14px] border-2 border-teal-100 bg-white p-4">
+              <p className="text-base font-black leading-snug text-[#5d351d]"><em lang="jv">{line}</em></p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {activity.categories.map((category) => (
                   <button
@@ -263,13 +290,13 @@ function MiniActivity({ activity }) {
                       setChecked(false);
                       setAnswer((current) => ({ ...(current ?? {}), [lineIndex]: category }));
                     }}
-                    className={`rounded-full border-2 px-4 py-2 text-xs font-black uppercase tracking-wide transition hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
+                    className={`rounded-full border-2 px-4 py-2 text-xs font-black uppercase tracking-wide transition hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 ${
                       safeAnswer?.[lineIndex] === category
-                        ? 'border-orange-400 bg-orange-100 text-orange-800'
-                        : 'border-orange-100 bg-orange-50 text-orange-700 hover:border-orange-200'
+                        ? 'border-teal-500 bg-teal-100 text-teal-900'
+                        : 'border-teal-100 bg-teal-50 text-teal-700 hover:border-teal-300'
                     }`}
                   >
-                    {category}
+                    <em lang="jv">{category}</em>
                   </button>
                 ))}
               </div>
@@ -280,17 +307,17 @@ function MiniActivity({ activity }) {
 
       {activity.type === 'order' && (
         <div className="mt-4 grid gap-4">
-          <div className="rounded-[14px] border-2 border-white bg-white p-4">
-            <p className="text-xs font-black uppercase tracking-[0.14em] text-orange-500">Urutanmu</p>
+          <div className="rounded-[14px] border-2 border-teal-100 bg-white p-4">
+            <p className="text-xs font-black uppercase tracking-[0.14em] text-teal-700">Urutanmu</p>
             <div className="mt-3 grid gap-2">
               {safeAnswer.length === 0 ? (
-                <p className="rounded-xl bg-orange-50 px-3 py-2 text-sm font-bold text-orange-700">
+                <p className="rounded-xl bg-teal-50 px-3 py-2 text-sm font-bold text-teal-700">
                   Klik langkah ing ngisor iki kanggo nyusun urutan.
                 </p>
               ) : (
                 safeAnswer.map((step, stepIndex) => (
-                  <div key={`${step}-${stepIndex}`} className="rounded-xl bg-orange-50 px-3 py-2 text-sm font-black text-orange-800">
-                    {stepIndex + 1}. {step}
+                  <div key={`${step}-${stepIndex}`} className="rounded-xl bg-teal-50 px-3 py-2 text-sm font-black text-teal-800">
+                    {stepIndex + 1}. <em lang="jv">{step}</em>
                   </div>
                 ))
               )}
@@ -310,13 +337,13 @@ function MiniActivity({ activity }) {
                     setChecked(false);
                     setAnswer((current) => [...(current ?? []), step]);
                   }}
-                  className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
+                  className={`rounded-[14px] border-2 px-4 py-3 text-left text-sm font-black leading-snug transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 ${
                     selected
                       ? 'cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400'
-                      : 'border-white bg-white text-[#4f2912] hover:-translate-y-0.5 hover:border-orange-200 active:translate-y-0 active:scale-95'
+                      : 'border-teal-100 bg-white text-[#4f2912] hover:-translate-y-0.5 hover:border-teal-300 active:translate-y-0 active:scale-95'
                   }`}
                 >
-                  {step}
+                  <em lang="jv">{step}</em>
                 </button>
               );
             })}
@@ -332,7 +359,7 @@ function MiniActivity({ activity }) {
         }`}>
           <span className="inline-flex items-center gap-2">
             {isCorrect ? <CheckCircle2 size={17} aria-hidden="true" /> : <XCircle size={17} aria-hidden="true" />}
-            {isCorrect ? activity.success : activity.retry}
+            <em lang="jv">{isCorrect ? activity.success : activity.retry}</em>
           </span>
         </div>
       )}
@@ -342,9 +369,9 @@ function MiniActivity({ activity }) {
           type="button"
           onClick={handleCheck}
           disabled={!canCheck}
-          className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-black uppercase tracking-wide shadow-sm transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
+          className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-black uppercase tracking-wide shadow-sm transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 ${
             canCheck
-              ? 'bg-orange-500 text-white hover:-translate-y-0.5 hover:bg-orange-600 active:translate-y-0 active:scale-95'
+              ? 'bg-teal-600 text-white hover:-translate-y-0.5 hover:bg-teal-700 active:translate-y-0 active:scale-95'
               : 'cursor-not-allowed bg-stone-200 text-stone-500'
           }`}
         >
@@ -354,7 +381,7 @@ function MiniActivity({ activity }) {
         <button
           type="button"
           onClick={handleReset}
-          className="inline-flex items-center gap-2 rounded-full border-2 border-orange-200 bg-white px-4 py-2 text-sm font-black uppercase tracking-wide text-orange-600 transition hover:-translate-y-0.5 hover:bg-orange-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-0 active:scale-95"
+          className="inline-flex items-center gap-2 rounded-full border-2 border-teal-200 bg-white px-4 py-2 text-sm font-black uppercase tracking-wide text-teal-700 transition hover:-translate-y-0.5 hover:bg-teal-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200 active:translate-y-0 active:scale-95"
         >
           <RotateCcw size={16} aria-hidden="true" />
           Coba Maneh
@@ -459,6 +486,7 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
   const miniActivity = item.activity ?? materiActivities[index];
   const normalizedProgress = normalizeLearningProgress(learningProgress);
   const isMateriCompleted = Boolean(normalizedProgress.completedMateri[item.title]);
+  const isFeatured = Boolean(item.featured);
 
   const stopNarration = () => {
     narrationRef.current?.stop();
@@ -630,17 +658,21 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
       </div>
 
       {/* ── Main content card ── */}
-      <StimulusComic stimulus={stimulus} title={item.title} />
+      <StimulusComic stimulus={stimulus} title={item.title} onPlayMedia={stopNarration} />
 
       <article className="overflow-hidden rounded-3xl border-4 border-white/80 bg-white shadow-[0_8px_40px_rgba(46,29,16,0.18)]">
         {/* Header */}
-        <header className="relative bg-gradient-to-r from-[#ff9b2f] to-[#ffba73] px-6 py-6 sm:px-8 sm:py-7">
+        <header className={`relative px-6 py-6 sm:px-8 sm:py-7 ${
+          isFeatured
+            ? 'bg-gradient-to-r from-[#087f8c] via-[#0f9d9a] to-[#45b8a9]'
+            : 'bg-gradient-to-r from-[#ff9b2f] to-[#ffba73]'
+        }`}>
           {/* Decorative shine */}
           <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent" />
           <span className="pointer-events-none absolute inset-1 rounded-t-2xl border border-white/30" />
 
           <p className="relative mb-1 text-xs font-black uppercase tracking-[0.15em] text-white/70">
-            Materi Parikan
+            {item.eyebrow ?? 'Materi Parikan'}
           </p>
           <h1 className="relative text-[clamp(1.8rem,4vw,2.6rem)] font-black leading-tight text-white drop-shadow-md">
             {item.title}
@@ -656,61 +688,121 @@ export function MateriDetailPage({ item, index, total, onNext, onPrev, hasNext, 
         <div className="px-6 py-7 sm:px-8 sm:py-8">
           {/* TTS + body text */}
           <div className="flex items-start gap-4">
-            <button
-              type="button"
-              onClick={toggleSpeech}
-              aria-label={isPlaying ? 'Hentikan suara' : isPreparingAudio ? 'Menyiapkan suara' : 'Putar suara'}
-              title={isPlaying ? 'Hentikan Suara' : isPreparingAudio ? 'Menyiapkan Suara' : 'Putar Suara'}
-              className={`mt-1 grid size-12 shrink-0 place-items-center rounded-full shadow-lg transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 ${
-                isPlaying
-                  ? 'bg-red-500 text-white hover:bg-red-600'
+            {item.audioSrc && (
+              <button
+                type="button"
+                onClick={toggleSpeech}
+                aria-label={isPlaying ? 'Hentikan suara' : isPreparingAudio ? 'Menyiapkan suara' : 'Putar suara'}
+                title={isPlaying ? 'Hentikan Suara' : isPreparingAudio ? 'Menyiapkan Suara' : 'Putar Suara'}
+                className={`mt-1 grid size-12 shrink-0 place-items-center rounded-full shadow-lg transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-4 ${
+                  isFeatured ? 'focus-visible:ring-teal-200' : 'focus-visible:ring-orange-200'
+                } ${
+                  isPlaying
+                    ? 'bg-red-500 text-white hover:bg-red-600'
+                    : isPreparingAudio
+                    ? 'cursor-wait bg-orange-400 text-white'
+                    : isFeatured
+                    ? 'bg-teal-600 text-white hover:bg-teal-700'
+                    : 'bg-[#ff9700] text-white hover:bg-[#e68800]'
+                }`}
+              >
+                {isPlaying
+                  ? <Square size={18} fill="currentColor" aria-hidden="true" />
                   : isPreparingAudio
-                  ? 'cursor-wait bg-orange-400 text-white'
-                  : 'bg-[#ff9700] text-white hover:bg-[#e68800]'
-              }`}
-            >
-              {isPlaying
-                ? <Square size={18} fill="currentColor" aria-hidden="true" />
-                : isPreparingAudio
-                ? <LoaderCircle size={22} className="animate-spin" aria-hidden="true" />
-                : <Volume2 size={22} aria-hidden="true" />
-              }
-            </button>
+                  ? <LoaderCircle size={22} className="animate-spin" aria-hidden="true" />
+                  : <Volume2 size={22} aria-hidden="true" />
+                }
+              </button>
+            )}
 
-            <p className="text-[clamp(1rem,2vw,1.2rem)] font-semibold leading-relaxed text-[#4f2912]">
-              {item.body}
-            </p>
+            <div className="flex-1 text-[clamp(1rem,2vw,1.2rem)] font-semibold leading-relaxed text-[#4f2912]">
+              {typeof item.body === 'string' ? (
+                <p>{item.body}</p>
+              ) : (
+                <>
+                  {item.body.intro && <p className="mb-3">{item.body.intro}</p>}
+                  
+                  {item.body.example && (
+                    <div className="my-5 rounded-2xl bg-amber-50 border-l-[6px] border-amber-400 px-6 py-4 shadow-sm">
+                      <p className="mb-2 text-base font-black text-amber-700">{item.body.example.label}</p>
+                      <p className="text-[clamp(1.1rem,2.5vw,1.4rem)] font-bold italic leading-relaxed text-amber-900">{item.body.example.text}</p>
+                    </div>
+                  )}
+
+                  {item.body.pointsTitle && <p className="mb-2 mt-4 font-black">{item.body.pointsTitle}</p>}
+                  
+                  {item.body.points && (
+                    <ol className="ml-6 flex flex-col gap-2 list-decimal">
+                      {item.body.points.map((point, idx) => (
+                        <li key={idx}>{point}</li>
+                      ))}
+                    </ol>
+                  )}
+
+                  {item.body.sections && (
+                    <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                      {item.body.sections.map((section, sectionIndex) => (
+                        <section
+                          key={section.title}
+                          className="rounded-2xl border-2 border-teal-100 bg-[linear-gradient(145deg,#ffffff,#f0fdfa)] p-5 shadow-sm"
+                        >
+                          <div className="mb-3 flex items-center gap-3">
+                            <span className="grid size-8 shrink-0 place-items-center rounded-full bg-teal-600 text-sm font-black text-white shadow-sm">
+                              {sectionIndex + 1}
+                            </span>
+                            <h2 className="text-base font-black leading-tight text-[#155e63] sm:text-lg">
+                              {section.title}
+                            </h2>
+                          </div>
+                          <p className="text-sm font-semibold leading-relaxed text-[#4f3a2d]">
+                            {section.text}
+                          </p>
+                          {section.bullets && (
+                            <ul className="mt-3 grid gap-2">
+                              {section.bullets.map((bullet) => (
+                                <li key={bullet} className="flex items-start gap-2 text-sm font-bold leading-relaxed text-[#3f4f4d]">
+                                  <CheckCircle2 className="mt-0.5 shrink-0 text-teal-600" size={16} aria-hidden="true" />
+                                  <span>{bullet}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </section>
+                      ))}
+                    </div>
+                  )}
+
+                  {item.body.examples && (
+                    <div className="mt-5 flex flex-col gap-5">
+                      {item.body.examples.map((ex, idx) => (
+                        <div key={idx} className="rounded-2xl border-2 border-blue-200 bg-blue-50 p-5">
+                          <p className="mb-3 text-base font-black text-blue-800">{ex.title}</p>
+                          <div className="mb-3 rounded-xl bg-white px-4 py-3">
+                            {ex.lines.map((line, lineIdx) => (
+                              <p key={lineIdx} className="font-bold leading-relaxed text-[#2e1d10]">
+                                {line}
+                              </p>
+                            ))}
+                          </div>
+                          {ex.explanation && (
+                            <p className="mb-2 text-sm font-semibold text-blue-900">{ex.explanation}</p>
+                          )}
+                          {ex.note && (
+                            <p className="text-sm font-semibold italic text-blue-800">{ex.note}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
           </div>
 
           {audioMessage && (
             <p className="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-bold text-amber-700">
               {audioMessage}
             </p>
-          )}
-
-          {/* Example block */}
-          {lines.length > 0 && (
-            <div className="relative mt-7 overflow-hidden rounded-2xl border-2 border-orange-200 bg-gradient-to-br from-orange-50 to-amber-50 p-5 sm:p-6">
-              {/* Left accent bar */}
-              <div className="absolute left-0 top-0 h-full w-[5px] rounded-l-2xl bg-gradient-to-b from-[#ff9700] to-[#ffba73]" />
-
-              <strong className="mb-4 block text-xs font-black uppercase tracking-[0.15em] text-[#d97706]">
-                📜 Tuladha (Contoh)
-              </strong>
-
-              <div className="grid gap-2 pl-1">
-                {lines.map((line, i) => (
-                  <p
-                    key={i}
-                    className={`text-[clamp(1.05rem,2.5vw,1.3rem)] font-black leading-snug text-[#6d3a14] ${
-                      i % 2 === 1 ? 'text-orange-700' : ''
-                    }`}
-                  >
-                    {line}
-                  </p>
-                ))}
-              </div>
-            </div>
           )}
 
           <MateriEnrichment enrichment={item.enrichment} />

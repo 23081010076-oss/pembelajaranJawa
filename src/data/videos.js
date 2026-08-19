@@ -16,10 +16,6 @@ export const videoList = [
     description: 'Maneka warna tuladha parikan (2 gatra lan 4 gatra) supaya luwih gamblang lan gampang dipraktèkaké.',
     videos: [
       {
-        embedUrl: 'https://youtu.be/bgzSY9woZEE?si=P-5IAXFpPpHDMDzF',
-        videoId: 'bgzSY9woZEE',
-      },
-      {
         embedUrl: 'https://youtu.be/EK4-mUPTv6o?si=hiouoWdWoCnAvJ_w',
         videoId: 'EK4-mUPTv6o',
       },

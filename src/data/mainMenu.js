@@ -1,11 +1,13 @@
 export const mainMenu = [
   {
+    order: 1,
     title: 'Capaian Pembelajaran',
     icon: 'graduation',
     page: 'learning',
     eyebrow: 'Capaian Pembelajaran',
     body:
       'Peserta didik mampu menulis dan mengembangkan kosakata baru dengan menggunakan basa rinengga/lalongèt untuk menyajikan gagasan sesuai unggah-ungguh basa/onḍhâgghâ bhâsa.',
+    foreignTerms: ['basa rinengga', 'lalongèt', 'unggah-ungguh basa', 'onḍhâgghâ bhâsa'],
     phase: {
       fase: 'D',
       element: 'Menulis',
@@ -13,12 +15,15 @@ export const mainMenu = [
     points: [],
   },
   {
+    order: 2,
     title: 'Tujuan Pembelajaran',
     icon: 'target',
     page: 'learning',
     eyebrow: 'Tujuan Pembelajaran',
     body:
       'Sawise sinau, siswa diarepake bisa nerangake parikan, mbedakake sampiran lan isi, maca tuladha, lan ngrakit parikan dhewe kanthi kreatif.',
+    bodyIsForeign: true,
+    foreignTerms: ['parikan', 'basa rinengga', 'lalongèt', 'unggah-ungguh basa'],
     points: [
       'Setelah mengamati contoh parikan (C), peserta didik (A) mampu melengkapi bagian sampiran atau isi parikan (B) dengan menggunakan kosakata basa rinengga/lalongèt sesuai unggah-ungguh basa secara tepat dan benar (D). (TPACK, C2)',
       'Setelah diberikan kata kunci (C), peserta didik (A) mampu menulis parikan sederhana (B) dengan mengembangkan gagasan menggunakan basa rinengga/lalongèt sesuai unggah-ungguh basa secara tepat dan benar (D). (TPACK, C3)',
@@ -26,19 +31,14 @@ export const mainMenu = [
     ],
   },
   {
+    order: 3,
     title: 'Materi Parikan',
     icon: 'book',
     page: 'materi',
     body: 'Bukak daftar materi parikan lengkap.',
   },
   {
-    title: 'Game Parikan',
-    icon: 'game',
-    page: 'game',
-    body:
-      'Latihan nyusun sampiran lan isi parikan kanthi cara kuis interaktif. Pilih tingkat lan buktikake kemampuanmu!',
-  },
-  {
+    order: 4,
     title: 'Video Pembelajaran',
     icon: 'video',
     page: 'video',
@@ -46,6 +46,15 @@ export const mainMenu = [
       'Menu video disiapake kanggo nampilake media pembelajaran parikan. Link utawa file video bisa ditambahake ing tahap berikutnya.',
   },
   {
+    order: 5,
+    title: 'Game Parikan',
+    icon: 'game',
+    page: 'game',
+    body:
+      'Latihan nyusun sampiran lan isi parikan kanthi cara kuis interaktif. Pilih tingkat lan buktikake kemampuanmu!',
+  },
+  {
+    order: 6,
     title: 'Evaluasi',
     icon: 'clipboard',
     page: 'evaluasi',
@@ -53,6 +62,7 @@ export const mainMenu = [
       'Uji pemahamanmu babagan parikan Jawa kanthi nggarap evaluasi lan entuk sertifikat.',
   },
   {
+    order: 7,
     title: 'Tentang Pengembang',
     icon: 'info',
     page: 'about',
