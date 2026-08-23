@@ -1872,7 +1872,7 @@ function ZepGameOnlyScreen() {
           <div className="mt-3">
             <p className="text-xs font-black uppercase tracking-[0.18em] text-[#087f8c]">Pituduh Ekspedisi</p>
             <p className="mx-auto mt-2 max-w-2xl text-sm font-bold leading-relaxed text-[#6b4428]">
-              Gunakake jeneng peserta kanthi format <strong>Nama_Kelas_Absen</strong>. Saben tombol misi bakal mbukak arena ZEP ing tab anyar.
+              Gunakake jeneng peserta kanthi format <strong>Nama_Kelas_Absen</strong>. Saben tombol misi bakal mbukak arena <i>ZEP</i> ing tab anyar.
               Rampungake kanthi urut saka Sambung Parikan, Rakit Parikan, banjur Pujangga Muda.
             </p>
           </div>

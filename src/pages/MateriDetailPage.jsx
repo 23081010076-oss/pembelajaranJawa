@@ -409,7 +409,7 @@ function MateriEnrichment({ enrichment }) {
             </div>
             <div>
               <p className="text-xs font-black uppercase tracking-[0.15em] text-orange-500">
-                Titik Penting
+                Titik wigati
               </p>
               <h2 className="text-lg font-black leading-tight text-[#3f2918]">
                 Sing kudu dielingi
