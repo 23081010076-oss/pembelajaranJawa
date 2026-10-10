@@ -135,7 +135,7 @@ export function LoginPage({ onLogin }) {
             Javanesia
           </h1>
           <p className="text-sm font-bold tracking-[0.14em] text-white/85 drop-shadow-md">
-            Sinau Basa Jawa kanthi Cara Menarik
+            Sinau Basa Jawa Kanthi Cara Nyenengake Lan Interaktif
           </p>
         </div>
 

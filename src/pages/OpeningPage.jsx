@@ -130,7 +130,7 @@ export function OpeningPage({ onEnter }) {
 
         {/* Footer */}
         <p
-          className="animate-[fadeInUp_1.3s_ease-out_both] text-xs font-bold text-[#000000]/100 tracking-widest uppercase"
+          className="animate-[fadeInUp_1.3s_ease-out_both] text-xs font-bold text-white/80 tracking-widest uppercase"
           aria-hidden="true"
         >
           ✦ Javanesia · Parikan ✦
