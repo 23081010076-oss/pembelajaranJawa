@@ -38,15 +38,15 @@ export const materiList = [
     },
   },
   {
-    title: 'Ciri-ciri Parikan',
+    title: 'Titikan Parikan',
     short: 'Tandha-tandha utama parikan.',
     body: {
-      intro: 'Ciri-ciri Parikan:',
+      intro: 'Titikan Parikan:',
       points: [
         'Dumadi saka rong utawa patang gatra.',
         'Ana purwaka lan wos.',
         'Nganggo purwakanthi guru swara.',
-        'Isine bisa pitutur, guyon, utawa sindiran.',
+        'Isine bosa pitutur, guyon, utawa sindiran.',
       ],
     },
     example: 'Ana pasar tuku tela, aja kasar marang kanca.',
@@ -173,7 +173,7 @@ export const materiList = [
     },
   },
   {
-    title: 'Jula-Juli Suroboyo',
+    title: 'Jula-Juli Surabaya',
     short: 'Kidungan khas ludruk lan budaya arek Surabaya.',
     eyebrow: 'Materi Khas Surabaya',
     featured: true,
