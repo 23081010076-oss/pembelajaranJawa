@@ -73,7 +73,7 @@ export function OpeningPage({ onEnter }) {
             Javanesia
           </h1>
           <p className="text-base font-bold tracking-[0.15em] text-white/85 drop-shadow-md sm:text-lg">
-            Sinau Basa Jawa kanthi Cara Menarik
+            Sinau Basa Jawa Kanthi Cara Nyenengake Lan Interaktif
           </p>
         </div>
 
