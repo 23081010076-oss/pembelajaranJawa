@@ -29,9 +29,9 @@ export function LearningPage({ item }) {
   const elementLabel = item.phase?.element ?? 'Menulis';
 
   const capaianBenefits = [
-    'Paham tujuan belajar kanthi cetha.',
-    'Siap ngembangake kosakata lan gagasan anyar.',
-    'Luwih percaya diri nalika menyang materi lan evaluasi.',
+    'Siswa bisa mangerteni ancas pasinaon kanthi cetha.  ',
+    'Siswa bisa ngembangake kosakata lan gagasan kanthi kreatif.  ',
+    'Siswa luwih percaya diri nalika nyampakake asil sinau lan nindakake evaluasi.  ',
   ];
 
   return (

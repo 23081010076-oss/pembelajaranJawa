@@ -92,7 +92,7 @@ export function SplashScreen({ onDone }) {
 
         {/* Tagline */}
         <p className="text-[clamp(0.9rem,2.5vw,1.1rem)] font-bold tracking-[0.2em] text-white/80 uppercase">
-          Sinau Basa Jawa kanthi Cara Menarik
+          Sinau Basa Jawa Kanthi Cara Nyenengake Lan Interaktif
         </p>
 
         {/* Decorative divider */}

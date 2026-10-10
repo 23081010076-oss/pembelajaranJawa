@@ -73,7 +73,7 @@ export function OpeningPage({ onEnter }) {
             Javanesia
           </h1>
           <p className="text-base font-bold tracking-[0.15em] text-white/85 drop-shadow-md sm:text-lg">
-            Sinau Basa Jawa kanthi Cara Menarik
+            Sinau Basa Jawa Kanthi Cara Nyenengake Lan Interaktif
           </p>
         </div>
 
@@ -130,7 +130,7 @@ export function OpeningPage({ onEnter }) {
 
         {/* Footer */}
         <p
-          className="animate-[fadeInUp_1.3s_ease-out_both] text-xs font-bold text-[#000000]/100 tracking-widest uppercase"
+          className="animate-[fadeInUp_1.3s_ease-out_both] text-xs font-bold text-white/80 tracking-widest uppercase"
           aria-hidden="true"
         >
           ✦ Javanesia · Parikan ✦

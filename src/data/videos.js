@@ -1,12 +1,12 @@
 export const videoList = [
   {
-    title: 'Pengenalan Parikan',
+    title: 'Pangerten Parikan',
     description: 'Sinau babagan pangertene parikan basa Jawa lan apa wae gunane ing urip padinan.',
     embedUrl: 'https://youtu.be/X16jdQeqW6E?si=8OeJAVWU4zqDZXy-',
     videoId: 'X16jdQeqW6E',
   },
   {
-    title: 'Struktur lan Paugeran Parikan',
+    title: 'Struktur lan paugeran parikan ',
     description: 'Mangerteni ciri-ciri, struktur (sampiran lan isi), sarta paugeran nalika nggawe parikan.',
     embedUrl: ' https://youtu.be/_ZLNLi7iggU?si=X7cWRQORcq8pykI2',
     videoId: 'DUaqQAiIiTc',

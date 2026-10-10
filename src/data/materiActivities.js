@@ -14,7 +14,7 @@ export const materiActivities = [
   },
   {
     type: 'multi',
-    title: 'Cirine Parikan',
+    title: 'Titikane Parikan',
     prompt: 'Pilih kabeh ciri parikan sing bener.',
     options: [
       'Ana purwakanthi utawa rima.',
@@ -51,7 +51,7 @@ export const materiActivities = [
   },
   {
     type: 'single',
-    title: 'Jula-Juli Suroboyo',
+    title: 'Jula-Juli Surabaya',
     prompt: 'Ing pementasan ludruk, Jula-Juli kalebu unsur apa?',
     options: [
       'Kidungan sing diiringi gamelan khas ludruk.',

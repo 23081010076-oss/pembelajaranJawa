@@ -93,8 +93,8 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, stu
         <h1 className="home-title animate-[fadeInUp_0.8s_ease-out] text-[clamp(3.5rem,7vw,5rem)] font-black uppercase leading-none text-white drop-shadow-2xl">
           Javanesia
         </h1>
-        <p className="mt-4 animate-[fadeInUp_1s_ease-out] text-lg font-bold text-white/90 drop-shadow-md sm:text-xl">
-          Sinau Basa Jawa kanthi Cara Menarik
+        <p className="mt-4 animate-[fadeInUp_1s_ease-out] text-lg font-bold text-white/85 drop-shadow-md sm:text-xl">
+          Sinau Basa Jawa Kanthi Cara Nyenengake Lan Interaktif
         </p>
 
         {/* Greeting siswa */}

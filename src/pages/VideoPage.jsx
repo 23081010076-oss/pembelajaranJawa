@@ -283,7 +283,7 @@ export function VideoPage({ videos }) {
           Pilih Video
         </h1>
         <p className="mt-2 text-sm font-bold text-[#2e1d10]/80 drop-shadow-sm">
-          {videos.length} video kasedhiya — klik kanggo nonton
+          Pilih 3 video — klik kanggo nonton
         </p>
       </header>
 
