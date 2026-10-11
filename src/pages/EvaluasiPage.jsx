@@ -176,7 +176,7 @@ export function EvaluasiPage() {
                   <div className="grid size-10 place-items-center rounded-xl bg-orange-100 text-orange-600 font-black">10</div>
                   <div>
                     <p className="text-xs text-orange-500 font-black uppercase tracking-wider">Cacahing Pitakon</p>
-                    <p className="text-base font-black text-[#2e1d10]">10 Pitakon Pilihan Ganda</p>
+                    <p className="text-base font-black text-[#2e1d10]">10 Pitakonan Pilihan Ganda</p>
                   </div>
                 </div>
 
@@ -217,7 +217,7 @@ export function EvaluasiPage() {
             {/* Kartu Profil Siswa */}
             <aside className="flex flex-col gap-4 rounded-[8px] border border-white/85 bg-white/92 p-5 shadow-[0_12px_28px_rgba(77,48,24,0.12)] backdrop-blur-sm justify-between">
               <div>
-                <p className="text-xs font-black uppercase tracking-widest text-orange-500 mb-3">Peserta Ujian</p>
+                <p className="text-xs font-black uppercase tracking-widest text-orange-500 mb-3">PASARTA UJIANn</p>
                 <div className="flex items-center gap-3 mb-5">
                   <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-[#d97811] text-base font-black uppercase text-white shadow-inner">
                     {getInitials(name)}

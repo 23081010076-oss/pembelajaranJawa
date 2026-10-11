@@ -30,7 +30,7 @@ export function MateriPage({ materiItems, onOpenMateri }) {
           Pilih Materi
         </h1>
         <p className="mx-auto mt-2 max-w-[18rem] text-sm font-bold leading-snug text-[#2e1d10]/80 drop-shadow-sm sm:max-w-none">
-          {materiItems.length} materi kasedhiya — klik kanggo maca kanthi lengkap
+          Ana 7 Materi Klik Kanggo Maca Kanthi Jangkep
         </p>
         <div className="mx-auto mt-4 w-full max-w-md rounded-2xl border-2 border-white/80 bg-white/85 p-3 shadow-sm sm:p-4">
           <div className="flex items-center justify-between gap-3 text-[0.68rem] font-black uppercase tracking-[0.12em] text-orange-600 sm:text-xs">

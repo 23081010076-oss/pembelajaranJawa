@@ -16,7 +16,7 @@ export const zepGameLevels = [
     image: '/assets/game/surabaya/level-1.png',
     location: 'Tugu Sura lan Baya',
     posLabel: 'Pos Wani',
-    description: 'Sambung parikan kanthi trep kanggo nguripake semangat wani arek Suroboyo.',
+    description: 'Sambung parikan kanthi trep kanggo nguripake semangat wani arek Surabaya',
     badge: 'Lencana Wani',
     keywords: ['Tugu Sura lan Baya', 'semanggi'],
   },

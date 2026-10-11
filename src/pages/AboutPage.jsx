@@ -201,7 +201,7 @@ export function AboutPage() {
     },
     {
       icon: UserRoundCheck,
-      label: 'Dosen Pembimbing',
+      label: 'Dhosen Pembimbing',
       person: developerProfile.supervisor,
       accent: '#f59e0b',
     },
@@ -218,7 +218,7 @@ export function AboutPage() {
           Tentang Pengembang
         </h1>
         <p className="mt-3 max-w-2xl text-sm font-bold leading-relaxed text-white/85">
-          Halaman ini memuat identitas mahasiswa, dosen pembimbing, dan tim developer aplikasi Javanesia.
+          Kaca iki ngemot idhentitas mahasiswa, Dhosen pembimbing, Lan Tim Developer Aplikasi Javanesia
         </p>
       </header>
 

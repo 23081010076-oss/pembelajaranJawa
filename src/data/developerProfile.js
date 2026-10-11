@@ -1,24 +1,24 @@
 export const developerProfile = {
   student: {
     name: 'Nashwa Namiralya Faza',
-    role: 'Mahasiswa Pengembang Media Pembelajaran',
+    role: 'Mahasiswa Panyusun Medhia Pasinaon',
     photo: '/assets/profile/mahasiswa.jpeg',
     details: [
-      'Program Studi: S1 - Pendidikan Bahasa dan Sastra Jawa',
+      'Program Studi: S1 - Pendhidikan Basa lan Sastra Jawi',
       'NIM: 23020114009',
       'Perguruan Tinggi: Universitas Negeri Surabaya',
     ],
   },
   supervisor: {
     name: 'Dr. Octo Dendy Andriyanto, S.Pd., M.Pd.',
-    role: 'Dosen Pembimbing',
+    role: 'Dhosen Pembimbing',
     photo: '/assets/profile/dosen-pembimbing.jpeg',
     imageFit: 'object-cover',
     imagePosition: 'object-top',
     details: [
       'NIP/NIDN: 198907262015041002 / 0026078901',
-      'Bidang: Pembelajaran Bahasa Jawa',
-      'Membimbing pengembangan materi dan kelayakan media.',
+      'Bidang: Pendhidikan Basa lan Sastra Jawi',
+      'Perguruan Tinggi: Universitas Negeri Surabaya',
     ],
   },
   developers: [
@@ -27,8 +27,8 @@ export const developerProfile = {
       role: 'developer',
       photo: '/assets/profile/pengembang.jpeg',
       details: [
-        'Membangun tampilan aplikasi Javanesia.',
-        'Mengembangkan halaman materi, video, dan game interaktif.',
+        '1.	Pangembang tampilan Aplikasi Javanesia.',
+        '2.	Ngembangakae kaca materi,video, lan game interaktif.',
       ],
     },
     {
@@ -38,8 +38,8 @@ export const developerProfile = {
       imageFit: 'object-cover',
       imagePosition: 'object-center',
       details: [
-        'Menyusun pengalaman belajar agar mudah digunakan.',
-        'Mengintegrasikan konten, audio, dan alur navigasi aplikasi.',
+        '1.	Pangembang pengelaman Pasinaon supaya gampang di mangerteni.',
+        '2.	Mengoptimalake konte, audio lan alur navigasi sajrone aplikasi.',
       ],
     },
   ],
