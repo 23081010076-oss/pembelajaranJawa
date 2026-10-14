@@ -46,7 +46,7 @@ export const materiList = [
         'Dumadi saka rong utawa patang gatra.',
         'Ana purwaka lan wos.',
         'Nganggo purwakanthi guru swara.',
-        'Isine bosa pitutur, guyon, utawa sindiran.',
+        'Isine bisa pitutur, guyon, utawa sindiran.',
       ],
     },
     example: 'Ana pasar tuku tela, aja kasar marang kanca.',
@@ -78,7 +78,7 @@ export const materiList = [
           bubbleStyle: { left: '58%', top: '4%', width: '32%' },
         },
       ],
-      question: 'Miturutmu, ciri apa sing paling gampang dingerteni saka parikan?',
+      question: 'Miturutmu, titikan apa sing paling gampang dingerteni saka parikan?',
     },
   },
   {

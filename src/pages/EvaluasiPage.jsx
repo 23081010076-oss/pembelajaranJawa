@@ -159,7 +159,7 @@ export function EvaluasiPage() {
               Evaluasi Parikan
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base font-semibold leading-relaxed text-[#6b4a2d] sm:text-lg">
-              Kanthi evaluasi iki, kowe bisa nguji pemahamanmu babagan parikan Jawa, wiwit saka teges, ciri-ciri, struktur sampiran lan isi, nganti ngerakit parikan.
+              Kanthi evaluasi iki, kowe bisa nguji pemahamanmu babagan parikan Jawa, wiwit saka teges, titikan, struktur sampiran lan isi, nganti ngerakit parikan.
             </p>
           </header>
 
@@ -217,14 +217,13 @@ export function EvaluasiPage() {
             {/* Kartu Profil Siswa */}
             <aside className="flex flex-col gap-4 rounded-[8px] border border-white/85 bg-white/92 p-5 shadow-[0_12px_28px_rgba(77,48,24,0.12)] backdrop-blur-sm justify-between">
               <div>
-                <p className="text-xs font-black uppercase tracking-widest text-orange-500 mb-3">PASARTA UJIANn</p>
+                <p className="text-xs font-black uppercase tracking-widest text-orange-500 mb-3">PASARTA UJIAN</p>
                 <div className="flex items-center gap-3 mb-5">
                   <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-[#d97811] text-base font-black uppercase text-white shadow-inner">
                     {getInitials(name)}
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-base font-black leading-tight text-[#2e1d10]">{name}</p>
-                    <p className="text-xs font-bold text-gray-500">Peserta Didik</p>
                   </div>
                 </div>
 

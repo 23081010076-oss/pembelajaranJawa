@@ -4,7 +4,7 @@ export const developerProfile = {
     role: 'Mahasiswa Panyusun Medhia Pasinaon',
     photo: '/assets/profile/mahasiswa.jpeg',
     details: [
-      'Program Studi: S1 - Pendhidikan Basa lan Sastra Jawi',
+      'Program Studi: S1 - Pendhidikan Basa lan Sastra Jawa',
       'NIM: 23020114009',
       'Perguruan Tinggi: Universitas Negeri Surabaya',
     ],
@@ -28,7 +28,7 @@ export const developerProfile = {
       photo: '/assets/profile/pengembang.jpeg',
       details: [
         '1.	Pangembang tampilan Aplikasi Javanesia.',
-        '2.	Ngembangakae kaca materi,video, lan game interaktif.',
+        '2.	Ngembangake kaca materi,video, lan game interaktif.',
       ],
     },
     {
@@ -38,8 +38,8 @@ export const developerProfile = {
       imageFit: 'object-cover',
       imagePosition: 'object-center',
       details: [
-        '1.	Pangembang pengelaman Pasinaon supaya gampang di mangerteni.',
-        '2.	Mengoptimalake konte, audio lan alur navigasi sajrone aplikasi.',
+        '1.	Pangembang pengelaman Pasinaon supaya gampang dimangerteni.',
+        '2.	Mengoptimalake konten, audio lan alur navigasi sajrone aplikasi.',
       ],
     },
   ],
