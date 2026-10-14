@@ -31,7 +31,7 @@ export function LearningPage({ item }) {
   const capaianBenefits = [
     'Siswa bisa mangerteni ancas pasinaon kanthi cetha.  ',
     'Siswa bisa ngembangake kosakata lan gagasan kanthi kreatif.  ',
-    'Siswa luwih percaya diri nalika nyampakake asil sinau lan nindakake evaluasi.  ',
+    'Siswa luwih percaya diri nalika nyampekake asil sinau lan nindakake evaluasi.  ',
   ];
 
   return (
@@ -99,7 +99,7 @@ export function LearningPage({ item }) {
             {/* Bottom Row: Benefits Cards 1-3 (Horizontal on PC/Laptop, Vertical on Mobile) */}
             <div>
               <h2 className="mb-4 text-xs font-black uppercase tracking-[0.16em] text-[#8c5627]">
-                Tujuan & Manfaat Pembelajaran
+                Tujuwan lan Paedah Pasinaon
               </h2>
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">

@@ -7,7 +7,7 @@ export const videoList = [
   },
   {
     title: 'Struktur lan paugeran parikan ',
-    description: 'Mangerteni ciri-ciri, struktur (sampiran lan isi), sarta paugeran nalika nggawe parikan.',
+    description: 'Mangerteni titikan, struktur (sampiran lan isi), sarta paugeran nalika nggawe parikan.',
     embedUrl: ' https://youtu.be/_ZLNLi7iggU?si=X7cWRQORcq8pykI2',
     videoId: 'DUaqQAiIiTc',
   },
