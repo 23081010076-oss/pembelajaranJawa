@@ -17,7 +17,7 @@ export const developerProfile = {
     imagePosition: 'object-top',
     details: [
       'NIP/NIDN: 198907262015041002 / 0026078901',
-      'Bidang: Pendhidikan Basa lan Sastra Jawi',
+      'Bidang: Pendhidikan Basa lan Sastra Jawa',
       'Perguruan Tinggi: Universitas Negeri Surabaya',
     ],
   },

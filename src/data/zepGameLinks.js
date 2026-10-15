@@ -26,11 +26,11 @@ export const zepGameLevels = [
     type: 'ZEP Game',
     url: 'https://quiz.zep.us/id/play/odJELZ',
     image: '/assets/game/surabaya/level-2.png',
-    location: 'Kutha Lama Surabaya',
+    location: 'Kutha Lawas Surabaya',
     posLabel: 'Pos Kreatif',
     description: 'Rakit parikan saka tetembungan kutha nalika njelajah jejak Kutha Lama Surabaya.',
     badge: 'Lencana Kreatif',
-    keywords: ['Kutha Lama', 'Jembatan Merah'],
+    keywords: ['Kutha lawas', 'Jembatan Merah'],
   },
   {
     levelId: 3,
