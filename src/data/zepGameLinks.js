@@ -25,7 +25,7 @@ export const zepGameLevels = [
     title: 'Rakit Parikan',
     type: 'ZEP Game',
     url: 'https://quiz.zep.us/id/play/odJELZ',
-    image: '/assets/game/surabaya/level-2.png',
+    image: '/assets/game/surabaya/Level 2-Kutha.png',
     location: 'Kutha Lawas Surabaya',
     posLabel: 'Pos Kreatif',
     description: 'Rakit parikan saka tetembungan kutha nalika njelajah jejak Kutha Lama Surabaya.',
