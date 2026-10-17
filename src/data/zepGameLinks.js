@@ -28,7 +28,7 @@ export const zepGameLevels = [
     image: '/assets/game/surabaya/Level 2-Kutha.png',
     location: 'Kutha Lawas Surabaya',
     posLabel: 'Pos Kreatif',
-    description: 'Rakit parikan saka tetembungan kutha nalika njelajah jejak Kutha Lama Surabaya.',
+    description: 'Rakit parikan saka tetembungan kutha nalika njelajah jejak Kutha Lawas Surabaya.',
     badge: 'Lencana Kreatif',
     keywords: ['Kutha lawas', 'Jembatan Merah'],
   },
