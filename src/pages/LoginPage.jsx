@@ -135,7 +135,7 @@ export function LoginPage({ onLogin }) {
             Javanesia
           </h1>
           <p className="text-sm font-bold tracking-[0.14em] text-white/85 drop-shadow-md">
-            Sinau Basa Jawa Kanthi Cara Nyenengake Lan Interaktif
+            Sinau Basa Jawa Kanthi Cara Nyenengake lan Interaktif
           </p>
         </div>
 
@@ -145,7 +145,7 @@ export function LoginPage({ onLogin }) {
           {/* Header card */}
           <div className="flex items-center justify-center gap-2 mb-1">
             <BookOpen size={15} className="text-orange-500" aria-hidden="true" />
-            <span className="text-xs font-black uppercase tracking-[0.18em] text-orange-500">Selamat Datang</span>
+            <span className="text-xs font-black uppercase tracking-[0.18em] text-orange-500">Sugeng Rawuh</span>
           </div>
           <p className="text-[clamp(1rem,3vw,1.2rem)] font-black text-[#3d1f00] mb-5">
             Sapa jenengmu?
