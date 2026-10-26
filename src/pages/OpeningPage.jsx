@@ -12,7 +12,7 @@ export function OpeningPage({ onEnter }) {
   };
 
   return (
-    <div className="home-scene relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 py-10">
+    <div className="home-scene relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden px-5 py-10 sm:px-6">
 
       {/* Batik border atas — animasi geser */}
       <div
@@ -51,7 +51,7 @@ export function OpeningPage({ onEnter }) {
       <div className="mist pointer-events-none absolute bottom-0 right-[-10vw] z-[1] h-48 w-[60vw] opacity-60" aria-hidden="true" />
 
       {/* Main content */}
-      <main className="relative z-10 flex w-full max-w-[560px] flex-col items-center gap-8 text-center">
+      <main className="relative z-10 flex w-full max-w-[560px] flex-col items-center gap-6 text-center sm:gap-8">
 
         {/* Logo */}
         <div className="flex flex-col items-center gap-3 animate-[fadeInUp_0.7s_ease-out_both]">
@@ -72,7 +72,7 @@ export function OpeningPage({ onEnter }) {
           >
             Javanesia
           </h1>
-          <p className="text-base font-bold tracking-[0.15em] text-white/85 drop-shadow-md sm:text-lg">
+          <p className="text-sm font-bold tracking-wide text-white/85 drop-shadow-md sm:text-base sm:tracking-[0.15em]">
             Sinau Basa Jawa Kanthi Cara Nyenengake lan Interaktif
           </p>
         </div>
@@ -88,7 +88,7 @@ export function OpeningPage({ onEnter }) {
         </div>
 
         {/* Info card */}
-        <div className="w-full animate-[fadeInUp_1s_ease-out_both] overflow-hidden rounded-2xl border-2 border-orange-200 bg-white/85 px-6 py-5 shadow-[0_8px_32px_rgba(46,29,16,0.2)] backdrop-blur-md">
+        <div className="w-full animate-[fadeInUp_1s_ease-out_both] overflow-hidden rounded-2xl border-2 border-orange-200 bg-white/85 px-4 py-4 shadow-[0_8px_32px_rgba(46,29,16,0.2)] backdrop-blur-md sm:px-6 sm:py-5">
           <div className="flex items-center justify-center gap-2 mb-3">
             <BookOpen size={15} className="text-orange-600" aria-hidden="true" />
             <span className="text-xs font-black uppercase tracking-[0.18em] text-orange-600">Medhia Pasinaon</span>
@@ -105,18 +105,19 @@ export function OpeningPage({ onEnter }) {
         <button
           type="button"
           onClick={handleEnter}
-          className="group animate-[fadeInUp_1.15s_ease-out_both] relative w-full overflow-hidden rounded-2xl border-4 border-white/90 bg-[#ffba73] px-8 py-5 font-black text-white shadow-[0_8px_0_rgba(72,64,56,0.25),0_16px_32px_rgba(46,29,16,0.2)] transition-all duration-200 hover:-translate-y-1.5 hover:bg-[#ffac5e] hover:shadow-[0_12px_0_rgba(72,64,56,0.2),0_20px_36px_rgba(46,29,16,0.25)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-[4px] active:shadow-[0_2px_0_rgba(72,64,56,0.25),0_4px_12px_rgba(46,29,16,0.15)]"
+          className="group animate-[fadeInUp_1.15s_ease-out_both] relative w-full overflow-hidden rounded-2xl border-4 border-white/90 bg-[#ffba73] px-6 py-4 font-black text-white shadow-[0_8px_0_rgba(72,64,56,0.25),0_16px_32px_rgba(46,29,16,0.2)] transition-all duration-200 hover:-translate-y-1.5 hover:bg-[#ffac5e] hover:shadow-[0_12px_0_rgba(72,64,56,0.2),0_20px_36px_rgba(46,29,16,0.25)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 active:translate-y-[4px] active:shadow-[0_2px_0_rgba(72,64,56,0.25),0_4px_12px_rgba(46,29,16,0.15)] sm:px-8 sm:py-5"
         >
           {/* Shine */}
           <span className="pointer-events-none absolute inset-1 rounded-xl border border-white/40" />
           <span className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b from-white/20 to-transparent" />
 
-          <span className="relative flex items-center justify-center gap-3 text-[clamp(1.3rem,3vw,1.6rem)]">
+          <span className="relative flex items-center justify-center gap-2 text-[clamp(1.2rem,4vw,1.6rem)] sm:gap-3">
             <span
               style={{
-                WebkitTextStroke: '4px #e07a00',
+                WebkitTextStroke: '3px #e07a00',
                 paintOrder: 'stroke fill',
               }}
+              className="sm:[webkit-text-stroke:4px_#e07a00]"
             >
               Mlebu / Miwiti
             </span>
