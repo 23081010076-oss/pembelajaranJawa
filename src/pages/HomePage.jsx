@@ -94,7 +94,7 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, stu
           Javanesia
         </h1>
         <p className="mt-4 animate-[fadeInUp_1s_ease-out] text-lg font-bold text-white/85 drop-shadow-md sm:text-xl">
-          Sinau Basa Jawa Kanthi Cara Nyenengake Lan Interaktif
+          Sinau Basa Jawa Kanthi Cara Nyenengake lan Interaktif
         </p>
 
         {/* Greeting siswa */}

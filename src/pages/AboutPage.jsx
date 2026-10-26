@@ -218,7 +218,7 @@ export function AboutPage() {
           Tentang Pengembang
         </h1>
         <p className="mt-3 max-w-2xl text-sm font-bold leading-relaxed text-white/85">
-          Kaca iki ngemot idhentitas mahasiswa, Dhosen pembimbing, Lan Tim Developer Aplikasi Javanesia
+          Kaca iki ngemot idhentitas mahasiswa, Dhosen pembimbing, lan Tim Developer Aplikasi Javanesia
         </p>
       </header>
 

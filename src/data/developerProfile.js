@@ -38,8 +38,8 @@ export const developerProfile = {
       imageFit: 'object-cover',
       imagePosition: 'object-center',
       details: [
-        '1.	Pangembang pengelaman Pasinaon supaya gampang dimangerteni.',
-        '2.	Mengoptimalake konten, audio lan alur navigasi sajrone aplikasi.',
+        '1.	Ngembangake pengalaman pasinaon supaya luwih gampang dimangerteni.',
+        '2.	Ngoptimalake konten, audio, lan alur navigasi sajrone aplikasi.',
       ],
     },
   ],
