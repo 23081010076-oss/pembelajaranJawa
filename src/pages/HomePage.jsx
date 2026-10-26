@@ -1,5 +1,6 @@
 import { BarChart3, BookOpenCheck, ClipboardCheck, Gamepad2, Hash, HelpCircle, LogOut, Map, RotateCcw, School } from 'lucide-react';
 import { MenuButton } from '../components/MenuButton.jsx';
+import { LazyImage } from '../components/LazyImage.jsx';
 import { useClickSound } from '../hooks/useClickSound.js';
 import { useStudentLocalStorage } from '../hooks/useLocalStorage.js';
 import { learningPathSteps } from '../data/learningPath.js';
@@ -85,10 +86,11 @@ export function HomePage({ menuItems, onChooseMenu, onOpenGuide, onOpenPath, stu
   return (
     <div className="mx-auto flex w-full max-w-[1200px] flex-col items-center justify-center gap-10 px-4 sm:gap-12 sm:px-6 lg:gap-14 lg:px-8">
       <header className="grid w-full max-w-4xl justify-items-center text-center">
-        <img
+        <LazyImage
           src="/assets/logo-icon.png"
           alt="Logo Javanesia"
           className="mb-3 h-auto w-[min(170px,42vw)] animate-[fadeInUp_0.65s_ease-out] drop-shadow-[0_10px_22px_rgba(46,29,16,0.22)]"
+          priority={true}
         />
         <h1 className="home-title animate-[fadeInUp_0.8s_ease-out] text-[clamp(3.5rem,7vw,5rem)] font-black uppercase leading-none text-white drop-shadow-2xl">
           Javanesia
