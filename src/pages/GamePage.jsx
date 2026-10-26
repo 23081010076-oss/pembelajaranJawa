@@ -1828,7 +1828,7 @@ function ZepGameOnlyScreen() {
     <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-6 px-4 py-2">
       <header className="overflow-hidden rounded-[32px] border-4 border-white/85 bg-[#087f8c] shadow-[0_22px_55px_rgba(15,62,78,0.28)]">
         <img
-          src="/assets/game/surabaya/banner-parikan.png"
+          src="/assets/game/surabaya/banner.png"
           alt="Banner Parikan Arek Suroboyo di Tugu Pahlawan"
           className="aspect-video w-full object-cover"
           loading="eager"
