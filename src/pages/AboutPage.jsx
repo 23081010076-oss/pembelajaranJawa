@@ -36,6 +36,8 @@ function ProfilePhoto({ person, accent, className = '' }) {
       alt={`Foto ${person.name}`}
       className={`h-full w-full ${person.imageFit || 'object-cover'} ${person.imagePosition || 'object-top'} ${className}`}
       onError={() => setHasError(true)}
+      loading="lazy"
+      decoding="async"
     />
   );
 }

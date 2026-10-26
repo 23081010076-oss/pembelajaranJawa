@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Play, ArrowLeft, Youtube, BookOpen, ChevronLeft, ChevronRight } from 'lucide-react';
+import { LazyImage } from '../components/LazyImage.jsx';
 import { useClickSound } from '../hooks/useClickSound.js';
 
 const getYoutubeVideoId = (video) => {

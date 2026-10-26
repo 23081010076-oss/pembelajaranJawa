@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Star, Trophy, RotateCcw, ChevronRight, CheckCircle2, XCircle, Sparkles, Zap, Target, PenLine, AlertCircle, Info, ExternalLink, Map, MapPin, ShieldCheck, Waves, Landmark } from 'lucide-react';
 import { gameLevels } from '../data/gameParikan.js';
 import { zepGameHub, zepGameLevels } from '../data/zepGameLinks.js';
+import { LazyImage } from '../components/LazyImage.jsx';
 import { useClickSound } from '../hooks/useClickSound.js';
 import { useFeedbackSound } from '../hooks/useFeedbackSound.js';
 import { useResultSound } from '../hooks/useResultSound.js';
@@ -1827,12 +1828,11 @@ function ZepGameOnlyScreen() {
   return (
     <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-6 px-4 py-2">
       <header className="overflow-hidden rounded-[32px] border-4 border-white/85 bg-[#087f8c] shadow-[0_22px_55px_rgba(15,62,78,0.28)]">
-        <img
+        <LazyImage
           src="/assets/game/surabaya/banner.png"
           alt="Banner Parikan Arek Suroboyo di Tugu Pahlawan"
           className="aspect-video w-full object-cover"
-          loading="eager"
-          fetchPriority="high"
+          priority={true}
         />
         <div className="sr-only">
           <p>Jelajah Kutha Surabaya. Petualangan telung pos.</p>
@@ -1910,11 +1910,11 @@ function ZepGameOnlyScreen() {
               }}
             >
               <span className="relative -mx-5 -mt-5 mb-5 block overflow-hidden border-b-4 border-white bg-[#dcefe9]">
-                <img
+                <LazyImage
                   src={mission.image}
                   alt={`Ilustrasi ${mission.location}`}
                   className="aspect-video w-full object-cover transition duration-500 group-hover:scale-[1.035]"
-                  loading={index === 0 ? 'eager' : 'lazy'}
+                  placeholderColor="#dcefe9"
                 />
                 <span className="absolute right-3 top-3 rounded-full border border-white/80 bg-white/90 px-3 py-1 text-[0.62rem] font-black uppercase tracking-widest shadow-sm backdrop-blur-sm" style={{ color }}>
                   {mission.posLabel ?? label}
@@ -1946,7 +1946,7 @@ function ZepGameOnlyScreen() {
               </span>
 
               <span className="relative mt-4 flex justify-center overflow-visible px-3 py-2 transition group-hover:scale-[1.025] group-active:scale-[0.98]">
-                <img
+                <LazyImage
                   src="/assets/game/surabaya/button-miwiti.png"
                   alt=""
                   className="h-auto w-[240px] max-w-full drop-shadow-lg"

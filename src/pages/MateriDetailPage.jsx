@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CheckCircle2, ChevronLeft, ChevronRight, ListChecks, RotateCcw, Volume2, Square, BookOpen, LoaderCircle, XCircle } from 'lucide-react';
 import { materiActivities } from '../data/materiActivities.js';
+import { LazyImage } from '../components/LazyImage.jsx';
 import { useClickSound } from '../hooks/useClickSound.js';
 import { playAudioFile } from '../hooks/useAudioFile.js';
 import { useStudentLocalStorage } from '../hooks/useLocalStorage.js';
@@ -71,11 +72,11 @@ function StimulusComic({ stimulus, title, onPlayMedia }) {
       ) : (
         <>
           <div className="relative bg-[#e7f6ff]">
-        <img
+        <LazyImage
           src={stimulus.image}
           alt={`Komik pembuka materi ${title}`}
           className="aspect-video h-auto w-full object-cover"
-          loading="lazy"
+          placeholderColor="#e7f6ff"
         />
 
         <div className="pointer-events-none absolute inset-0 hidden sm:block">
