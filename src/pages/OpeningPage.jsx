@@ -91,7 +91,7 @@ export function OpeningPage({ onEnter }) {
         <div className="w-full animate-[fadeInUp_1s_ease-out_both] overflow-hidden rounded-2xl border-2 border-orange-200 bg-white/85 px-6 py-5 shadow-[0_8px_32px_rgba(46,29,16,0.2)] backdrop-blur-md">
           <div className="flex items-center justify-center gap-2 mb-3">
             <BookOpen size={15} className="text-orange-600" aria-hidden="true" />
-            <span className="text-xs font-black uppercase tracking-[0.18em] text-orange-600">Media Pembelajaran</span>
+            <span className="text-xs font-black uppercase tracking-[0.18em] text-orange-600">Medhia Pasinaon</span>
           </div>
           <p className="text-[clamp(1.1rem,3vw,1.4rem)] font-black text-[#3d1f00] drop-shadow-sm">
             Basa Jawa
